@@ -21,7 +21,6 @@ struct ThemeParkView: View {
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
                         } else {
-//                                Spacer() // Placeholder for second column content
                             Text(viewModel.entities[index].status ?? "Unknown") // Show status
                                 .font(.footnote)
                                 .foregroundColor(.gray)
@@ -34,7 +33,6 @@ struct ThemeParkView: View {
             }
             .padding()
         }
-        .navigationTitle("What the Pooh!")
         .onAppear {
             viewModel.fetchEntities(for: "7340550b-c14d-4def-80bb-acdb51d49a66")
         }
