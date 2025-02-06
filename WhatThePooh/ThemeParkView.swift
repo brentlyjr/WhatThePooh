@@ -12,19 +12,16 @@ struct ThemeParkView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible(minimum: 250, maximum: .infinity)), GridItem(.flexible(minimum: 30, maximum: .infinity))], spacing: 2) {
+            Grid(alignment: .leading, horizontalSpacing: 10, verticalSpacing: 10) {
                 ForEach(viewModel.entities.indices, id: \.self) { index in
-                    HStack {
-                        if index % 2 == 0 {
+                    GridRow {
                             Text(viewModel.entities[index].name)
                                 .font(.footnote)
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
-                        } else {
                             Text(viewModel.entities[index].status ?? "Unknown") // Show status
                                 .font(.footnote)
                                 .foregroundColor(.gray)
-                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading) // Stretch the row to fill the column
                     .padding()
@@ -35,6 +32,7 @@ struct ThemeParkView: View {
             .padding()
         }
         .onAppear {
+            // Load all the entities for our park
             viewModel.fetchEntities(for: "7340550b-c14d-4def-80bb-acdb51d49a66")
         }
     }

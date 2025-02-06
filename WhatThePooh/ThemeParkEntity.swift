@@ -12,6 +12,7 @@ struct ThemeParkEntity: Identifiable, Decodable {
     let id: String
     let name: String
     var status: String? // Added status property
+    var waitTime: Int? // Time we are waiting
 
     enum EntityType: String, Decodable {
         case attraction = "ATTRACTION"

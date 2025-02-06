@@ -34,11 +34,6 @@ class ThemeParkViewModel: ObservableObject {
                 return
             }
 
-            // Log raw JSON response
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Raw JSON Response: \(jsonString)")
-            }
-
             do {
                 // Attempt to decode
                 let decoder = JSONDecoder()
@@ -68,12 +63,12 @@ class ThemeParkViewModel: ObservableObject {
 
     private func startStatusUpdates() {
         timer?.invalidate() // Cancel any existing timer
-        timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             self?.updateEntityStatuses()
         }
     }
 
-    private func updateEntityStatuses() {
+    func updateEntityStatuses() {
         for index in entities.indices {
             let entity = entities[index]
             fetchStatus(for: entity) { [weak self] status in
@@ -102,6 +97,11 @@ class ThemeParkViewModel: ObservableObject {
                 print("No status data for \(entity.name)")
                 completion(nil)
                 return
+            }
+
+            // Log raw JSON response
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("Raw JSON Response: \(jsonString)")
             }
 
             do {
