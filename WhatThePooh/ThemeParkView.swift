@@ -12,7 +12,7 @@ struct ThemeParkView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+            LazyVGrid(columns: [GridItem(.flexible(minimum: 250, maximum: .infinity)), GridItem(.flexible(minimum: 30, maximum: .infinity))], spacing: 2) {
                 ForEach(viewModel.entities.indices, id: \.self) { index in
                     HStack {
                         if index % 2 == 0 {
@@ -26,6 +26,7 @@ struct ThemeParkView: View {
                                 .foregroundColor(.gray)
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading) // Stretch the row to fill the column
                     .padding()
                     .background(Color.blue.opacity(0.1))
                     .cornerRadius(8)
