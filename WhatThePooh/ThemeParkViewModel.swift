@@ -41,7 +41,7 @@ class ThemeParkViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.entities = response.children.filter { $0.entityType == .attraction }
                     self.updateEntityStatuses() // Get the initial refresh of the statuses
-                    self.startStatusUpdates() // Start periodic status updates from our timer
+                    self.startStatusUpdates() // Start periodic status updates from our timer 
                 }
             } catch let error as DecodingError {
                 switch error {
