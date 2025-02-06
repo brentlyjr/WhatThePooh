@@ -40,7 +40,8 @@ class ThemeParkViewModel: ObservableObject {
                 let response = try decoder.decode(ThemeParkResponse.self, from: data)
                 DispatchQueue.main.async {
                     self.entities = response.children.filter { $0.entityType == .attraction }
-                    self.startStatusUpdates() // Start periodic status updates
+                    self.updateEntityStatuses() // Get the initial refresh of the statuses
+                    self.startStatusUpdates() // Start periodic status updates from our timer
                 }
             } catch let error as DecodingError {
                 switch error {
@@ -68,7 +69,7 @@ class ThemeParkViewModel: ObservableObject {
         }
     }
 
-    func updateEntityStatuses() {
+    private func updateEntityStatuses() {
         for index in entities.indices {
             let entity = entities[index]
             fetchStatus(for: entity) { [weak self] status in
