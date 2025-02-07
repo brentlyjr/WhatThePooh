@@ -121,6 +121,10 @@ class ThemeParkViewModel: ObservableObject {
                     let standby = queue?["STANDBY"] as? [String: Any]
                     let waitTime = standby?["waitTime"] as? Int ?? 0
 
+                    if (waitTime > 0 && status != "OPERATING") {
+                        let jsonString = String(data: data, encoding: .utf8)
+                        print(" Weird data field: \(jsonString ?? "NO JSON")")
+                    }
 //                    print("Status: \(status), waitTime: \(waitTime)")
                     completion(status, waitTime)
                 }
