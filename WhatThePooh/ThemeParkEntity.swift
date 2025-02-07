@@ -18,13 +18,15 @@ struct ThemeParkEntity: Identifiable, Decodable {
         case attraction = "ATTRACTION"
         case show = "SHOW"
         case restaurant = "RESTAURANT"
+        case park = "PARK"
     }
-
+    
     let entityType: EntityType
 
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case entityType
+    enum LiveStatusType: String, Decodable {
+        case operating = "OPERATING"
+        case down = "DOWN"
+        case closed = "CLOSED"
+        case refurbishment = "REFURBISHMENT"
     }
 }

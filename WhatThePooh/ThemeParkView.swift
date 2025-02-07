@@ -9,22 +9,25 @@ import SwiftUI
 
 struct ThemeParkView: View {
     @StateObject private var viewModel = ThemeParkViewModel()
-
+    
     var body: some View {
         ScrollView {
             Grid(alignment: .leading, horizontalSpacing: 10, verticalSpacing: 10) {
                 ForEach(viewModel.entities.indices, id: \.self) { index in
                     GridRow {
-                            Text(viewModel.entities[index].name)
-                                .font(.footnote)
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: false, vertical: true)
-                            Text(viewModel.entities[index].status ?? "Unknown") // Show status
-                                .font(.footnote)
-                                .foregroundColor(.gray)
+                        Text(viewModel.entities[index].name)
+                            .font(.footnote)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text(viewModel.entities[index].status ?? "Unknown") // Show status
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                        Text("\(viewModel.entities[index].waitTime ?? 0)")
+                            .font(.footnote)
+                            .foregroundColor(.orange)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading) // Stretch the row to fill the column
-                    .padding()
+                    .padding(1)
                     .background(Color.blue.opacity(0.1))
                     .cornerRadius(8)
                 }
@@ -33,7 +36,17 @@ struct ThemeParkView: View {
         }
         .onAppear {
             // Load all the entities for our park
-            viewModel.fetchEntities(for: "7340550b-c14d-4def-80bb-acdb51d49a66")
+            viewModel.fetchEntities(for: "e957da41-3552-4cf6-b636-5babc5cbc4e5")
+            
+            // Conglomeration of parks
+            // Walt Disney World® Resort - e957da41-3552-4cf6-b636-5babc5cbc4e5
+            // Tokyo Disney Resort - faff60df-c766-4470-8adb-dee78e813f42
+            // Disneyland Paris - e8d0207f-da8a-4048-bec8-117aa946b2c2
+            // Shanghai Disney Resort - 6e1464ca-1e9b-49c3-8937-c5c6f6675057
+            // Disneyland Resort - bfc89fd6-314d-44b4-b89e-df1a89cf991e
+            // Hong Kong Disneyland Parks - abcfffe7-01f2-4f92-ae61-5093346f5a68
+            
+            // Individual Parks
         }
     }
 }

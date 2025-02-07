@@ -17,7 +17,9 @@ class ThemeParkViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
 
-    func fetchEntities(for destinationID: String) {
+    // Retrieves all the entities (children) under a park - filters based on ATTRACTION
+    // Stores them in entity array
+    func fetchEntities(for destinationID: String) -> Void {
         guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(destinationID)/children") else {
             print("Invalid URL")
             return
@@ -30,7 +32,7 @@ class ThemeParkViewModel: ObservableObject {
             }
 
             guard let data = data else {
-                print("No data received")
+                print("No data received for entity/children query.")
                 return
             }
 
@@ -57,70 +59,93 @@ class ThemeParkViewModel: ObservableObject {
                     print("Unknown decoding error: \(error)")
                 }
             } catch {
-                print("Other error: \(error)")
+                print("Other decoding error: \(error)")
             }
         }.resume()
     }
 
-    private func startStatusUpdates() {
+    private func startStatusUpdates() -> Void {
         timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             self?.updateEntityStatuses()
         }
     }
 
-    private func updateEntityStatuses() {
+    private func updateEntityStatuses() -> Void {
         for index in entities.indices {
             let entity = entities[index]
-            fetchStatus(for: entity) { [weak self] status in
+            fetchStatus(for: entity) { [weak self] status, waitTime in
                 DispatchQueue.main.async {
                     self?.entities[index].status = status
+                    self?.entities[index].waitTime = waitTime
                 }
             }
         }
     }
 
-    private func fetchStatus(for entity: ThemeParkEntity, completion: @escaping (String?) -> Void) {
+    private func fetchStatus(for entity: ThemeParkEntity, completion: @escaping (String?, Int) -> Void) -> Void {
         guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(entity.id)/live") else {
             print("Invalid status URL")
-            completion(nil)
+            completion(nil, 0)
             return
         }
 
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching status for \(entity.name): \(error.localizedDescription)")
-                completion(nil)
+                completion(nil, 0)
                 return
             }
 
             guard let data = data else {
                 print("No status data for \(entity.name)")
-                completion(nil)
+                completion(nil, 0)
                 return
             }
 
             // Log raw JSON response
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Raw JSON Response: \(jsonString)")
-            }
+//            if let jsonString = String(data: data, encoding: .utf8) {
+//                print("Raw JSON Response: \(jsonString)")
+//            }
 
+            
+            // New code to parse out waitTime, let's leave the old code here for now until I know
+            // it is working well
             do {
-                let decoder = JSONDecoder()
-                let liveResponse = try decoder.decode(LiveEntityResponse.self, from: data)
-                completion(liveResponse.liveData.first?.status)
+                if let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                    let liveData = jsonObject["liveData"] as? [[String: Any]], // Simplified cast directly to an array of dictionaries
+                    let firstLiveData = liveData.first
+                {
+                    let status = firstLiveData["status"] as? String ?? "Unknown"
+                    let queue = firstLiveData["queue"] as? [String: Any]
+                    let standby = queue?["STANDBY"] as? [String: Any]
+                    let waitTime = standby?["waitTime"] as? Int ?? 0
+
+//                    print("Status: \(status), waitTime: \(waitTime)")
+                    completion(status, waitTime)
+                }
             } catch {
-                print("Error decoding status for \(entity.name): \(error)")
-                completion(nil)
+                print("Failed to parse JSON: \(error.localizedDescription)")
             }
+            // End test code
+
+            
+//            do {
+//                let decoder = JSONDecoder()
+//                let liveResponse = try decoder.decode(LiveEntityResponse.self, from: data)
+//                completion(liveResponse.liveData.first?.status, 0)
+//            } catch {
+//                print("Error decoding status for \(entity.name): \(error)")
+//                completion(nil, 0)
+//            }
         }.resume()
     }
 }
 
-struct LiveEntityResponse: Decodable {
-    let liveData: [LiveEntityData]
-}
-
-struct LiveEntityData: Decodable {
-    let status: String?
-}
+//struct LiveEntityResponse: Decodable {
+//    let liveData: [LiveEntityData]
+//}
+//
+//struct LiveEntityData: Decodable {
+//    let status: String?
+//}
