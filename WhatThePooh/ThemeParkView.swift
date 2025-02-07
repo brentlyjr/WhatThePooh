@@ -12,22 +12,25 @@ struct ThemeParkView: View {
     
     var body: some View {
         ScrollView {
-            Grid(alignment: .leading, horizontalSpacing: 10, verticalSpacing: 10) {
+            Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
                 ForEach(viewModel.entities.indices, id: \.self) { index in
+                    let entity = viewModel.entities[index] // Create a local variable for entity
+                    
                     GridRow {
-                        Text(viewModel.entities[index].name)
+                        Text(entity.name)
                             .font(.footnote)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
-                        Text(viewModel.entities[index].status ?? "Unknown") // Show status
+                        Text(entity.status ?? "Unknown")
                             .font(.footnote)
                             .foregroundColor(.gray)
-                        Text("\(viewModel.entities[index].waitTime ?? 0)")
+                        Text("\(entity.waitTime ?? 0)")
                             .font(.footnote)
                             .foregroundColor(.orange)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading) // Stretch the row to fill the column
                     .padding(1)
+                    .frame(minHeight: 40, maxHeight: 40) // Add this line to set a minimum height for each GridRow
                     .background(Color.blue.opacity(0.1))
                     .cornerRadius(8)
                 }
