@@ -16,27 +16,19 @@ struct ThemeParkView: View {
                 ForEach(viewModel.entities.indices, id: \.self) { index in
                     let entity = viewModel.entities[index] // Create a local variable for entity
                     
+                    let (column2, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime)
                     GridRow {
                         Text(entity.name)
                             .font(.footnote)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
-                        Text(entity.status ?? "Unknown")
+                        Text(column2)
                             .font(.footnote)
-                            .foregroundColor(.gray)
-                        Text("\(entity.waitTime ?? 0)")
-                            .font(.footnote)
-                            .foregroundColor(.orange)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading) // Stretch the row to fill the column
                     .padding(1)
                     .frame(minHeight: 40, maxHeight: 40) // Add this line to set a minimum height for each GridRow
-                    .background(
-                        entity.status == "DOWN" ? Color.red.opacity(0.2) :
-                        entity.status == "REFURBISHMENT" ? Color.yellow.opacity(0.2) :
-                        entity.status == "CLOSED" ? Color.blue.opacity(0.2) :
-                        Color.green.opacity(0.2)
-                    )
+                    .background(color)
                     .cornerRadius(8)
                 }
             }
@@ -55,6 +47,25 @@ struct ThemeParkView: View {
             // Hong Kong Disneyland Parks - abcfffe7-01f2-4f92-ae61-5093346f5a68
             
             // Individual Parks
+        }
+    }
+    
+    private func statusAttributes(status: String?, waitTime: Int?) -> (String, Color) {
+        switch status {
+        case "CLOSED":
+            return ("CLOSED", Color.blue.opacity(0.2))
+        case "OPERATING":
+            if let waitTime = waitTime, waitTime > 0 {
+                return ("\(waitTime) mins", Color.green.opacity(0.2))
+            } else {
+                return ("OPERATING", Color.green.opacity(0.2))
+            }
+        case "DOWN":
+            return ("DOWN", Color.red.opacity(0.2))
+        case "REFURBISHMENT":
+            return ("REFURBISHMENT", Color.yellow.opacity(0.2))
+        default:
+            return ("Unknown", Color.clear)
         }
     }
 }
