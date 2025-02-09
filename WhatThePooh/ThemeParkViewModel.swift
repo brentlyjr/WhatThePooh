@@ -74,10 +74,12 @@ class ThemeParkViewModel: ObservableObject {
     private func updateEntityStatuses() -> Void {
         for index in entities.indices {
             let entity = entities[index]
-            fetchStatus(for: entity) { [weak self] status, waitTime in
-                DispatchQueue.main.async {
-                    self?.entities[index].status = status
-                    self?.entities[index].waitTime = waitTime
+            DispatchQueue.main.async {
+                self.fetchStatus(for: entity) { [weak self] status, waitTime in
+                    DispatchQueue.main.async {
+                        self?.entities[index].status = status
+                        self?.entities[index].waitTime = waitTime
+                    }
                 }
             }
         }

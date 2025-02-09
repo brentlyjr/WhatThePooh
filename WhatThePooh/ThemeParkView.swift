@@ -31,7 +31,12 @@ struct ThemeParkView: View {
                     .frame(maxWidth: .infinity, alignment: .leading) // Stretch the row to fill the column
                     .padding(1)
                     .frame(minHeight: 40, maxHeight: 40) // Add this line to set a minimum height for each GridRow
-                    .background(Color.blue.opacity(0.1))
+                    .background(
+                        entity.status == "DOWN" ? Color.red.opacity(0.2) :
+                        entity.status == "REFURBISHMENT" ? Color.yellow.opacity(0.2) :
+                        entity.status == "CLOSED" ? Color.blue.opacity(0.2) :
+                        Color.green.opacity(0.2)
+                    )
                     .cornerRadius(8)
                 }
             }
@@ -39,7 +44,7 @@ struct ThemeParkView: View {
         }
         .onAppear {
             // Load all the entities for our park
-            viewModel.fetchEntities(for: "e957da41-3552-4cf6-b636-5babc5cbc4e5")
+            viewModel.fetchEntities(for: "bfc89fd6-314d-44b4-b89e-df1a89cf991e")
             
             // Conglomeration of parks
             // Walt Disney World® Resort - e957da41-3552-4cf6-b636-5babc5cbc4e5
