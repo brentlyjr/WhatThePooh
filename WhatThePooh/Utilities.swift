@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import AVFoundation
 
 class Utilities {
+    
+    static var audioPlayer: AVAudioPlayer?
+    private static var poohSound: String = "pooh-laughing"
     
     // Takes a date as a string in UTC format and returns how much earlier in
     // minutes was that date from the current time. Used for determing down
@@ -35,5 +39,27 @@ class Utilities {
         let formatter = ISO8601DateFormatter()
         formatter.timeZone = TimeZone(secondsFromGMT: 0) // UTC
         return formatter.string(from: Date())
+    }
+    
+    static func playSound() -> Void {
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to set audio session: \(error.localizedDescription)")
+        }
+
+        if let path = Bundle.main.path(forResource: poohSound, ofType: "mp3") {
+            do {
+
+                audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                audioPlayer?.play()
+            } catch {
+                print("Error playing sound: \(error.localizedDescription)")
+            }
+        } else {
+            print("Cannot locate sound file: \(poohSound).")
+        }
     }
 }
