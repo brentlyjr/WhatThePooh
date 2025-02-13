@@ -26,16 +26,16 @@ struct HeaderView: View {
                     .shadow(radius: 7)
             }
             
-            HStack {
+//            HStack {
 //                Text("Park: \(selectedOption)")
-                
-                Picker("Select a Park", selection: $selectedOption) {
-                    ForEach(options, id: \.self) { option in
-                        Text(option).tag(option)
-                    }
-                }
-                .pickerStyle(MenuPickerStyle()) // Dropdown-style appearance
-            }
+//                
+//                Picker("Select a Park", selection: $selectedOption) {
+//                    ForEach(options, id: \.self) { option in
+//                        Text(option).tag(option)
+//                    }
+//                }
+//                .pickerStyle(MenuPickerStyle()) // Dropdown-style appearance
+//            }
 //            .padding()
         }
     }
