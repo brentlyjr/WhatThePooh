@@ -66,6 +66,12 @@ struct RideView: View {
         if status == "CLOSED" && minutes! > 2880 {
             calculatedStatus = "REFURBISHMENT"
         }
+        
+        // Once again, we are making some assumptions. If the ride is closed, but it hasn't been closed
+        // for very long, then we should assume it is DOWN
+        if status == "CLOSED" && minutes! < 240 {
+            calculatedStatus = "DOWN"
+        }
 
         switch calculatedStatus {
         case "CLOSED":

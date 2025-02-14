@@ -5,7 +5,14 @@
 //  Created by Brent Cromley on 2/13/25.
 //
 
+import SwiftUI
 
+struct ParkModel  {
+
+    let id: String
+    let name: String
+
+}
 
 //    "name": "Walt Disney World® Resort",
 //

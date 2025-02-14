@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct WhatThePoohApp: App {
+
+    @StateObject private var notificationManager = Notifications.shared
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear() {
+                    notificationManager.requestNotificationPermissionIfNeeded()
+                }
         }
     }
 }

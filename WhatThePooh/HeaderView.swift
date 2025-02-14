@@ -10,7 +10,8 @@ import SwiftUI
 struct HeaderView: View {
     @State private var selectedOption = "Disney Land"
     let options = ["Disney Land", "Disney World", "Disney Paris"]
-
+    @EnvironmentObject var notificationManager: Notifications
+    
     var body: some View {
         VStack {
             HStack {
@@ -26,6 +27,7 @@ struct HeaderView: View {
                     .shadow(radius: 7)
                     .onTapGesture {
                         Utilities.playSound()
+                        notificationManager.sendStatusChangeNotification(rideName: "Rise", newStatus: "Down")
                     }
             }
             
