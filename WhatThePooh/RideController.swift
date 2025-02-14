@@ -8,12 +8,12 @@
 import Foundation
 import Combine
 
-struct ThemeParkResponse: Decodable {
-    let liveData: [ThemeParkEntity]
+struct RideResponse: Decodable {
+    let liveData: [RideModel]
 }
 
-class ThemeParkViewModel: ObservableObject {
-    @Published var entities: [ThemeParkEntity] = []
+class RideController: ObservableObject {
+    @Published var entities: [RideModel] = []
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
     
@@ -39,10 +39,10 @@ class ThemeParkViewModel: ObservableObject {
             do {
                 // Attempt to decode
                 let decoder = JSONDecoder()
-                let response = try decoder.decode(ThemeParkResponse.self, from: data)
+                let response = try decoder.decode(RideResponse.self, from: data)
                 DispatchQueue.main.async {
                     self.entities = response.liveData.filter { $0.entityType == .attraction }
-                    self.updateEntityStatuses() // Get the initial refresh of the statuses
+                    self.updateRideStatuses() // Get the initial refresh of the statuses
                     self.startStatusUpdates() // Start periodic status updates from our timer
                 }
             } catch let error as DecodingError {
@@ -67,11 +67,11 @@ class ThemeParkViewModel: ObservableObject {
     private func startStatusUpdates() -> Void {
         timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            self?.updateEntityStatuses()
+            self?.updateRideStatuses()
         }
     }
     
-    private func updateEntityStatuses() -> Void {
+    private func updateRideStatuses() -> Void {
         for index in entities.indices {
             let entity = entities[index]
             DispatchQueue.main.async {
@@ -86,7 +86,7 @@ class ThemeParkViewModel: ObservableObject {
         }
     }
     
-    private func fetchStatus(for entity: ThemeParkEntity, completion: @escaping (String?, Int?, String?) -> Void) -> Void {
+    private func fetchStatus(for entity: RideModel, completion: @escaping (String?, Int?, String?) -> Void) -> Void {
         guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(entity.id)/live") else {
             print("Invalid status URL")
             completion(nil, 0, nil)

@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct ThemeParkEntity: Identifiable, Decodable {
+struct RideModel: Identifiable, Decodable {
     let id: String
     let name: String
     var status: String? // Added status property

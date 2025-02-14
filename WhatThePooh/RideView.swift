@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct ThemeParkView: View {
-    @StateObject private var viewModel = ThemeParkViewModel()
+struct RideView: View {
+    @StateObject private var rideController = RideController()
     
     var body: some View {
         ScrollView {
             Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
-                ForEach(viewModel.entities.indices, id: \.self) { index in
-                    let entity = viewModel.entities[index] // Create a local variable for entity
+                ForEach(rideController.entities.indices, id: \.self) { index in
+                    let entity = rideController.entities[index] // Create a local variable for entity
                     
                     let (column2, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
                     
@@ -39,7 +39,7 @@ struct ThemeParkView: View {
         }
         .onAppear {
             // Load all the entities for our park
-            viewModel.fetchEntities(for: "faff60df-c766-4470-8adb-dee78e813f42")
+            rideController.fetchEntities(for: "faff60df-c766-4470-8adb-dee78e813f42")
             
             // Conglomeration of parks
             // Walt Disney World® Resort - e957da41-3552-4cf6-b636-5babc5cbc4e5
