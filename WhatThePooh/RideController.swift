@@ -14,54 +14,34 @@ struct RideResponse: Decodable {
 
 class RideController: ObservableObject {
     @Published var entities: [RideModel] = []
-    private var cancellables = Set<AnyCancellable>()
+    private var offlineMode: Bool = false
     private var timer: Timer?
+    
+    init() {
+        // Set offlineMode during initialization
+        self.offlineMode = isOfflineModeEnabled()
+    }
     
     // Retrieves all the entities (children) under a park - filters based on ATTRACTION
     // Stores them in entity array
-    func fetchEntities(for destinationID: String) -> Void {
-        guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(destinationID)/live") else {
-            print("Invalid URL")
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                return
-            }
-            
+    func fetchEntities(for destinationID: String) {
+        performNetworkRequest(endpoint: destinationID) { data in
             guard let data = data else {
-                print("No data received for entity/children query.")
+                print("No data received for entity query.")
                 return
             }
-            
             do {
-                // Attempt to decode
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(RideResponse.self, from: data)
                 DispatchQueue.main.async {
                     self.entities = response.liveData.filter { $0.entityType == .attraction }
-                    self.updateRideStatuses() // Get the initial refresh of the statuses
-                    self.startStatusUpdates() // Start periodic status updates from our timer
-                }
-            } catch let error as DecodingError {
-                switch error {
-                case .typeMismatch(let type, let context):
-                    print("Type mismatch: \(type), context: \(context)")
-                case .valueNotFound(let type, let context):
-                    print("Value not found: \(type), context: \(context)")
-                case .keyNotFound(let key, let context):
-                    print("Key '\(key)' not found: \(context.debugDescription)")
-                case .dataCorrupted(let context):
-                    print("Data corrupted: \(context.debugDescription)")
-                default:
-                    print("Unknown decoding error: \(error)")
+                    self.updateRideStatuses()
+                    self.startStatusUpdates()
                 }
             } catch {
-                print("Other decoding error: \(error)")
+                print("Decoding error: \(error)")
             }
-        }.resume()
+        }
     }
     
     private func startStatusUpdates() -> Void {
@@ -86,51 +66,77 @@ class RideController: ObservableObject {
         }
     }
     
-    private func fetchStatus(for entity: RideModel, completion: @escaping (String?, Int?, String?) -> Void) -> Void {
-        guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(entity.id)/live") else {
-            print("Invalid status URL")
-            completion(nil, 0, nil)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error fetching status for \(entity.name): \(error.localizedDescription)")
-                completion(nil, 0, nil)
-                return
-            }
-            
+    private func fetchStatus(for entity: RideModel, completion: @escaping (String?, Int?, String?) -> Void) {
+        performNetworkRequest(endpoint: entity.id) { data in
             guard let data = data else {
-                print("No status data for \(entity.name)")
                 completion(nil, 0, nil)
                 return
             }
-            
             // Log raw JSON response
             //            if let jsonString = String(data: data, encoding: .utf8) {
             //                print("Raw JSON Response: \(jsonString)")
             //            }
-            
-            
-            // Parse out waitTime lastUpdated and status
             do {
-                if let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-                   let liveData = jsonObject["liveData"] as? [[String: Any]], // Simplified cast directly to an array of dictionaries
-                   let firstLiveData = liveData.first
-                {
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let liveData = json["liveData"] as? [[String: Any]],
+                   let firstLiveData = liveData.first {
                     let status = firstLiveData["status"] as? String ?? "Unknown"
                     let queue = firstLiveData["queue"] as? [String: Any]
                     let lastUpdated = firstLiveData["lastUpdated"] as? String ?? "No Date"
                     let standby = queue?["STANDBY"] as? [String: Any]
                     let waitTime = standby?["waitTime"] as? Int
-                    
-                    let minutes = Utilities.minutesSince(lastUpdated)
-                    print("Ride: \(entity.name), status: \(status), waitTime: \(String(describing: waitTime)), lastUpdate: \(lastUpdated), minutesSince: \(minutes ?? 0)")
                     completion(status, waitTime, lastUpdated)
                 }
             } catch {
-                print("Failed to parse JSON: \(error.localizedDescription)")
+                print("Error parsing status JSON: \(error)")
             }
-        }.resume()
+        }
+    }
+    
+    private func performNetworkRequest(endpoint: String, completion: @escaping (Data?) -> Void) {
+        if self.offlineMode {
+            loadMockData(endpoint: endpoint, completion: completion)
+        } else {
+            guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(endpoint)/live") else {
+                print("Invalid URL")
+                completion(nil)
+                return
+            }
+            
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                if let error = error {
+                    print("Network error: \(error.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+                completion(data)
+            }.resume()
+        }
+    }
+    
+    private func isOfflineModeEnabled() -> Bool {
+        let key = "OFFLINE_MODE"
+        if let offlineMode = Bundle.main.object(forInfoDictionaryKey: key) as? Bool {
+            print("Found \(key): \(offlineMode)")
+            return offlineMode
+        } else {
+            print("\(key) key not found. Defaulting to false.")
+            return false
+        }
+    }
+    
+    private func loadMockData(endpoint: String, completion: @escaping (Data?) -> Void) {
+        if let path = Bundle.main.path(forResource: "DisneyJapan-02-13-2025-OPEN", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path))
+                completion(data)
+            } catch {
+                print("Failed to load mock data: \(error)")
+                completion(nil)
+            }
+        } else {
+            print("Mock JSON file not found for \(endpoint)")
+            completion(nil)
+        }
     }
 }

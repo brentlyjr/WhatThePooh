@@ -8,20 +8,23 @@
 import UserNotifications
 
 class Notifications: ObservableObject {
+
+    // Singleton of Notification class
     static let shared = Notifications()
     
+    // Something we can look on later to determine if we should try to send notifications
     @Published var permissionGranted = false
     
-    private init() {
-        
-    }
-
+    private init() { }
+    
+    // This really only needs to execute once on first app launch (assuming they
+    // approve notifications). After this, it just confirms we have notifications enabled
     func requestNotificationPermissionIfNeeded() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
                 self.permissionGranted = settings.authorizationStatus == .authorized
             }
-
+            
             if settings.authorizationStatus == .notDetermined {
                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
                     DispatchQueue.main.async {
@@ -35,42 +38,28 @@ class Notifications: ObservableObject {
             print("Authorization status: \(settings.authorizationStatus.rawValue)")
         }
     }
-
-//    func requestNotificationPermissionIfNeeded() {
-//        UNUserNotificationCenter.current().getNotificationSettings { settings in
-//            switch settings.authorizationStatus {
-//            case .notDetermined:
-//                // Permission not asked yet, request it
-//                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-//                    if granted {
-//                        print("Notifications granted.")
-//                    } else {
-//                        print("Notifications denied.")
-//                    }
-//                }
-//            case .denied:
-//                print("Notifications were previously denied. User must enable them in Settings.")
-//            case .authorized, .provisional, .ephemeral:
-//                print("Notifications are already authorized.")
-//            @unknown default:
-//                print("Unknown notification authorization status.")
-//            }
-//        }
-//    }
-
+    
+    // This is the code that generates our notification
     func sendStatusChangeNotification(rideName: String, newStatus: String) {
         let content = UNMutableNotificationContent()
         content.title = "\(rideName) Status Update"
         content.body = "The ride is now \(newStatus)."
         content.sound = .default
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
+        
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Error scheduling notification: \(error.localizedDescription)")
             }
         }
+    }
+    
+    // Allow foreground notifications while app is running
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound])
     }
 }
