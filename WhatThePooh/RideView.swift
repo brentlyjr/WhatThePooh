@@ -39,7 +39,7 @@ struct RideView: View {
         }
         .onAppear {
             // Load all the entities for our park
-            rideController.fetchEntities(for: "faff60df-c766-4470-8adb-dee78e813f42")
+            rideController.fetchEntities(for: "abcfffe7-01f2-4f92-ae61-5093346f5a68")
             
             // Conglomeration of parks
             // Walt Disney World® Resort - e957da41-3552-4cf6-b636-5babc5cbc4e5
@@ -53,6 +53,9 @@ struct RideView: View {
         }
     }
     
+    //    https://api.themeparks.wiki/v1/entity/bd0eb47b-2f02-4d4d-90fa-cb3a68988e3b/schedule - hong kong
+    //    https://api.themeparks.wiki/v1/entity/bfc89fd6-314d-44b4-b89e-df1a89cf991e/schedule - disneyland
+
     private func statusAttributes(status: String?, waitTime: Int?, lastUpdated: String?) -> (String, Color) {
         
         // So for some parks, the status is not always accurate (IE, don't use REFURBISH, etc)

@@ -1,0 +1,3515 @@
+{
+    "id": "bfc89fd6-314d-44b4-b89e-df1a89cf991e",
+    "name": "Disneyland Resort",
+    "entityType": "DESTINATION",
+    "timezone": "America/Los_Angeles",
+    "liveData": [
+        {
+            "id": "3b37fd7b-1906-4bbf-874e-9e95bb315150",
+            "name": "Napa Rose",
+            "entityType": "RESTAURANT",
+            "parkId": null,
+            "externalId": "354372;entityType=restaurant",
+            "status": "OPERATING",
+            "lastUpdated": "2024-05-08T20:22:11Z"
+        },
+        {
+            "id": "531f6200-393e-4e4d-b95e-aedd30102e49",
+            "name": "Ancient Sanctum",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19534194;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Operating",
+                    "endTime": "2022-07-13T14:30:00-07:00",
+                    "startTime": "2022-07-13T08:00:00-07:00"
+                }
+            ],
+            "lastUpdated": "2022-07-13T07:08:17Z"
+        },
+        {
+            "id": "05e283ad-9409-4f4b-b062-23714f6f1b31",
+            "name": "Goofy's Kitchen",
+            "entityType": "RESTAURANT",
+            "parkId": null,
+            "externalId": "354261;entityType=restaurant",
+            "status": "OPERATING",
+            "lastUpdated": "2024-05-08T20:22:12Z"
+        },
+        {
+            "id": "9d401ad3-49b2-469f-ac73-93eb429428fb",
+            "name": "Mr. Toad's Wild Ride",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353389;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 10
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:17:46Z"
+        },
+        {
+            "id": "3178251f-4570-4ebf-ae2f-fb28edc7534f",
+            "name": "Mickey's Mix Magic with Projection",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "19263037;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:30:00-08:00",
+                    "startTime": "2025-02-13T19:30:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:47Z"
+        },
+        {
+            "id": "3220fd76-38e4-49a4-afa3-4842c07203fa",
+            "name": "Jambalaya Jazz",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401501;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:00:00-08:00",
+                    "startTime": "2025-02-13T11:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:00:00-08:00",
+                    "startTime": "2025-02-13T12:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:00:00-08:00",
+                    "startTime": "2025-02-13T13:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:05:00-08:00",
+                    "startTime": "2025-02-13T15:05:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:00:00-08:00",
+                    "startTime": "2025-02-13T16:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:00:00-08:00",
+                    "startTime": "2025-02-13T17:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "eeafc865-a4e0-4dc5-9cea-446108bf7d48",
+            "name": "Flag Retreat Ceremony",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401487;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:15:00-08:00",
+                    "startTime": "2025-02-13T16:15:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "ca32ef8a-ae0d-4c24-bf4f-e59192122e01",
+            "name": "Donald's Duck Pond",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353321;entityType=Attraction",
+            "status": "OPERATING",
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:11:45Z"
+        },
+        {
+            "id": "82aeb29b-504a-416f-b13f-f41fa5b766aa",
+            "name": "Pirates of the Caribbean",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353405;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T04:06:48Z"
+        },
+        {
+            "id": "77f205a4-d482-4d91-a5ff-71e54a086ad2",
+            "name": "Soarin' Around the World",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353431;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:12Z"
+        },
+        {
+            "id": "8deb6338-b65f-467c-9dd3-56ed8c02c355",
+            "name": "Plaza Inn",
+            "entityType": "RESTAURANT",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "354414;entityType=restaurant",
+            "status": "OPERATING",
+            "lastUpdated": "2024-09-16T08:11:42Z"
+        },
+        {
+            "id": "13bc1b70-3a42-41eb-9cb5-7fa8615af2ca",
+            "name": "Sonoma Terrace",
+            "entityType": "RESTAURANT",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "368880;entityType=restaurant",
+            "status": "OPERATING",
+            "lastUpdated": "2024-09-16T08:11:42Z"
+        },
+        {
+            "id": "bcfd1e17-3eab-4203-b597-6257a257d427",
+            "name": "Main Street Vehicles",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "393385;entityType=Attraction",
+            "status": "OPERATING",
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T15:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:11:46Z"
+        },
+        {
+            "id": "1214912c-de6d-4493-9344-c245357f7af6",
+            "name": "Lamplight Lounge",
+            "entityType": "RESTAURANT",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19013078;entityType=restaurant",
+            "status": "OPERATING",
+            "lastUpdated": "2024-05-08T20:22:11Z"
+        },
+        {
+            "id": "f5bb0d14-7eee-4ede-9230-eb256ce3664c",
+            "name": "Main Street Cinema",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353371;entityType=Attraction",
+            "status": "OPERATING",
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-14T01:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:11:45Z"
+        },
+        {
+            "id": "388ad3f1-5cf5-4a9d-8d0e-6dfb817d7822",
+            "name": "Jessie's Critter Carousel",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353367;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:18Z"
+        },
+        {
+            "id": "1da85181-bf0f-4ccc-b98e-243142f7347b",
+            "name": "Autopia",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353293;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 15
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:53:49Z"
+        },
+        {
+            "id": "835deb74-de54-4d7f-9dc4-dacab90fcb60",
+            "name": "Frontierland Shootin' Exposition",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353335;entityType=Attraction",
+            "status": "OPERATING",
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:11:45Z"
+        },
+        {
+            "id": "c02fb82d-0860-4e95-8c61-899fa594d20e",
+            "name": "Minnie's House",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353383;entityType=Attraction",
+            "status": "OPERATING",
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T19:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:11:45Z"
+        },
+        {
+            "id": "9212c98b-3638-4f0b-bf42-2e2848330e1d",
+            "name": "Pearly Band at Castle Courtyard",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "411755028;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T08:15:00-08:00",
+                    "startTime": "2025-02-13T08:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T09:05:00-08:00",
+                    "startTime": "2025-02-13T09:05:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:00:00-08:00",
+                    "startTime": "2025-02-13T10:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:55:00-08:00",
+                    "startTime": "2025-02-13T10:55:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "d252d547-a3e4-4ae4-b6ea-e8e4b0849512",
+            "name": "Mickey's Mix Magic with Fireworks",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "19259687;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-09T08:16:09Z"
+        },
+        {
+            "id": "faaa8be9-cc1e-4535-ac20-04a535654bd0",
+            "name": "Matterhorn Bobsleds",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353377;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 60
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:29:50Z"
+        },
+        {
+            "id": "cb84b53c-dbb5-483d-a717-00d9259c6484",
+            "name": "Disneyland Band at Frontierland",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "18154861;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:15:00-08:00",
+                    "startTime": "2025-02-13T15:15:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:47Z"
+        },
+        {
+            "id": "f71bfc6e-2f10-40a1-bf29-a4b98c5350f4",
+            "name": "Meet the Residents of Radiator Springs in Cars Land",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16578447;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T22:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:46Z"
+        },
+        {
+            "id": "c9e39189-7e99-4e0a-97e0-4a0d5654d257",
+            "name": "Sailing Ship Columbia",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353425;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-10T08:31:08Z"
+        },
+        {
+            "id": "c60c768b-3461-465c-8f4f-b44b087506fc",
+            "name": "Radiator Springs Racers",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16514416;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "SINGLE_RIDER": {
+                    "waitTime": null
+                },
+                "PAID_RETURN_TIME": {
+                    "price": {
+                        "amount": 2200,
+                        "currency": "USD",
+                        "formatted": "$22.00"
+                    },
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:09Z"
+        },
+        {
+            "id": "2295351d-ce6b-4c04-92d5-5b416372c5b5",
+            "name": "WEB SLINGERS: A Spider-Man Adventure",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19531124;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                },
+                "SINGLE_RIDER": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:11Z"
+        },
+        {
+            "id": "37858b2a-9c11-4ac6-9f8d-db7fa9088703",
+            "name": "The Disney Gallery",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "17734741;entityType=Attraction",
+            "status": "REFURBISHMENT",
+            "operatingHours": [],
+            "lastUpdated": "2025-01-13T21:41:50Z"
+        },
+        {
+            "id": "8d4b6d5f-558f-4210-82b5-02b0570232ea",
+            "name": "Citizens of Buena Vista Street",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16428783;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-12T17:15:00-08:00",
+                    "startTime": "2025-02-12T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-12T08:26:45Z"
+        },
+        {
+            "id": "7a09a2f0-e226-4f3e-86f8-2598ab67ec44",
+            "name": "Luigi's Rollickin' Roadsters",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "18343088;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:12Z"
+        },
+        {
+            "id": "1b23667a-d8fb-436d-8952-c3e3f2e56d13",
+            "name": "The Disneyland Story presenting Great Moments with Mr. Lincoln",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353461;entityType=Attraction",
+            "status": "REFURBISHMENT",
+            "operatingHours": [],
+            "lastUpdated": "2024-06-16T05:02:34Z"
+        },
+        {
+            "id": "eb77ee1f-3207-44fd-acfc-d7bc18602007",
+            "name": "The Bakery Tour",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353447;entityType=Attraction",
+            "status": "OPERATING",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 0,
+                    "percentage": 0
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 0,
+                    "percentage": 0
+                },
+                {
+                    "time": "2025-02-13T20:00:00-08:00",
+                    "waitTime": 0,
+                    "percentage": 0
+                },
+                {
+                    "time": "2025-02-13T21:00:00-08:00",
+                    "waitTime": 0,
+                    "percentage": 0
+                }
+            ],
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T18:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T11:11:59Z"
+        },
+        {
+            "id": "a07f3110-013e-43bb-a182-e66bb8b5e28d",
+            "name": "Alice in Wonderland",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "367495;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-13T08:16:51Z"
+        },
+        {
+            "id": "640525ab-75db-4f3c-b917-27ecb7b5ef97",
+            "name": "Jambalaya Jazz Band on the Mark Twain Riverboat",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "411992760;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2024-12-29T15:32:21Z"
+        },
+        {
+            "id": "8b12916b-a384-4305-838a-c4b07affbb14",
+            "name": "Main Street Piano Player",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401517;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:00:00-08:00",
+                    "startTime": "2025-02-13T11:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:55:00-08:00",
+                    "startTime": "2025-02-13T11:55:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:50:00-08:00",
+                    "startTime": "2025-02-13T12:50:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:20:00-08:00",
+                    "startTime": "2025-02-13T15:20:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:15:00-08:00",
+                    "startTime": "2025-02-13T16:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:05:00-08:00",
+                    "startTime": "2025-02-13T17:05:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "name": "Disneyland Park",
+            "entityType": "PARK",
+            "parkId": null,
+            "externalId": "330339;entityType=theme-park",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2024-04-05T15:54:30Z"
+        },
+        {
+            "id": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "name": "Disney California Adventure Park",
+            "entityType": "PARK",
+            "parkId": null,
+            "externalId": "336894;entityType=theme-park",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2024-04-05T15:54:30Z"
+        },
+        {
+            "id": "78568c55-6dcb-4893-a14e-ba7ed9bddaff",
+            "name": "Disneyland Band at \"it's a small world\" Promenade",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "412054818;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-01-07T08:11:44Z"
+        },
+        {
+            "id": "8c36ff0b-3a32-4d7b-9388-0516c19277db",
+            "name": "Fantasmic!",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401483;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-09T08:16:10Z"
+        },
+        {
+            "id": "3ee735b5-68dc-470a-a4a2-6ddd415b9cbd",
+            "name": "Avengers Headquarters",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19534191;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T22:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:47Z"
+        },
+        {
+            "id": "e9ef1443-c735-43b6-81c6-45e53527cf93",
+            "name": "Fire of the Rising Moons",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "412107646;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-09T08:16:10Z"
+        },
+        {
+            "id": "6c30d5b0-8c0a-406f-9258-0b6c55d4a5e4",
+            "name": "Mark Twain Riverboat",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353375;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 10
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:05:47Z"
+        },
+        {
+            "id": "88197808-3c56-4198-a5a4-6066541251cf",
+            "name": "Buzz Lightyear Astro Blasters",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353301;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                },
+                "RETURN_TIME": {
+                    "state": "AVAILABLE",
+                    "returnEnd": null,
+                    "returnStart": "2025-02-13T12:10:00-08:00"
+                }
+            },
+            "status": "OPERATING",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 25,
+                    "percentage": 20
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 25,
+                    "percentage": 20
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 25,
+                    "percentage": 20
+                }
+            ],
+            "operatingHours": [
+                {
+                    "type": "Early Entry",
+                    "endTime": "2025-02-13T08:00:00-08:00",
+                    "startTime": "2025-02-13T07:30:00-08:00"
+                },
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-14T01:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T20:06:57Z"
+        },
+        {
+            "id": "56d0bd6d-5106-4420-8f60-0005475c04c3",
+            "name": "Disneyland Monorail",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353313;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "REFURBISHMENT",
+            "operatingHours": [],
+            "lastUpdated": "2025-01-06T08:07:56Z"
+        },
+        {
+            "id": "90d5a091-478c-4df1-adfe-c605b4005013",
+            "name": "Sleeping Beauty Castle Walkthrough",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353427;entityType=Attraction",
+            "status": "CLOSED",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 5,
+                    "percentage": 4
+                }
+            ],
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-14T01:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T11:11:56Z"
+        },
+        {
+            "id": "1b6a816a-337c-431c-8df6-72f993e15e64",
+            "name": "Warriors of Wakanda: The Disciplines of the Dora Milaje",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19630110;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:30:00-08:00",
+                    "startTime": "2025-02-13T12:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:00:00-08:00",
+                    "startTime": "2025-02-13T15:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:00:00-08:00",
+                    "startTime": "2025-02-13T16:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T18:16:58Z"
+        },
+        {
+            "id": "cbd85f5f-27c5-41b4-94aa-d25c8883ee3c",
+            "name": "Disney Jr. Dance Party!",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "18708628;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:15:00-08:00",
+                    "startTime": "2025-02-13T10:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:15:00-08:00",
+                    "startTime": "2025-02-13T11:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:15:00-08:00",
+                    "startTime": "2025-02-13T12:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:00:00-08:00",
+                    "startTime": "2025-02-13T15:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:00:00-08:00",
+                    "startTime": "2025-02-13T16:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:47Z"
+        },
+        {
+            "id": "34b1d70f-11c4-42df-935e-d5582c9f1a8e",
+            "name": "Star Wars: Rise of the Resistance",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "19193461;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 60
+                },
+                "PAID_RETURN_TIME": {
+                    "price": {
+                        "amount": 2800,
+                        "currency": "USD",
+                        "formatted": "$28.00"
+                    },
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 75,
+                    "percentage": 64
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 85,
+                    "percentage": 73
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 85,
+                    "percentage": 73
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 80,
+                    "percentage": 68
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 80,
+                    "percentage": 68
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 85,
+                    "percentage": 73
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 75,
+                    "percentage": 64
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 85,
+                    "percentage": 73
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 70,
+                    "percentage": 60
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 65,
+                    "percentage": 56
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 80,
+                    "percentage": 68
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 0,
+                    "percentage": 0
+                }
+            ],
+            "lastUpdated": "2025-02-14T02:44:50Z"
+        },
+        {
+            "id": "b0eca3d3-a519-47f9-a5a7-9911126da2df",
+            "name": "Goofy's How-to-Play Yard",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353343;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T04:05:45Z"
+        },
+        {
+            "id": "d2aa0987-49a2-45dc-a635-3a8bf7401230",
+            "name": "Animation Academy",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353289;entityType=Attraction",
+            "status": "OPERATING",
+            "operatingHours": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T09:00:00-08:00",
+                    "startTime": "2025-02-13T09:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T09:30:00-08:00",
+                    "startTime": "2025-02-13T09:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:00:00-08:00",
+                    "startTime": "2025-02-13T10:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:30:00-08:00",
+                    "startTime": "2025-02-13T10:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:00:00-08:00",
+                    "startTime": "2025-02-13T11:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:30:00-08:00",
+                    "startTime": "2025-02-13T11:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:00:00-08:00",
+                    "startTime": "2025-02-13T12:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:30:00-08:00",
+                    "startTime": "2025-02-13T12:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:00:00-08:00",
+                    "startTime": "2025-02-13T13:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:30:00-08:00",
+                    "startTime": "2025-02-13T13:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:30:00-08:00",
+                    "startTime": "2025-02-13T14:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:00:00-08:00",
+                    "startTime": "2025-02-13T15:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:30:00-08:00",
+                    "startTime": "2025-02-13T15:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:00:00-08:00",
+                    "startTime": "2025-02-13T16:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:30:00-08:00",
+                    "startTime": "2025-02-13T16:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:00:00-08:00",
+                    "startTime": "2025-02-13T17:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:30:00-08:00",
+                    "startTime": "2025-02-13T17:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T18:00:00-08:00",
+                    "startTime": "2025-02-13T18:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T18:30:00-08:00",
+                    "startTime": "2025-02-13T18:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:00:00-08:00",
+                    "startTime": "2025-02-13T19:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:30:00-08:00",
+                    "startTime": "2025-02-13T19:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:30:00-08:00",
+                    "startTime": "2025-02-13T20:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T21:00:00-08:00",
+                    "startTime": "2025-02-13T21:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T21:30:00-08:00",
+                    "startTime": "2025-02-13T21:30:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:11:45Z"
+        },
+        {
+            "id": "3665b38e-3e56-4c84-ad20-3e39672079a1",
+            "name": "Cafe Orleans",
+            "entityType": "RESTAURANT",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "354117;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T01:33:49Z"
+        },
+        {
+            "id": "2aedc657-1ee2-4545-a1ce-14753f28cc66",
+            "name": "Indiana Jones™ Adventure",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353355;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 15
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:06:17Z"
+        },
+        {
+            "id": "449e351b-a05a-4a52-8893-0ed5c1f6fc48",
+            "name": "Five & Dime",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16633170;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:00:00-08:00",
+                    "startTime": "2025-02-13T12:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:05:00-08:00",
+                    "startTime": "2025-02-13T13:05:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:30:00-08:00",
+                    "startTime": "2025-02-13T15:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:30:00-08:00",
+                    "startTime": "2025-02-13T16:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:30:00-08:00",
+                    "startTime": "2025-02-13T17:30:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:47Z"
+        },
+        {
+            "id": "9167db1d-e5e7-46da-a07f-ae30a87bc4c4",
+            "name": "Space Mountain",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353435;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 25
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:14:54Z"
+        },
+        {
+            "id": "72340a8a-b6d2-474f-aca5-5ea7d2d52335",
+            "name": "Storytelling at Royal Theatre",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "17346575;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-11T08:26:50Z"
+        },
+        {
+            "id": "f44a5072-3cda-4c7c-8574-33ad09d16cca",
+            "name": "Goofy's Sky School",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "15822029;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-13T08:46:58Z"
+        },
+        {
+            "id": "59647168-d239-4161-8b24-92eb128e96fb",
+            "name": "Chip 'n' Dale's GADGETcoaster",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353337;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-13T08:16:49Z"
+        },
+        {
+            "id": "4119dd28-6da8-46a0-9246-bea86e07ac61",
+            "name": "Pearly Band near \"it's a small world\"",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401530;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:10:00-08:00",
+                    "startTime": "2025-02-13T12:10:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:10:00-08:00",
+                    "startTime": "2025-02-13T13:10:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:25:00-08:00",
+                    "startTime": "2025-02-13T14:25:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "af195dcb-a69e-499a-b659-6751ee871f79",
+            "name": "Operation: Playtime! - featuring the Green Army Patrol",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "17478465;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:30:00-08:00",
+                    "startTime": "2025-02-13T12:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:00:00-08:00",
+                    "startTime": "2025-02-13T15:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:00:00-08:00",
+                    "startTime": "2025-02-13T16:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T18:16:58Z"
+        },
+        {
+            "id": "90ee50d4-7cc9-4824-b29d-2aac801acc29",
+            "name": "Pinocchio's Daring Journey",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353401;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:40:53Z"
+        },
+        {
+            "id": "10a5fc6f-5ad3-414b-9bdd-e6bae097b6ad",
+            "name": "Golden Zephyr",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353341;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:13Z"
+        },
+        {
+            "id": "b2c2549c-e9da-4fdd-98ea-1dcff596fed7",
+            "name": "Millennium Falcon: Smugglers Run",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "19193459;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 15
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                },
+                "SINGLE_RIDER": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:26:46Z"
+        },
+        {
+            "id": "7561bcd8-18ea-4e3f-89d5-c905b7ba3d42",
+            "name": "Turtle Talk with Crush",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353457;entityType=Attraction",
+            "status": "OPERATING",
+            "operatingHours": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T09:00:00-08:00",
+                    "startTime": "2025-02-13T09:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T09:30:00-08:00",
+                    "startTime": "2025-02-13T09:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:00:00-08:00",
+                    "startTime": "2025-02-13T10:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:30:00-08:00",
+                    "startTime": "2025-02-13T10:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:00:00-08:00",
+                    "startTime": "2025-02-13T11:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:30:00-08:00",
+                    "startTime": "2025-02-13T11:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:00:00-08:00",
+                    "startTime": "2025-02-13T12:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:30:00-08:00",
+                    "startTime": "2025-02-13T12:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:00:00-08:00",
+                    "startTime": "2025-02-13T13:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:30:00-08:00",
+                    "startTime": "2025-02-13T13:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:00:00-08:00",
+                    "startTime": "2025-02-13T14:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:30:00-08:00",
+                    "startTime": "2025-02-13T14:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:00:00-08:00",
+                    "startTime": "2025-02-13T15:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:30:00-08:00",
+                    "startTime": "2025-02-13T15:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:00:00-08:00",
+                    "startTime": "2025-02-13T16:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:30:00-08:00",
+                    "startTime": "2025-02-13T16:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:00:00-08:00",
+                    "startTime": "2025-02-13T17:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:30:00-08:00",
+                    "startTime": "2025-02-13T17:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T18:00:00-08:00",
+                    "startTime": "2025-02-13T18:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T18:30:00-08:00",
+                    "startTime": "2025-02-13T18:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:00:00-08:00",
+                    "startTime": "2025-02-13T19:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:30:00-08:00",
+                    "startTime": "2025-02-13T19:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:30:00-08:00",
+                    "startTime": "2025-02-13T20:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T21:00:00-08:00",
+                    "startTime": "2025-02-13T21:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T21:30:00-08:00",
+                    "startTime": "2025-02-13T21:30:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:11:46Z"
+        },
+        {
+            "id": "cb929138-d77a-4dd2-983c-f651bbd1bd92",
+            "name": "Storybook Land Canal Boats",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353443;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-13T20:56:50Z"
+        },
+        {
+            "id": "57f454da-52bb-407d-9daa-db74f1a32db3",
+            "name": "Mulan's Lunar New Year Procession",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "18373589;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-13T18:46:58Z"
+        },
+        {
+            "id": "dca741a6-3472-4d4f-a9aa-7774aae81754",
+            "name": "Paradise Garden Bandstand",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16642243;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:10:00-08:00",
+                    "startTime": "2025-02-13T12:10:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:10:00-08:00",
+                    "startTime": "2025-02-13T13:10:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:10:00-08:00",
+                    "startTime": "2025-02-13T14:10:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:40:00-08:00",
+                    "startTime": "2025-02-13T15:40:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:40:00-08:00",
+                    "startTime": "2025-02-13T16:40:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:40:00-08:00",
+                    "startTime": "2025-02-13T17:40:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:47Z"
+        },
+        {
+            "id": "0184d4c8-b98f-491e-a61a-0ac37c210dfb",
+            "name": "Vocal Seoul at Sonoma Terrace",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "411858159;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-10T08:06:10Z"
+        },
+        {
+            "id": "41d7d024-9014-4bca-818f-278faecce785",
+            "name": "Royal Ball at Sweethearts' Nite",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "411593322;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-13T00:00:00-08:00",
+                    "startTime": "2025-02-13T00:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-13T21:00:00-08:00",
+                    "startTime": "2025-02-13T21:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-13T22:00:00-08:00",
+                    "startTime": "2025-02-13T22:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-13T23:00:00-08:00",
+                    "startTime": "2025-02-13T23:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "4ca6cdbf-4c5f-45bf-b0dc-db83393ec208",
+            "name": "Pixar Pal-A-Round – Non-Swinging",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19009994;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-12T17:56:45Z"
+        },
+        {
+            "id": "048f854a-97d8-4295-8b7f-2575605259c6",
+            "name": "Wine Country Trattoria",
+            "entityType": "RESTAURANT",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "354555;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T00:03:41Z"
+        },
+        {
+            "id": "4c570f5a-c5da-4388-9804-dd56123d18ce",
+            "name": "Meet Disney Pals on Buena Vista Street",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "401471;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T08:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T09:00:00-08:00",
+                    "startTime": "2025-02-13T09:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:00:00-08:00",
+                    "startTime": "2025-02-13T10:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:55:00-08:00",
+                    "startTime": "2025-02-13T10:55:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:25:00-08:00",
+                    "startTime": "2025-02-13T11:25:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:25:00-08:00",
+                    "startTime": "2025-02-13T12:25:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:15:00-08:00",
+                    "startTime": "2025-02-13T13:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:10:00-08:00",
+                    "startTime": "2025-02-13T14:10:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:15:00-08:00",
+                    "startTime": "2025-02-13T15:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:45:00-08:00",
+                    "startTime": "2025-02-13T15:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:15:00-08:00",
+                    "startTime": "2025-02-13T16:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:45:00-08:00",
+                    "startTime": "2025-02-13T16:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:15:00-08:00",
+                    "startTime": "2025-02-13T17:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T17:45:00-08:00",
+                    "startTime": "2025-02-13T17:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T18:45:00-08:00",
+                    "startTime": "2025-02-13T18:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:30:00-08:00",
+                    "startTime": "2025-02-13T19:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:45:00-08:00",
+                    "startTime": "2025-02-13T19:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:30:00-08:00",
+                    "startTime": "2025-02-13T20:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:45:00-08:00",
+                    "startTime": "2025-02-13T20:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T21:00:00-08:00",
+                    "startTime": "2025-02-13T21:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T21:30:00-08:00",
+                    "startTime": "2025-02-13T21:30:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "4f5b28d0-b78e-482b-8e2e-1f90756d6220",
+            "name": "Silly Symphony Swings",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "15510732;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "SINGLE_RIDER": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:10Z"
+        },
+        {
+            "id": "4f0053e7-b8db-4833-b02f-35e1c91b4523",
+            "name": "Snow White's Enchanted Wish",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353429;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 10
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:17:47Z"
+        },
+        {
+            "id": "8fcf5b7b-f37a-4e7c-8945-99bd8ccb69a4",
+            "name": "Trader Sam's Enchanted Tiki Bar",
+            "entityType": "RESTAURANT",
+            "parkId": null,
+            "externalId": "16027513;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 25
+                }
+            },
+            "status": "OPERATING",
+            "diningAvailability": [
+                {
+                    "waitTime": 40,
+                    "partySize": 1
+                },
+                {
+                    "waitTime": 40,
+                    "partySize": 2
+                },
+                {
+                    "waitTime": 40,
+                    "partySize": 3
+                },
+                {
+                    "waitTime": 25,
+                    "partySize": 4
+                },
+                {
+                    "waitTime": 25,
+                    "partySize": 5
+                },
+                {
+                    "waitTime": 25,
+                    "partySize": 6
+                }
+            ],
+            "lastUpdated": "2025-02-14T05:57:58Z"
+        },
+        {
+            "id": "b7678dab-5544-48d5-8fdc-c1a0127cfbcd",
+            "name": "Guardians of the Galaxy - Mission: BREAKOUT!",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353451;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:06Z"
+        },
+        {
+            "id": "5bd95ae8-181d-449c-8f04-a621e2448961",
+            "name": "Davy Crockett's Explorer Canoes",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353311;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-10T08:31:08Z"
+        },
+        {
+            "id": "1b83fda8-d60e-48e4-9a3d-90ddcbcd1001",
+            "name": "Jungle Cruise",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353363;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T04:08:52Z"
+        },
+        {
+            "id": "1bef32e2-73b4-4de3-bb07-f71c3f301f22",
+            "name": "Carthay Circle Lounge",
+            "entityType": "RESTAURANT",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16588263;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T03:03:29Z"
+        },
+        {
+            "id": "e46d8982-4991-4b9e-8e4a-b519d3ca6060",
+            "name": "World of Color – ONE",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "411805933;entityType=Entertainment",
+            "queue": {
+                "BOARDING_GROUP": {
+                    "estimatedWait": null,
+                    "currentGroupEnd": null,
+                    "allocationStatus": "AVAILABLE",
+                    "currentGroupStart": null,
+                    "nextAllocationTime": null
+                }
+            },
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T21:00:00-08:00",
+                    "startTime": "2025-02-13T21:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T22:15:00-08:00",
+                    "startTime": "2025-02-13T22:15:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:46:58Z"
+        },
+        {
+            "id": "e2d460e9-2bef-4613-b126-092ab7cb37e5",
+            "name": "Disneyland Railroad",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353315;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "REFURBISHMENT",
+            "operatingHours": [],
+            "lastUpdated": "2025-01-13T08:06:30Z"
+        },
+        {
+            "id": "8e686e4c-f3db-4d9c-a185-2d54b1fa8899",
+            "name": "Casey Jr. Circus Train",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353305;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:56:51Z"
+        },
+        {
+            "id": "528016ef-db24-47fa-a0f2-b6d26d61e29f",
+            "name": "Pixar Pal-A-Round - Swinging",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353379;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-12T17:56:45Z"
+        },
+        {
+            "id": "44c1f655-25d3-440c-b1a8-db736a12b105",
+            "name": "Sorcerer's Workshop",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353433;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:13Z"
+        },
+        {
+            "id": "228b9736-f889-469f-92f7-0e89bf150d5c",
+            "name": "Disneyland Band at Castle Promenade",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "411713851;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:30:00-08:00",
+                    "startTime": "2025-02-13T10:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T13:05:00-08:00",
+                    "startTime": "2025-02-13T13:05:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:25:00-08:00",
+                    "startTime": "2025-02-13T14:25:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "6c225598-91c9-44a3-95e2-7c423475db61",
+            "name": "Astro Orbitor",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353291;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 20,
+                    "percentage": 16
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 20,
+                    "percentage": 16
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 25,
+                    "percentage": 20
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 15,
+                    "percentage": 12
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 25,
+                    "percentage": 20
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                }
+            ],
+            "lastUpdated": "2025-02-13T22:11:51Z"
+        },
+        {
+            "id": "ead977e1-1a66-49de-b7ab-90be760b9d48",
+            "name": "Red Car Trolley",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16581435;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-09T08:26:09Z"
+        },
+        {
+            "id": "5d07a2b1-49ca-4de7-9d32-6d08edf69b08",
+            "name": "Incredicoaster",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353303;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                },
+                "SINGLE_RIDER": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:10Z"
+        },
+        {
+            "id": "e0cfed11-96d7-40f3-907f-5cfed172592a",
+            "name": "Mad Tea Party",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353369;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-13T08:16:51Z"
+        },
+        {
+            "id": "6ac8a892-675d-4365-8d7a-2a3d7e0cd4ff",
+            "name": "Main Street, U.S.A. Holiday Tree Lighting",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "411801464;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-01-07T08:11:44Z"
+        },
+        {
+            "id": "b1d285a7-2444-4a7c-b7bb-d2d4d6428a85",
+            "name": "Grizzly River Run",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353345;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "REFURBISHMENT",
+            "operatingHours": [],
+            "lastUpdated": "2025-01-06T20:31:44Z"
+        },
+        {
+            "id": "a098bd7c-f1a9-4ffb-97db-e85925509f19",
+            "name": "Magic Key Terrace - Magic Key Holder Dining",
+            "entityType": "RESTAURANT",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "15527906;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T00:03:33Z"
+        },
+        {
+            "id": "2459a357-2b20-4445-8476-6a9a7e5eab54",
+            "name": "Lamplight Lounge - Boardwalk Dining",
+            "entityType": "RESTAURANT",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19629820;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T03:53:47Z"
+        },
+        {
+            "id": "e1fbc7a1-2cd1-4282-b373-ac11d9d9d38a",
+            "name": "The Little Mermaid - Ariel's Undersea Adventure",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "15575069;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:07Z"
+        },
+        {
+            "id": "2c1f7c9b-dc07-4fdb-ad01-274b4859dacc",
+            "name": "Storytellers Cafe",
+            "entityType": "RESTAURANT",
+            "parkId": null,
+            "externalId": "354474;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:03:47Z"
+        },
+        {
+            "id": "fdf0e3b1-2eeb-42b4-9516-5d43463d021e",
+            "name": "The Dapper Dans",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401463;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-12T08:26:47Z"
+        },
+        {
+            "id": "1545da28-7369-45cb-b550-456204c9c96c",
+            "name": "GCH Craftsman Bar",
+            "entityType": "RESTAURANT",
+            "parkId": null,
+            "externalId": "19343532;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:03:22Z"
+        },
+        {
+            "id": "c7ce633e-1f6b-4699-98c9-6772bb196b16",
+            "name": "Carnation Cafe",
+            "entityType": "RESTAURANT",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "354129;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T02:14:27Z"
+        },
+        {
+            "id": "3638ac09-9fce-4a43-8c79-8ebbe17afce2",
+            "name": "\"it's a small world\"",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "367492;entityType=Attraction",
+            "status": "REFURBISHMENT",
+            "operatingHours": [],
+            "lastUpdated": "2025-01-21T12:12:33Z"
+        },
+        {
+            "id": "8160b905-b318-41be-84bf-869fb6a55b14",
+            "name": "The Bootstrappers",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "15751758;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T08:30:00-08:00",
+                    "startTime": "2025-02-13T08:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T09:30:00-08:00",
+                    "startTime": "2025-02-13T09:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T10:30:00-08:00",
+                    "startTime": "2025-02-13T10:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:30:00-08:00",
+                    "startTime": "2025-02-13T11:30:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:35:00-08:00",
+                    "startTime": "2025-02-13T12:35:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:30:00-08:00",
+                    "startTime": "2025-02-13T14:30:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:46Z"
+        },
+        {
+            "id": "cc980e8e-192f-48b6-848c-27784084e54b",
+            "name": "Dumbo the Flying Elephant",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353323;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T03:20:44Z"
+        },
+        {
+            "id": "a6760f7b-3489-47df-9547-d70dd2d8cb76",
+            "name": "Disneyland Band at Main Street, U.S.A.",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401473;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T11:20:00-08:00",
+                    "startTime": "2025-02-13T11:20:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T12:15:00-08:00",
+                    "startTime": "2025-02-13T12:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:15:00-08:00",
+                    "startTime": "2025-02-13T16:15:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:48Z"
+        },
+        {
+            "id": "c8a4b7b1-c1b2-4dfe-b73c-4e834b4a73db",
+            "name": "Jumpin' Jellyfish",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353361;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:08Z"
+        },
+        {
+            "id": "e27b1db8-9ec9-4f8b-9ca6-fd6377de66ee",
+            "name": "Adventureland Treehouse inspired by Walt Disney’s Swiss Family Robinson",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "411936760;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                }
+            ],
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-14T01:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T16:21:59Z"
+        },
+        {
+            "id": "753b558a-ff18-4ed9-a3c2-70e76b421618",
+            "name": "Carthay Circle Restaurant",
+            "entityType": "RESTAURANT",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16515009;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T04:03:03Z"
+        },
+        {
+            "id": "6d876f4c-c3ff-4ae3-a2d8-d4b831e1039b",
+            "name": "Inside Out Emotional Whirlwind",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19285637;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:11Z"
+        },
+        {
+            "id": "106c1e5a-a5e7-42d7-96ab-bc100d8faf71",
+            "name": "Walt Disney's Enchanted Tiki Room",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353325;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                }
+            ],
+            "operatingHours": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                },
+                {
+                    "type": "Special Ticketed Event",
+                    "endTime": "2025-02-14T01:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T16:21:59Z"
+        },
+        {
+            "id": "eb29424b-42ed-41a2-891c-d4c9494eab12",
+            "name": "Oga's Cantina at the Disneyland Resort",
+            "entityType": "RESTAURANT",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "19268344;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 20
+                }
+            },
+            "status": "OPERATING",
+            "diningAvailability": [
+                {
+                    "waitTime": 20,
+                    "partySize": 1
+                },
+                {
+                    "waitTime": 20,
+                    "partySize": 2
+                },
+                {
+                    "waitTime": 20,
+                    "partySize": 3
+                },
+                {
+                    "waitTime": 20,
+                    "partySize": 4
+                },
+                {
+                    "waitTime": 20,
+                    "partySize": 5
+                },
+                {
+                    "waitTime": 20,
+                    "partySize": 6
+                },
+                {
+                    "waitTime": 25,
+                    "partySize": 7
+                },
+                {
+                    "waitTime": 25,
+                    "partySize": 8
+                }
+            ],
+            "lastUpdated": "2025-02-14T05:39:05Z"
+        },
+        {
+            "id": "057872ed-3f27-496f-80e2-edd3639ba084",
+            "name": "River Belle Terrace",
+            "entityType": "RESTAURANT",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "354450;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 15
+                }
+            },
+            "status": "OPERATING",
+            "diningAvailability": [
+                {
+                    "waitTime": 15,
+                    "partySize": 1
+                },
+                {
+                    "waitTime": 15,
+                    "partySize": 2
+                },
+                {
+                    "waitTime": 15,
+                    "partySize": 3
+                },
+                {
+                    "waitTime": 15,
+                    "partySize": 4
+                },
+                {
+                    "waitTime": 40,
+                    "partySize": 6
+                },
+                {
+                    "waitTime": 40,
+                    "partySize": 7
+                }
+            ],
+            "lastUpdated": "2025-02-14T05:40:52Z"
+        },
+        {
+            "id": "cc718d11-fa15-44ee-87d0-ded989ad61bc",
+            "name": "Star Tours - The Adventures Continue",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353439;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 15
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:59:47Z"
+        },
+        {
+            "id": "c23af6ba-8515-406a-8a48-d0818ba0bfc9",
+            "name": "Peter Pan's Flight",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353399;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 20
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:08:58Z"
+        },
+        {
+            "id": "c9803366-6f37-4406-82af-7692357e3ca9",
+            "name": "Redwood Creek Challenge Trail",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353413;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-13T08:16:47Z"
+        },
+        {
+            "id": "4784fd0f-9ba3-4a5d-a4b9-ed33b93c4489",
+            "name": "Blue Bayou Restaurant",
+            "entityType": "RESTAURANT",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "354099;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-08T01:36:08Z"
+        },
+        {
+            "id": "8f586a2f-cef5-46d3-b822-fd622c4e9e33",
+            "name": "Mickey's PhilharMagic",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19299875;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 0,
+                    "percentage": 0
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T20:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T21:00:00-08:00",
+                    "waitTime": 0,
+                    "percentage": 0
+                }
+            ],
+            "lastUpdated": "2025-02-14T05:05:49Z"
+        },
+        {
+            "id": "64d44aaa-6857-4693-b24b-bcff6c6dcfa1",
+            "name": "Finding Nemo Submarine Voyage",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353327;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 10,
+                    "percentage": 8
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 20,
+                    "percentage": 16
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 30,
+                    "percentage": 25
+                }
+            ],
+            "lastUpdated": "2025-02-13T21:23:45Z"
+        },
+        {
+            "id": "ff52cb64-c1d5-4feb-9d43-5dbd429bac81",
+            "name": "Haunted Mansion",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353347;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 15
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T05:53:49Z"
+        },
+        {
+            "id": "0c6c7664-94f0-48b0-91ce-7cc2108a72c9",
+            "name": "Guardians of the Galaxy: Awesome Dance Off!",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "18691239;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:15:00-08:00",
+                    "startTime": "2025-02-13T15:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:15:00-08:00",
+                    "startTime": "2025-02-13T16:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T18:15:00-08:00",
+                    "startTime": "2025-02-13T18:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T19:05:00-08:00",
+                    "startTime": "2025-02-13T19:05:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:00:00-08:00",
+                    "startTime": "2025-02-13T20:00:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T20:50:00-08:00",
+                    "startTime": "2025-02-13T20:50:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T08:21:47Z"
+        },
+        {
+            "id": "912c3c55-c599-47d3-9559-73f57ec955cf",
+            "name": "Avengers Assemble!",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19630107;entityType=Entertainment",
+            "status": "CLOSED",
+            "showtimes": [],
+            "lastUpdated": "2025-02-13T00:16:48Z"
+        },
+        {
+            "id": "52a8ef64-d54c-4974-883f-027c3026e3f1",
+            "name": "The Many Adventures of Winnie the Pooh",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353449;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T00:53:47Z"
+        },
+        {
+            "id": "07952343-3498-404b-8337-734de9a185c1",
+            "name": "Pirate's Lair on Tom Sawyer Island",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353403;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "operatingHours": [],
+            "lastUpdated": "2025-02-12T15:46:46Z"
+        },
+        {
+            "id": "1d24dd7a-372b-4195-8ad0-ba9679d72b08",
+            "name": "Games of Pixar Pier",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353339;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T05:05:48Z"
+        },
+        {
+            "id": "46097afe-a1ea-4807-93d3-14d14f36e55f",
+            "name": "Mater's Junkyard Jamboree",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "16514431;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:07Z"
+        },
+        {
+            "id": "36c65924-14eb-4c1e-a03d-2b0b29f6ff5d",
+            "name": "Palm Breeze Bar",
+            "entityType": "RESTAURANT",
+            "parkId": null,
+            "externalId": "411954570;entityType=restaurant",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T03:53:07Z"
+        },
+        {
+            "id": "bdb0a3ec-eb7a-41c9-918f-ccee7194743e",
+            "name": "The Amazing Spider-Man!",
+            "entityType": "SHOW",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "19630108;entityType=Entertainment",
+            "status": "OPERATING",
+            "showtimes": [
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:15:00-08:00",
+                    "startTime": "2025-02-13T14:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T14:45:00-08:00",
+                    "startTime": "2025-02-13T14:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:15:00-08:00",
+                    "startTime": "2025-02-13T15:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T15:45:00-08:00",
+                    "startTime": "2025-02-13T15:45:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:15:00-08:00",
+                    "startTime": "2025-02-13T16:15:00-08:00"
+                },
+                {
+                    "type": "Performance Time",
+                    "endTime": "2025-02-13T16:45:00-08:00",
+                    "startTime": "2025-02-13T16:45:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-13T18:16:58Z"
+        },
+        {
+            "id": "a9076acd-7630-4bad-a8da-e6bd689ddcac",
+            "name": "Tiana's Bayou Adventure",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "412062678;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                },
+                "SINGLE_RIDER": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T04:05:45Z"
+        },
+        {
+            "id": "0de1413a-73ee-46cf-af2e-c491cc7c7d3b",
+            "name": "Big Thunder Mountain Railroad",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353295;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "AVAILABLE",
+                    "returnEnd": null,
+                    "returnStart": "2025-02-13T18:30:00-08:00"
+                }
+            },
+            "status": "DOWN",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 20,
+                    "percentage": 16
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 45,
+                    "percentage": 37
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 45,
+                    "percentage": 37
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 45,
+                    "percentage": 37
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 45,
+                    "percentage": 37
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 45,
+                    "percentage": 37
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 45,
+                    "percentage": 37
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                }
+            ],
+            "lastUpdated": "2025-02-14T02:32:47Z"
+        },
+        {
+            "id": "33cbbd09-6d93-40d7-b758-9d7b7d3fd2eb",
+            "name": "Meet Disney Princesses at Royal Hall",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "18738682;entityType=Entertainment",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "showtimes": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T17:00:00-08:00",
+                    "startTime": "2025-02-13T10:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-14T01:05:47Z"
+        },
+        {
+            "id": "f7904912-3f08-4563-b99e-fd59f43cc9f2",
+            "name": "King Arthur Carrousel",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353365;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:06:13Z"
+        },
+        {
+            "id": "6ce9cdd1-0a43-459e-83cd-f4cace9cfa7b",
+            "name": "Roger Rabbit's Car Toon Spin",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "353421;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 5
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:06:07Z"
+        },
+        {
+            "id": "40524fba-5d84-49e7-9204-f493dbe2d5a4",
+            "name": "Monsters, Inc. Mike & Sulley to the Rescue!",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353387;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:12Z"
+        },
+        {
+            "id": "5a107a57-9174-4f3f-9be7-625a5d5bb899",
+            "name": "Mickey's House and Meet Mickey Mouse",
+            "entityType": "SHOW",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "401526;entityType=Entertainment",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                }
+            },
+            "status": "CLOSED",
+            "forecast": [
+                {
+                    "time": "2025-02-13T08:00:00-08:00",
+                    "waitTime": 15,
+                    "percentage": 12
+                },
+                {
+                    "time": "2025-02-13T09:00:00-08:00",
+                    "waitTime": 20,
+                    "percentage": 16
+                },
+                {
+                    "time": "2025-02-13T10:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T11:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T12:00:00-08:00",
+                    "waitTime": 40,
+                    "percentage": 33
+                },
+                {
+                    "time": "2025-02-13T13:00:00-08:00",
+                    "waitTime": 45,
+                    "percentage": 37
+                },
+                {
+                    "time": "2025-02-13T14:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T15:00:00-08:00",
+                    "waitTime": 35,
+                    "percentage": 29
+                },
+                {
+                    "time": "2025-02-13T16:00:00-08:00",
+                    "waitTime": 55,
+                    "percentage": 45
+                },
+                {
+                    "time": "2025-02-13T17:00:00-08:00",
+                    "waitTime": 50,
+                    "percentage": 41
+                },
+                {
+                    "time": "2025-02-13T18:00:00-08:00",
+                    "waitTime": 50,
+                    "percentage": 41
+                },
+                {
+                    "time": "2025-02-13T19:00:00-08:00",
+                    "waitTime": 50,
+                    "percentage": 41
+                }
+            ],
+            "showtimes": [
+                {
+                    "type": "Operating",
+                    "endTime": "2025-02-13T19:30:00-08:00",
+                    "startTime": "2025-02-13T08:00:00-08:00"
+                }
+            ],
+            "lastUpdated": "2025-02-14T03:35:45Z"
+        },
+        {
+            "id": "cd670bff-81d1-4f34-8676-7bafdf49220a",
+            "name": "Mickey & Minnie's Runaway Railway",
+            "entityType": "ATTRACTION",
+            "parkId": "7340550b-c14d-4def-80bb-acdb51d49a66",
+            "externalId": "411821333;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": 10
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "OPERATING",
+            "lastUpdated": "2025-02-14T06:32:47Z"
+        },
+        {
+            "id": "86ab3069-110d-49c5-a7e7-29ddf28695a6",
+            "name": "Toy Story Midway Mania!",
+            "entityType": "ATTRACTION",
+            "parkId": "832fcd51-ea19-4e77-85c7-75d5843b127c",
+            "externalId": "353453;entityType=Attraction",
+            "queue": {
+                "STANDBY": {
+                    "waitTime": null
+                },
+                "RETURN_TIME": {
+                    "state": "FINISHED",
+                    "returnEnd": null,
+                    "returnStart": null
+                }
+            },
+            "status": "CLOSED",
+            "lastUpdated": "2025-02-14T06:06:08Z"
+        }
+    ]
+}
