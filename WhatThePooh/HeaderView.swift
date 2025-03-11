@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HeaderView: View {
+    @ObservedObject var viewModel: SharedViewModel
+    
 //    @State private var selectedOption = "Disney Land"
 //    let options = ["Disney Land", "Disney World", "Disney Paris"]
 

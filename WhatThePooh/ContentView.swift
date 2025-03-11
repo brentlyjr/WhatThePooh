@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
 
+    @StateObject var viewModel = SharedViewModel()
+    
     var body: some View {
-        HeaderView()
+        HeaderView(viewModel: viewModel)
             .environmentObject(Notifications.shared)
-        RideView()
+        RideView(viewModel: viewModel)
     }
 }
 
