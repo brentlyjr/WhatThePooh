@@ -1,6 +1,6 @@
 //
-//  ThemeParkEntity.swift
-//  ThemePark
+//  Ride.swift
+//  WhatThePooh
 //
 //  Created by Brent Cromley on 2/2/25.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct RideModel: Identifiable, Decodable {
+struct Ride: Identifiable, Decodable {
     let id: String
     let name: String
     var status: String? // Added status property

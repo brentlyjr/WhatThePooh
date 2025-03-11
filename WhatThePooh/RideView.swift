@@ -1,6 +1,6 @@
 //
-//  ThemeParkView.swift
-//  ThemePark
+//  RideView.swift
+//  WhatThePooh
 //
 //  Created by Brent Cromley on 2/2/25.
 //

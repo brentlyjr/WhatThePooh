@@ -1,6 +1,6 @@
 //
-//  ThemeParkViewModel.swift
-//  ThemePark
+//  RideController.swift
+//  WhatThePooh
 //
 //  Created by Brent Cromley on 2/2/25.
 //
@@ -9,11 +9,11 @@ import Foundation
 import Combine
 
 struct RideResponse: Decodable {
-    let liveData: [RideModel]
+    let liveData: [Ride]
 }
 
 class RideController: ObservableObject {
-    @Published var entities: [RideModel] = []
+    @Published var entities: [Ride] = []
     private var offlineMode: Bool = false
     private var timer: Timer?
     
@@ -66,7 +66,7 @@ class RideController: ObservableObject {
         }
     }
     
-    private func fetchStatus(for entity: RideModel, completion: @escaping (String?, Int?, String?) -> Void) {
+    private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {
         performNetworkRequest(endpoint: entity.id) { data in
             guard let data = data else {
                 completion(nil, 0, nil)
