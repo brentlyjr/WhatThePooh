@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RideView: View {
-    @StateObject private var rideController = RideController()
     @ObservedObject var viewModel: SharedViewModel
+    @EnvironmentObject var rideController: RideController
     
     var body: some View {
         ScrollView {

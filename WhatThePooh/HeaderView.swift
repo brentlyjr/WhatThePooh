@@ -33,7 +33,7 @@ struct HeaderView: View {
                         notificationManager.sendStatusChangeNotification(rideName: "Star Wars: Rise of the Resistance", newStatus: "Down")
                     }
             }
-            
+            ParkSelectionView()
 //            HStack {
 //                Text("Park: \(selectedOption)")
 //                
