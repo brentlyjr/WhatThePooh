@@ -17,16 +17,15 @@ struct RideView: View {
             Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
                 ForEach(rideController.entities.indices, id: \.self) { index in
                     let entity = rideController.entities[index] // Create a local variable for entity
-                    var isFavorite: Bool = false
                     let (column2, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
                     
                     if (entity.status != "UNKNOWN") {
                         GridRow {
                             Button(action: {
-                                isFavorite.toggle()
+                                rideController.toggleFavorite(for: entity)
                             }) {
-                                Image(systemName: isFavorite ? "heart.fill" : "heart")
-                                    .foregroundColor(isFavorite ? .red : .gray)
+                                Image(systemName: entity.isFavorited ? "heart.fill" : "heart")
+                                    .foregroundColor(entity.isFavorited ? .red : .gray)
                                     .imageScale(.large)
                             }
                             .buttonStyle(BorderlessButtonStyle())

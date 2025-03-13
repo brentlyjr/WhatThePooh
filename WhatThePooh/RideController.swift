@@ -17,9 +17,12 @@ class RideController: ObservableObject {
     private var offlineMode: Bool = false
     private var timer: Timer?
     
+    // Persisted favorites – we only store the IDs.
+    private let favoritesKey = "favoriteRides"
+    private var favoriteIDs: Set<String> = []
+    
     init() {
-        // Set offlineMode during initialization
-        self.offlineMode = isOfflineModeEnabled()
+        loadFavorites()
     }
     
     // Retrieves all the entities (children) under a park - filters based on ATTRACTION
@@ -35,6 +38,7 @@ class RideController: ObservableObject {
                 let response = try decoder.decode(RideResponse.self, from: data)
                 DispatchQueue.main.async {
                     self.entities = response.liveData.filter { $0.entityType == .attraction }
+                    self.updateFavoriteStates()
                     self.updateRideStatuses()
                     self.startStatusUpdates()
                 }
@@ -42,6 +46,37 @@ class RideController: ObservableObject {
                 print("Decoding error: \(error)")
             }
         }
+    }
+    
+    // Apply the persisted favorite state to each ride.
+    private func updateFavoriteStates() {
+        for index in self.entities.indices {
+            self.entities[index].isFavorited = favoriteIDs.contains(self.entities[index].id)
+        }
+    }
+    
+    // Toggle the favorite state for a ride.
+    func toggleFavorite(for ride: Ride) {
+        guard let index = entities.firstIndex(where: { $0.id == ride.id }) else { return }
+        entities[index].isFavorited.toggle()
+        if entities[index].isFavorited {
+            favoriteIDs.insert(ride.id)
+        } else {
+            favoriteIDs.remove(ride.id)
+        }
+        saveFavorites()
+    }
+
+    // Load persisted favorite ride IDs from UserDefaults.
+    private func loadFavorites() {
+        if let storedIDs = UserDefaults.standard.array(forKey: favoritesKey) as? [String] {
+            favoriteIDs = Set(storedIDs)
+        }
+    }
+    
+    // Save the current favorite ride IDs to UserDefaults.
+    private func saveFavorites() {
+        UserDefaults.standard.set(Array(favoriteIDs), forKey: favoritesKey)
     }
     
     private func startStatusUpdates() -> Void {
@@ -94,49 +129,19 @@ class RideController: ObservableObject {
     }
     
     private func performNetworkRequest(endpoint: String, completion: @escaping (Data?) -> Void) {
-        if self.offlineMode {
-            loadMockData(endpoint: endpoint, completion: completion)
-        } else {
-            guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(endpoint)/live") else {
-                print("Invalid URL")
+        guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(endpoint)/live") else {
+            print("Invalid URL")
+            completion(nil)
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            if let error = error {
+                print("Network error: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-            
-            URLSession.shared.dataTask(with: url) { data, _, error in
-                if let error = error {
-                    print("Network error: \(error.localizedDescription)")
-                    completion(nil)
-                    return
-                }
-                completion(data)
-            }.resume()
-        }
-    }
-    
-    private func isOfflineModeEnabled() -> Bool {
-        let key = "OFFLINE_MODE"
-        if let offlineMode = Bundle.main.object(forInfoDictionaryKey: key) as? Bool {
-            print("Found \(key): \(offlineMode)")
-            return offlineMode
-        } else {
-            print("\(key) key not found. Defaulting to false.")
-            return false
-        }
-    }
-    
-    private func loadMockData(endpoint: String, completion: @escaping (Data?) -> Void) {
-        if let path = Bundle.main.path(forResource: "DisneyJapan-02-13-2025-OPEN", ofType: "json") {
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path))
-                completion(data)
-            } catch {
-                print("Failed to load mock data: \(error)")
-                completion(nil)
-            }
-        } else {
-            print("Mock JSON file not found for \(endpoint)")
-            completion(nil)
-        }
+            completion(data)
+        }.resume()
     }
 }
