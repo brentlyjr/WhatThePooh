@@ -34,6 +34,7 @@ struct ContentView: View {
 
             // Fixed Bottom Drawer
             BottomDrawer(showSortModal: $showSortModal, showFilterModal: $showFilterModal)
+                .environmentObject(viewModel)
         }
         .edgesIgnoringSafeArea(.bottom) // Optional, depending on styling
         .sheet(isPresented: $showSortModal) {

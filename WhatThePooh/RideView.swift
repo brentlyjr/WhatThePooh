@@ -33,10 +33,15 @@ struct RideView: View {
 //    }
 
     var sortedRides: [Ride] {
+        // First, filter rides based on the showFavoritesOnly flag
+        let filteredRides = viewModel.showFavoritesOnly ?
+            rideController.entities.filter { $0.isFavorited } :
+            rideController.entities
+
         switch viewModel.sortOrder {
         case .favorited:
             // Favorites come first; if both rides have the same favorited status, sort by name.
-            return rideController.entities.sorted {
+            return filteredRides.sorted {
                 if $0.isFavorited != $1.isFavorited {
                     return $0.isFavorited && !$1.isFavorited
                 } else {
@@ -44,11 +49,11 @@ struct RideView: View {
                 }
             }
         case .name:
-            return rideController.entities.sorted { $0.name < $1.name }
+            return filteredRides.sorted { $0.name < $1.name }
         case .waitTime:
             // Assuming waitTime is an optional Int (Int?) in your Ride model,
             // we provide a default value (like Int.max) if waitTime is nil.
-            return rideController.entities.sorted {
+            return filteredRides.sorted {
                 ($0.waitTime ?? Int.max) < ($1.waitTime ?? Int.max)
             }
         }

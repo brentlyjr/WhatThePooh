@@ -10,6 +10,7 @@ import SwiftUI
 struct BottomDrawer: View {
     @Binding var showSortModal: Bool
     @Binding var showFilterModal: Bool
+    @EnvironmentObject var viewModel: SharedViewModel
     
     var body: some View {
         HStack {
@@ -20,7 +21,7 @@ struct BottomDrawer: View {
                     .foregroundColor(.black)
             }
             Spacer()
-            Button(action: { print("Favorite tapped") }) {
+            Button(action: { viewModel.showFavoritesOnly.toggle()}) {
                 Image(systemName: "heart.fill")
                     .imageScale(.large)
                     .foregroundColor(.red)

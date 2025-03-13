@@ -10,6 +10,7 @@ import SwiftUI
 class SharedViewModel: ObservableObject {
     @Published var selectedFilter: RideFilter = .all
     @Published var sortOrder: RideSortOrder = .name
+    @Published var showFavoritesOnly: Bool = false
 }
 
 enum RideFilter {
