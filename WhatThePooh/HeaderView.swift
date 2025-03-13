@@ -34,17 +34,6 @@ struct HeaderView: View {
                     }
             }
             ParkSelectionView()
-//            HStack {
-//                Text("Park: \(selectedOption)")
-//                
-//                Picker("Select a Park", selection: $selectedOption) {
-//                    ForEach(options, id: \.self) { option in
-//                        Text(option).tag(option)
-//                    }
-//                }
-//                .pickerStyle(MenuPickerStyle()) // Dropdown-style appearance
-//            }
-//            .padding()
         }
     }
 }

@@ -13,14 +13,35 @@ struct ContentView: View {
     @StateObject var parkStore = ParkStore()
     @StateObject private var rideController = RideController()
 
+    @State private var showSortModal = false
+    @State private var showFilterModal = false
+
     var body: some View {
-        HeaderView(viewModel: viewModel)
-            .environmentObject(Notifications.shared)
-            .environmentObject(parkStore)
-            .environmentObject(rideController)
-        RideView(viewModel: viewModel)
-            .environmentObject(rideController)
-            .environmentObject(parkStore)
+        VStack(spacing: 0) {
+            // Fixed Header
+            HeaderView(viewModel: viewModel)
+                .environmentObject(Notifications.shared)
+                .environmentObject(parkStore)
+                .environmentObject(rideController)
+
+            // Scrolling RideView
+            ScrollView {
+                RideView(viewModel: viewModel)
+                    .environmentObject(rideController)
+                    .environmentObject(parkStore)
+            }
+            .frame(maxWidth: .infinity)
+
+            // Fixed Bottom Drawer
+            BottomDrawer(showSortModal: $showSortModal, showFilterModal: $showFilterModal)
+        }
+        .edgesIgnoringSafeArea(.bottom) // Optional, depending on styling
+        .sheet(isPresented: $showSortModal) {
+            SortModalView()
+        }
+        .sheet(isPresented: $showFilterModal) {
+            FilterModalView()
+        }
     }
 }
 

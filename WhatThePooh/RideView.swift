@@ -11,12 +11,49 @@ struct RideView: View {
     @ObservedObject var viewModel: SharedViewModel
     @EnvironmentObject var rideController: RideController
     @EnvironmentObject var parkStore: ParkStore
+    @State private var sortOption: SortOption = .favorited
 
+    enum SortOption {
+        case favorited
+        case name
+        case waitTime
+    }
+
+    // Computed property that returns sorted rides.
+    var sortedRides: [Ride] {
+        switch sortOption {
+        case .favorited:
+            // Favorites come first; within each group sort by name.
+            return rideController.entities.sorted {
+                if $0.isFavorited != $1.isFavorited {
+                    return $0.isFavorited && !$1.isFavorited
+                } else {
+                    return $0.name < $1.name
+                }
+            }
+        case .name:
+            return rideController.entities.sorted { $0.name < $1.name }
+        case .waitTime:
+            return rideController.entities.sorted { $0.name < $1.name }
+
+        }
+    }
+    
     var body: some View {
+        VStack {
+            // Picker to select sort option
+            Picker("Sort By", selection: $sortOption) {
+                Text("Favorited").tag(SortOption.favorited)
+                Text("Name").tag(SortOption.name)
+                Text("Wait Time").tag(SortOption.waitTime)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+        }
         ScrollView {
             Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
-                ForEach(rideController.entities.indices, id: \.self) { index in
-                    let entity = rideController.entities[index] // Create a local variable for entity
+                ForEach(sortedRides.indices, id: \.self) { index in
+                    let entity = sortedRides[index]
                     let (column2, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
                     
                     if (entity.status != "UNKNOWN") {
@@ -29,10 +66,12 @@ struct RideView: View {
                                     .imageScale(.large)
                             }
                             .buttonStyle(BorderlessButtonStyle())
+                            
                             Text(entity.name)
                                 .font(.footnote)
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
+                            
                             Text(column2)
                                 .font(.footnote)
                         }
@@ -54,9 +93,6 @@ struct RideView: View {
         }
     }
     
-    //    https://api.themeparks.wiki/v1/entity/bd0eb47b-2f02-4d4d-90fa-cb3a68988e3b/schedule - hong kong
-    //    https://api.themeparks.wiki/v1/entity/bfc89fd6-314d-44b4-b89e-df1a89cf991e/schedule - disneyland
-
     private func statusAttributes(status: String?, waitTime: Int?, lastUpdated: String?) -> (String, Color) {
         
         // So for some parks, the status is not always accurate (IE, don't use REFURBISH, etc)
