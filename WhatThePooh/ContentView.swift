@@ -38,6 +38,7 @@ struct ContentView: View {
         .edgesIgnoringSafeArea(.bottom) // Optional, depending on styling
         .sheet(isPresented: $showSortModal) {
             SortModalView()
+                .environmentObject(viewModel)
         }
         .sheet(isPresented: $showFilterModal) {
             FilterModalView()

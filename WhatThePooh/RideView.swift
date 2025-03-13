@@ -11,19 +11,31 @@ struct RideView: View {
     @ObservedObject var viewModel: SharedViewModel
     @EnvironmentObject var rideController: RideController
     @EnvironmentObject var parkStore: ParkStore
-    @State private var sortOption: SortOption = .favorited
-
-    enum SortOption {
-        case favorited
-        case name
-        case waitTime
-    }
 
     // Computed property that returns sorted rides.
+//    var sortedRides: [Ride] {
+//        switch sortOption {
+//        case .favorited:
+//            // Favorites come first; within each group sort by name.
+//            return rideController.entities.sorted {
+//                if $0.isFavorited != $1.isFavorited {
+//                    return $0.isFavorited && !$1.isFavorited
+//                } else {
+//                    return $0.name < $1.name
+//                }
+//            }
+//        case .name:
+//            return rideController.entities.sorted { $0.name < $1.name }
+//        case .waitTime:
+//            return rideController.entities.sorted { $0.name < $1.name }
+//
+//        }
+//    }
+
     var sortedRides: [Ride] {
-        switch sortOption {
+        switch viewModel.sortOrder {
         case .favorited:
-            // Favorites come first; within each group sort by name.
+            // Favorites come first; if both rides have the same favorited status, sort by name.
             return rideController.entities.sorted {
                 if $0.isFavorited != $1.isFavorited {
                     return $0.isFavorited && !$1.isFavorited
@@ -34,22 +46,15 @@ struct RideView: View {
         case .name:
             return rideController.entities.sorted { $0.name < $1.name }
         case .waitTime:
-            return rideController.entities.sorted { $0.name < $1.name }
-
+            // Assuming waitTime is an optional Int (Int?) in your Ride model,
+            // we provide a default value (like Int.max) if waitTime is nil.
+            return rideController.entities.sorted {
+                ($0.waitTime ?? Int.max) < ($1.waitTime ?? Int.max)
+            }
         }
     }
     
     var body: some View {
-        VStack {
-            // Picker to select sort option
-            Picker("Sort By", selection: $sortOption) {
-                Text("Favorited").tag(SortOption.favorited)
-                Text("Name").tag(SortOption.name)
-                Text("Wait Time").tag(SortOption.waitTime)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-        }
         ScrollView {
             Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
                 ForEach(sortedRides.indices, id: \.self) { index in
