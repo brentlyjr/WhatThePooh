@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct ParkSelectionView: View {
-    @StateObject var parkStore = ParkStore()
-    @State private var selectedPark: Park? = nil
     @EnvironmentObject var rideController: RideController
-    
+    @EnvironmentObject var parkStore: ParkStore
+
     var body: some View {
-        // Filter parks to include only those that are selected
-        let selectedParks = parkStore.parks.filter { $0.isSelected }
-        
+        // Filter parks to only show those with isVisible true
+        let visibleParks = parkStore.parks.filter { $0.isVisible }
+        // Find the currently selected park
+        let selectedPark = parkStore.parks.first { $0.isSelected }
+
         Menu {
-            // Create a button for each selected park
-            ForEach(selectedParks) { park in
+            ForEach(visibleParks) { park in
                 Button(action: {
-                    selectedPark = park
-                    // Call the fetch method with the selected park's id
+                    updateSelectedPark(to: park)
                     rideController.fetchEntities(for: park.id)
                 }) {
                     Text(park.name)
@@ -41,5 +40,13 @@ struct ParkSelectionView: View {
             .cornerRadius(8)
         }
         .padding()
+    }
+
+    private func updateSelectedPark(to newPark: Park) {
+        // Loop through all the parks. If the park is not the new one we selected, turn its isSelected
+        // status to false. Unless you are the newly selected park, then turn it true!
+        for index in parkStore.parks.indices {
+            parkStore.parks[index].isSelected = (parkStore.parks[index].id == newPark.id)
+        }
     }
 }

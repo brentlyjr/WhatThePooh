@@ -10,7 +10,8 @@ import SwiftUI
 struct RideView: View {
     @ObservedObject var viewModel: SharedViewModel
     @EnvironmentObject var rideController: RideController
-    
+    @EnvironmentObject var parkStore: ParkStore
+
     var body: some View {
         ScrollView {
             Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
@@ -47,18 +48,10 @@ struct RideView: View {
             .padding()
         }
         .onAppear {
-            // Load all the entities for our park
-            rideController.fetchEntities(for: "abcfffe7-01f2-4f92-ae61-5093346f5a68")
-            
-            // Conglomeration of parks
-            // Walt Disney World® Resort - e957da41-3552-4cf6-b636-5babc5cbc4e5
-            // Tokyo Disney Resort - faff60df-c766-4470-8adb-dee78e813f42
-            // Disneyland Paris - e8d0207f-da8a-4048-bec8-117aa946b2c2
-            // Shanghai Disney Resort - 6e1464ca-1e9b-49c3-8937-c5c6f6675057
-            // Disneyland Resort - bfc89fd6-314d-44b4-b89e-df1a89cf991e
-            // Hong Kong Disneyland Parks - abcfffe7-01f2-4f92-ae61-5093346f5a68
-            
-            // Individual Parks
+            // Load all the entities for our park. Lookup the currently selected park
+            if let selectedPark = parkStore.currentSelectedPark {
+                rideController.fetchEntities(for: selectedPark.id)
+            }
         }
     }
     
