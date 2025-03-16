@@ -15,14 +15,16 @@ struct ContentView: View {
 
     @State private var showSortModal = false
     @State private var showFilterModal = false
+    @State private var showDebugScreen: Bool = false
 
     var body: some View {
         VStack(spacing: 0) {
             // Fixed Header
-            HeaderView(viewModel: viewModel)
+            HeaderView(showDebugScreen: $showDebugScreen)
                 .environmentObject(Notifications.shared)
                 .environmentObject(parkStore)
                 .environmentObject(rideController)
+                .environmentObject(viewModel)
 
             // Scrolling RideView
             ScrollView {
@@ -43,6 +45,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showFilterModal) {
             FilterModalView()
+        }
+        .fullScreenCover(isPresented: $showDebugScreen) {
+            DebugView(showDebugScreen: $showDebugScreen)
         }
     }
 }

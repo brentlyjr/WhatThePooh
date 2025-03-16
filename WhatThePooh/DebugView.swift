@@ -7,17 +7,26 @@
 
 import SwiftUI
 
-struct FullScreenView: View {
+struct DebugView: View {
     @Binding var showDebugScreen: Bool
 
     var body: some View {
         VStack {
-            Text("This is the full-screen view!")
-                .padding()
+            HStack {
+                Text("Debug Window")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding()
 
-            Button("Dismiss") {
-                showDebugScreen = false
+                Spacer()
+
+                Button("Close") {
+                    showDebugScreen = false
+                }
+                .padding()
             }
+            .safeAreaInset(edge: .top) { Spacer().frame(height: 50) } // Pushes content down
+            Spacer()
         }
         .background(Color.blue)
         .foregroundColor(.white)
