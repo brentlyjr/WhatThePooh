@@ -10,7 +10,6 @@ import SwiftUI
 struct HeaderView: View {
     @EnvironmentObject var viewModel: SharedViewModel
     @EnvironmentObject var notificationManager: Notifications
-    @Binding var showDebugScreen: Bool  // Binding from ContentView
     
     var body: some View {
         VStack {
@@ -19,7 +18,7 @@ struct HeaderView: View {
                     .fontWeight(.bold)
                     .font(.largeTitle)
                     .onTapGesture {
-                        showDebugScreen = true  // Open debug screen
+                        viewModel.showDebugWindow = true  // Open debug screen
                     }
                 Image("PoohImage")
                     .resizable()

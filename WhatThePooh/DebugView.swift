@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DebugView: View {
-    @Binding var showDebugScreen: Bool
+    @EnvironmentObject var viewModel: SharedViewModel
 
     var body: some View {
         VStack {
@@ -21,7 +21,7 @@ struct DebugView: View {
                 Spacer()
 
                 Button("Close") {
-                    showDebugScreen = false
+                    viewModel.showDebugWindow = false
                 }
                 .padding()
             }
