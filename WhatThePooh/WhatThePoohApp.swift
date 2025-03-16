@@ -11,11 +11,12 @@ import UserNotifications
 @main
 struct WhatThePoohApp: App {
 
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var notificationManager = Notifications.shared
-    
     private let notificationDelegate = NotificationDelegate()
-
+    
     init() {
+        print("SwiftUI App initialized!")
         let center = UNUserNotificationCenter.current()
         center.delegate = notificationDelegate // Set the delegate here
         
@@ -34,6 +35,8 @@ struct WhatThePoohApp: App {
             ContentView()
                 .onAppear() {
                     notificationManager.requestNotificationPermissionIfNeeded()
+                    // Schedule the background task when the app starts
+                    appDelegate.scheduleAppRefresh()
                 }
         }
     }
