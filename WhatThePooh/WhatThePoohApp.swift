@@ -20,6 +20,8 @@ struct WhatThePoohApp: App {
         let center = UNUserNotificationCenter.current()
         center.delegate = notificationDelegate // Set the delegate here
         
+        print("Requesting authorization here at 2")
+
         // Request notification permissions
         center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
@@ -32,12 +34,14 @@ struct WhatThePoohApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(notificationManager: notificationManager)
                 .onAppear() {
+                    // Make sure we have requested notification permissions
                     notificationManager.requestNotificationPermissionIfNeeded()
                     // Schedule the background task when the app starts
                     appDelegate.scheduleAppRefresh()
                 }
+                .environmentObject(notificationManager)
         }
     }
 }

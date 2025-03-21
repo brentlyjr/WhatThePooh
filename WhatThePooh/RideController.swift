@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 struct RideResponse: Decodable {
     let liveData: [Ride]
@@ -21,7 +22,10 @@ class RideController: ObservableObject {
     private let favoritesKey = "favoriteRides"
     private var favoriteIDs: Set<String> = []
     
-    init() {
+    private let notificationManager: Notifications
+    
+    init(notificationManager: Notifications) {
+        self.notificationManager = notificationManager
         loadFavorites()
     }
     
@@ -67,6 +71,59 @@ class RideController: ObservableObject {
         saveFavorites()
     }
 
+    // This is the function that checks a ride's status and sends a notification if has changed
+    private func sendNotificationOnStatusChange(for ride: Ride) {
+        print("Notification check for ride \(ride.name)")
+
+        // Now let's see if the status has changed for our entity, we also find out if this entity didn't have a value yet
+//        let (statusChanged, emptyValue ) = RideStatusManager.shared.checkStatus(for: ride)
+//        
+//        // Our ride status changed, but this is a boostrap case, so we don't send notification this time
+//        if statusChanged && emptyValue {
+//            print("First time getting status for ride \(ride.name)")
+//            print(" --> Current Status: \(String(describing: ride.status))")
+//        }
+//
+//        print(" --> Current Status: \(String(describing: ride.status))")
+//        print(" --> Previous Status: \(String(describing: ride.previousStatus))")
+//
+//        // Our ride status changed, and the value was not empty (IE, we had a previous stored state
+//        if statusChanged && !emptyValue, let status = ride.status {
+//            notificationManager.sendStatusChangeNotification(rideName: ride.name, newStatus: status)
+//        }
+
+        // Else, our status hasn't changed so don't do anything
+    }
+
+//    // This is the function that checks a ride's status and sends a notification if has changed
+//    private func sendNotificationOnStatusChange(for ride: Ride) {
+//        print("Notification check for ride \(ride.name)")
+//        
+//        // Get the previously stored status and update the stored value with the new one.
+//        let previousStatus = RideStatusManager.shared.checkStatus(for: ride)
+//        
+//        // Define if this is the first time getting a status.
+//        let isFirstTime = (previousStatus == nil || previousStatus?.isEmpty == true)
+//        
+//        // Determine if the status has changed (i.e. new status differs from what was stored)
+//        let statusChanged = (ride.status != previousStatus)
+//        
+//        print(" --> Current Status: \(String(describing: ride.status))")
+//        print(" --> Previous Status: \(String(describing: previousStatus))")
+//        
+//        if statusChanged {
+//            if isFirstTime {
+//                // This is the bootstrap case: first time receiving a status, so don't notify.
+//                print("First time getting status for ride \(ride.name)")
+//            } else if let status = ride.status {
+//                // Send notification if the status has changed and we have a valid current status.
+//                notificationManager.sendStatusChangeNotification(rideName: ride.name, newStatus: status)
+//            }
+//        }
+//
+//        // Else, our status hasn't changed so don't do anything
+//    }
+    
     // Load persisted favorite ride IDs from UserDefaults.
     private func loadFavorites() {
         if let storedIDs = UserDefaults.standard.array(forKey: favoritesKey) as? [String] {
@@ -79,13 +136,15 @@ class RideController: ObservableObject {
         UserDefaults.standard.set(Array(favoriteIDs), forKey: favoritesKey)
     }
     
+    // Sets a timer to reguarly query ride statuses and update them
     private func startStatusUpdates() -> Void {
         timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
             self?.updateRideStatuses()
         }
     }
-    
+  
+    // Old updateRideStatus
     private func updateRideStatuses() -> Void {
         for index in entities.indices {
             let entity = entities[index]
@@ -97,9 +156,42 @@ class RideController: ObservableObject {
                         self?.entities[index].lastUpdated = lastUpdated
                     }
                 }
+                self.sendNotificationOnStatusChange(for: entity)
             }
         }
     }
+
+    // New updateRide statuses from ChatGPT
+//    private func updateRideStatuses() -> Void {
+//        for index in entities.indices {
+//            let entity = entities[index]
+//            
+//            // Fetch the latest status for the ride
+//            self.fetchStatus(for: entity) { [weak self] status, waitTime, lastUpdated in
+//                guard let self = self else { return }
+//                
+//                // Create an updated ride (or use the fetched values directly)
+//                // We send the notification regardless of app state.
+//                // Note: If you want the notification to reflect the new values,
+//                // you can update a temporary ride variable and pass it.
+//                // For simplicity, we're still using `entity` here.
+//                self.sendNotificationOnStatusChange(for: entity)
+//                
+//                // Only update the @Published property (thus the UI) if the app is active.
+//                if UIApplication.shared.applicationState == .active {
+//                    DispatchQueue.main.async {
+//                        self.entities[index].status = status
+//                        self.entities[index].waitTime = waitTime
+//                        self.entities[index].lastUpdated = lastUpdated
+//                    }
+//                } else {
+//                    // In background, you might still persist the latest state if needed.
+//                    // For example, saving to disk or UserDefaults.
+//                    // RideStatusManager.shared.saveStatuses(...)?
+//                }
+//            }
+//        }
+//    }
     
     private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {
         performNetworkRequest(endpoint: entity.id) { data in

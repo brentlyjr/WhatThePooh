@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var notificationManager: Notifications
 
     @StateObject var viewModel = SharedViewModel()
     @StateObject var parkStore = ParkStore()
-    @StateObject private var rideController = RideController()
+    @StateObject private var rideController: RideController
 
     @State private var showSortModal = false
     @State private var showFilterModal = false
+
+    init(notificationManager: Notifications) {
+        _rideController = StateObject(wrappedValue: RideController(notificationManager: notificationManager))
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -54,5 +59,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(notificationManager: Notifications.shared)
 }

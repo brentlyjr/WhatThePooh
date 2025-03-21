@@ -40,12 +40,12 @@ struct Ride: Identifiable, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        // These three values come from the entity API
+        // These three values come from the entity API query from api.themeparks.wiki
         id = try container.decode(String.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
         entityType = try container.decode(EntityType.self, forKey: .entityType)
 
-        // These values we will in later
+        // These values we will fill in later, they don't come from a different API query
         status = nil
         waitTime = nil
         lastUpdated = nil

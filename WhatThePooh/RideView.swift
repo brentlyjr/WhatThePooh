@@ -11,33 +11,14 @@ struct RideView: View {
     @ObservedObject var viewModel: SharedViewModel
     @EnvironmentObject var rideController: RideController
     @EnvironmentObject var parkStore: ParkStore
-
-    // Computed property that returns sorted rides.
-//    var sortedRides: [Ride] {
-//        switch sortOption {
-//        case .favorited:
-//            // Favorites come first; within each group sort by name.
-//            return rideController.entities.sorted {
-//                if $0.isFavorited != $1.isFavorited {
-//                    return $0.isFavorited && !$1.isFavorited
-//                } else {
-//                    return $0.name < $1.name
-//                }
-//            }
-//        case .name:
-//            return rideController.entities.sorted { $0.name < $1.name }
-//        case .waitTime:
-//            return rideController.entities.sorted { $0.name < $1.name }
-//
-//        }
-//    }
+    @EnvironmentObject var notificationManager: Notifications
 
     var sortedRides: [Ride] {
         // First, filter rides based on the showFavoritesOnly flag
         let filteredRides = viewModel.showFavoritesOnly ?
-            rideController.entities.filter { $0.isFavorited } :
-            rideController.entities
-
+        rideController.entities.filter { $0.isFavorited } :
+        rideController.entities
+        
         switch viewModel.sortOrder {
         case .favorited:
             // Favorites come first; if both rides have the same favorited status, sort by name.
@@ -64,8 +45,10 @@ struct RideView: View {
             Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
                 ForEach(sortedRides.indices, id: \.self) { index in
                     let entity = sortedRides[index]
-                    let (column2, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
                     
+                    // For this current entity we are processing, calculate its row color and the waittime column string
+                    let (column2, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
+                                        
                     if (entity.status != "UNKNOWN") {
                         GridRow {
                             Button(action: {
@@ -108,21 +91,21 @@ struct RideView: View {
         // So for some parks, the status is not always accurate (IE, don't use REFURBISH, etc)
         // So for those odd cases, I am going to potentially change the status for display
         var calculatedStatus = status
-
+        
         let minutes = Utilities.minutesSince(lastUpdated ?? Utilities.getTimeNowUTCString())
         
         // Japan, stuff can be "DOWN" for months, so if has been down for more than 2 days, let's
         // call it refurbished.
-//        if status == "CLOSED" && minutes! > 2880 {
-//            calculatedStatus = "REFURBISHMENT"
-//        }
+        //        if status == "CLOSED" && minutes! > 2880 {
+        //            calculatedStatus = "REFURBISHMENT"
+        //        }
         
         // Once again, we are making some assumptions. If the ride is closed, but it hasn't been closed
         // for very long, then we should assume it is DOWN
-//        if status == "CLOSED" && minutes! < 240 {
-//            calculatedStatus = "DOWN"
-//        }
-
+        //        if status == "CLOSED" && minutes! < 240 {
+        //            calculatedStatus = "DOWN"
+        //        }
+        
         switch calculatedStatus {
         case "CLOSED":
             return ("Closed (\(minutes!) mins)", Color.blue.opacity(0.2))
