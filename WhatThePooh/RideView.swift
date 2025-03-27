@@ -16,8 +16,8 @@ struct RideView: View {
     var sortedRides: [Ride] {
         // First, filter rides based on the showFavoritesOnly flag
         let filteredRides = viewModel.showFavoritesOnly ?
-        rideController.entities.filter { $0.isFavorited } :
-        rideController.entities
+        rideController.visibleRideArray.filter { $0.isFavorited } :
+        rideController.visibleRideArray
         
         switch viewModel.sortOrder {
         case .favorited:
@@ -81,7 +81,12 @@ struct RideView: View {
         .onAppear {
             // Load all the entities for our park. Lookup the currently selected park
             if let selectedPark = parkStore.currentSelectedPark {
-                rideController.fetchEntities(for: selectedPark.id)
+                rideController.fetchRidesForPark(for: selectedPark.id) {
+                    rideController.updateRideStatus() {
+                        rideController.updateFavoriteStatus()
+                        rideController.updateRideView()
+                    }
+                }
             }
         }
     }

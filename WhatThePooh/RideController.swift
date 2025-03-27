@@ -14,8 +14,15 @@ struct RideResponse: Decodable {
 }
 
 class RideController: ObservableObject {
-    @Published var entities: [Ride] = []
-    private var offlineMode: Bool = false
+    // This is our published object that links to our RideView - Any updates to this
+    // object will trigger a view update
+    @Published var visibleRideArray: [Ride] = []
+
+    // This is our internal ride array. This spans all of our parks and will allow us
+    // to get the updated status for all rides that we may have favorited
+    private var parkRideArray: [Ride] = []
+
+    // An internal timer that will fetch updated statuses while we are in the foreground
     private var timer: Timer?
     
     // Persisted favorites – we only store the IDs.
@@ -30,40 +37,94 @@ class RideController: ObservableObject {
     }
     
     // Retrieves all the entities (children) under a park - filters based on ATTRACTION
-    // Stores them in entity array
-    func fetchEntities(for destinationID: String) {
+    // Stores them in a rideArray
+    func fetchRidesForPark(for destinationID: String, completion: @escaping () -> Void) {
         performNetworkRequest(endpoint: destinationID) { data in
             guard let data = data else {
-                print("No data received for entity query.")
+                print("No data received for park query.")
                 return
             }
             do {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(RideResponse.self, from: data)
-                DispatchQueue.main.async {
-                    self.entities = response.liveData.filter { $0.entityType == .attraction }
-                    self.updateFavoriteStates()
-                    self.updateRideStatuses()
-                    self.startStatusUpdates()
-                }
+                
+                // Decode the list of parks into our local park array
+                self.parkRideArray = response.liveData.filter { $0.entityType == .attraction }
+                
+                // Execute our completion handler so we can chain funtions together
+                completion()
+
             } catch {
-                print("Decoding error: \(error)")
+                print("Decoding error for our park: \(error)")
             }
         }
     }
     
+    // This updates the ride status from the API. This just updates our internal copy
+    func updateRideStatus(completion: @escaping () -> Void) {
+        
+        // Setting up a completion block around our ride query
+        let dispatchGroup = DispatchGroup()
+        
+        for index in parkRideArray.indices {
+            let ride = parkRideArray[index]
+
+            dispatchGroup.enter()
+
+            self.fetchStatus(for: ride) { [weak self] status, waitTime, lastUpdated in
+                self?.parkRideArray[index].status = status
+                self?.parkRideArray[index].waitTime = waitTime
+                self?.parkRideArray[index].lastUpdated = lastUpdated
+                
+                // We are basically keeping the old status so we can compare to see if it has changed later
+                self?.parkRideArray[index].oldStatus = ride.status
+                
+                dispatchGroup.leave()
+            }
+        }
+
+        dispatchGroup.notify(queue: .global()) {
+            completion()
+        }
+    }
+
     // Apply the persisted favorite state to each ride.
-    private func updateFavoriteStates() {
-        for index in self.entities.indices {
-            self.entities[index].isFavorited = favoriteIDs.contains(self.entities[index].id)
+    func updateFavoriteStatus() {
+        for index in self.parkRideArray.indices {
+            self.parkRideArray[index].isFavorited = favoriteIDs.contains(self.parkRideArray[index].id)
+        }
+    }
+    
+    func updateRideView() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            // Ensure visibleRideArray has the same count as parkRideArray before updating
+            guard self.visibleRideArray.count == self.parkRideArray.count else {
+                self.visibleRideArray = self.parkRideArray // Just replace if structure differs
+                return
+            }
+            
+            // Update only the necessary fields
+            for index in self.visibleRideArray.indices {
+                let newRide = self.parkRideArray[index]
+                var visibleRide = self.visibleRideArray[index]
+                
+                visibleRide.status = newRide.status
+                visibleRide.oldStatus = newRide.oldStatus
+                visibleRide.waitTime = newRide.waitTime
+                visibleRide.lastUpdated = newRide.lastUpdated
+                
+                self.visibleRideArray[index] = visibleRide // Assign back to trigger SwiftUI updates
+            }
         }
     }
     
     // Toggle the favorite state for a ride.
     func toggleFavorite(for ride: Ride) {
-        guard let index = entities.firstIndex(where: { $0.id == ride.id }) else { return }
-        entities[index].isFavorited.toggle()
-        if entities[index].isFavorited {
+        guard let index = visibleRideArray.firstIndex(where: { $0.id == ride.id }) else { return }
+        visibleRideArray[index].isFavorited.toggle()
+        if visibleRideArray[index].isFavorited {
             favoriteIDs.insert(ride.id)
         } else {
             favoriteIDs.remove(ride.id)
@@ -140,58 +201,14 @@ class RideController: ObservableObject {
     private func startStatusUpdates() -> Void {
         timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            self?.updateRideStatuses()
-        }
-    }
-  
-    // Old updateRideStatus
-    private func updateRideStatuses() -> Void {
-        for index in entities.indices {
-            let entity = entities[index]
-            DispatchQueue.main.async {
-                self.fetchStatus(for: entity) { [weak self] status, waitTime, lastUpdated in
-                    DispatchQueue.main.async {
-                        self?.entities[index].status = status
-                        self?.entities[index].waitTime = waitTime
-                        self?.entities[index].lastUpdated = lastUpdated
-                    }
-                }
-                self.sendNotificationOnStatusChange(for: entity)
+            // self?.updateRideStatuses()
+            self?.updateRideStatus() {
+                self?.updateFavoriteStatus()
+                self?.updateRideView()
             }
+
         }
     }
-
-    // New updateRide statuses from ChatGPT
-//    private func updateRideStatuses() -> Void {
-//        for index in entities.indices {
-//            let entity = entities[index]
-//            
-//            // Fetch the latest status for the ride
-//            self.fetchStatus(for: entity) { [weak self] status, waitTime, lastUpdated in
-//                guard let self = self else { return }
-//                
-//                // Create an updated ride (or use the fetched values directly)
-//                // We send the notification regardless of app state.
-//                // Note: If you want the notification to reflect the new values,
-//                // you can update a temporary ride variable and pass it.
-//                // For simplicity, we're still using `entity` here.
-//                self.sendNotificationOnStatusChange(for: entity)
-//                
-//                // Only update the @Published property (thus the UI) if the app is active.
-//                if UIApplication.shared.applicationState == .active {
-//                    DispatchQueue.main.async {
-//                        self.entities[index].status = status
-//                        self.entities[index].waitTime = waitTime
-//                        self.entities[index].lastUpdated = lastUpdated
-//                    }
-//                } else {
-//                    // In background, you might still persist the latest state if needed.
-//                    // For example, saving to disk or UserDefaults.
-//                    // RideStatusManager.shared.saveStatuses(...)?
-//                }
-//            }
-//        }
-//    }
     
     private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {
         performNetworkRequest(endpoint: entity.id) { data in

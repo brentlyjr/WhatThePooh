@@ -12,6 +12,7 @@ struct Ride: Identifiable, Decodable {
     let id: String
     let name: String
     var status: String? // Added status property
+    var oldStatus: String?
     var waitTime: Int? // Time we are waiting
     var lastUpdated: String? // Time the last ride status was updated
     var isFavorited: Bool = false // Has the user favorited this ride, will be read from user preferences
@@ -47,6 +48,7 @@ struct Ride: Identifiable, Decodable {
 
         // These values we will fill in later, they don't come from a different API query
         status = nil
+        oldStatus = nil
         waitTime = nil
         lastUpdated = nil
 
