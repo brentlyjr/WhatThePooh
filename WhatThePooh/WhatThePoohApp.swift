@@ -16,11 +16,10 @@ struct WhatThePoohApp: App {
     private let notificationDelegate = NotificationDelegate()
     
     init() {
-        print("SwiftUI App initialized!")
         let center = UNUserNotificationCenter.current()
         center.delegate = notificationDelegate // Set the delegate here
         
-        print("Requesting authorization here at 2")
+        print("Requesting authorization here at App:init()")
 
         // Request notification permissions
         center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in

@@ -25,7 +25,7 @@ class Notifications: ObservableObject {
                 self.permissionGranted = settings.authorizationStatus == .authorized
             }
             
-            print("Requesting authorization here at 1")
+            print("Requesting authorization here at Notifications:requestNotificationPermissionIfNeeded()")
             if settings.authorizationStatus == .notDetermined {
                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
                     DispatchQueue.main.async {

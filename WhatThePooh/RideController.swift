@@ -203,8 +203,9 @@ class RideController: ObservableObject {
         // timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
 
-            print("Fetching new ride statuses...")
-
+            let timestamp = ISO8601DateFormatter().string(from: Date())
+            print("[\(timestamp)] Fetching new ride statuses...")
+            
             self?.updateRideStatus() {
                 self?.updateFavoriteStatus()
                 self?.updateRideView()
