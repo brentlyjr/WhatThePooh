@@ -85,6 +85,10 @@ struct RideView: View {
                     rideController.updateRideStatus() {
                         rideController.updateFavoriteStatus()
                         rideController.updateRideView()
+                        // Starts a time to refresh the data in the view periodically
+                        DispatchQueue.main.async {
+                            rideController.startStatusUpdates()
+                        }
                     }
                 }
             }

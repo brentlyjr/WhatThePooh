@@ -198,15 +198,17 @@ class RideController: ObservableObject {
     }
     
     // Sets a timer to reguarly query ride statuses and update them
-    private func startStatusUpdates() -> Void {
-        timer?.invalidate() // Cancel any existing timer
+    func startStatusUpdates() -> Void {
+
+        // timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-            // self?.updateRideStatuses()
+
+            print("Fetching new ride statuses...")
+
             self?.updateRideStatus() {
                 self?.updateFavoriteStatus()
                 self?.updateRideView()
             }
-
         }
     }
     
