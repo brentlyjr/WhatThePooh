@@ -9,20 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var notificationManager: Notifications
-
     @StateObject var viewModel = SharedViewModel()
     @StateObject var parkStore = ParkStore()
     @StateObject private var rideController: RideController
 
-    init(notificationManager: Notifications) {
-        _rideController = StateObject(wrappedValue: RideController(notificationManager: notificationManager))
+    init() {
+        _rideController = StateObject(wrappedValue: RideController(notificationManager: Notifications.shared))
     }
 
     var body: some View {
         VStack(spacing: 0) {
             // Fixed Header
             HeaderView()
-                .environmentObject(Notifications.shared)
                 .environmentObject(parkStore)
                 .environmentObject(rideController)
                 .environmentObject(viewModel)
@@ -65,5 +63,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(notificationManager: Notifications.shared)
+    ContentView()
 }

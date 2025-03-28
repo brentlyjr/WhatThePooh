@@ -12,36 +12,49 @@ class Notifications: ObservableObject {
     // Singleton of Notification class
     static let shared = Notifications()
     
-    // Something we can look on later to determine if we should try to send notifications
-    @Published var permissionGranted = false
+    // Published state
+    @Published private(set) var permissionGranted = false
     
-    private init() { }
-    
-    // This really only needs to execute once on first app launch (assuming they
-    // approve notifications). After this, it just confirms we have notifications enabled
-    func requestNotificationPermissionIfNeeded() {
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            DispatchQueue.main.async {
-                self.permissionGranted = settings.authorizationStatus == .authorized
-            }
-            
-            print("Requesting authorization here at Notifications:requestNotificationPermissionIfNeeded()")
-            if settings.authorizationStatus == .notDetermined {
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-                    DispatchQueue.main.async {
-                        self.permissionGranted = granted
-                    }
-                }
-            }
-        }
-        
-        UNUserNotificationCenter.current().getNotificationSettings { settings in
-            print("Authorization status: \(settings.authorizationStatus.rawValue)")
+    private init() {
+        // Check initial permission status
+        Task {
+            await checkPermissionStatus()
         }
     }
     
-    // This is the code that generates our notification
+    // Check current permission status
+    private func checkPermissionStatus() async {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        DispatchQueue.main.async {
+            self.permissionGranted = settings.authorizationStatus == .authorized
+        }
+    }
+    
+    // Request notification permissions if needed
+    func requestNotificationPermissionIfNeeded() {
+        Task {
+            let settings = await UNUserNotificationCenter.current().notificationSettings()
+            
+            if settings.authorizationStatus == .notDetermined {
+                do {
+                    let granted = try await UNUserNotificationCenter.current()
+                        .requestAuthorization(options: [.alert, .badge, .sound])
+                    DispatchQueue.main.async {
+                        self.permissionGranted = granted
+                    }
+                } catch {
+                    print("Error requesting notification permission: \(error.localizedDescription)")
+                }
+            } else {
+                await checkPermissionStatus()
+            }
+        }
+    }
+    
+    // Send a status change notification
     func sendStatusChangeNotification(rideName: String, newStatus: String) {
+        guard permissionGranted else { return }
+        
         let content = UNMutableNotificationContent()
         content.title = "\(rideName) Status Update"
         content.body = "The ride is now \(newStatus)."
@@ -50,8 +63,10 @@ class Notifications: ObservableObject {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
+        Task {
+            do {
+                try await UNUserNotificationCenter.current().add(request)
+            } catch {
                 print("Error scheduling notification: \(error.localizedDescription)")
             }
         }

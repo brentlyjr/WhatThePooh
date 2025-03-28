@@ -10,37 +10,39 @@ import UserNotifications
 
 @main
 struct WhatThePoohApp: App {
-
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    // Initialize our core services
     @StateObject private var notificationManager = Notifications.shared
     private let notificationDelegate = NotificationDelegate()
     
+    // Initialize app delegate for background tasks
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     init() {
+        // Configure notification center
         let center = UNUserNotificationCenter.current()
-        center.delegate = notificationDelegate // Set the delegate here
+        center.delegate = notificationDelegate
         
-        print("Requesting authorization here at App:init()")
-
         // Request notification permissions
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if let error = error {
-                print("Notification permission error: \(error.localizedDescription)")
-            } else {
+        Task {
+            do {
+                let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
                 print("Notification permission granted: \(granted)")
+            } catch {
+                print("Notification permission error: \(error.localizedDescription)")
             }
         }
     }
 
     var body: some Scene {
         WindowGroup {
-            ContentView(notificationManager: notificationManager)
-                .onAppear() {
-                    // Make sure we have requested notification permissions
+            ContentView()
+                .environmentObject(notificationManager)
+                .onAppear {
+                    // Ensure notification permissions are requested
                     notificationManager.requestNotificationPermissionIfNeeded()
-                    // Schedule the background task when the app starts
+                    // Schedule background refresh
                     appDelegate.scheduleAppRefresh()
                 }
-                .environmentObject(notificationManager)
         }
     }
 }
