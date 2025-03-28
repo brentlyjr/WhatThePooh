@@ -54,8 +54,10 @@ struct RideView: View {
                         .background(color)
                         .cornerRadius(8)
                         .onTapGesture {
-                            viewModel.selectedRide = entity
-                            viewModel.isPreviewVisible = true
+                            withAnimation(.spring(response: 1.2, dampingFraction: 0.5)) {
+                                viewModel.selectedRide = entity
+                                viewModel.isPreviewVisible = true
+                            }
                         }
                     }
                 }

@@ -43,8 +43,11 @@ struct ContentView: View {
             if viewModel.isPreviewVisible, let ride = viewModel.selectedRide {
                 Color.black.opacity(0.3)
                     .ignoresSafeArea()
+                    .transition(.opacity)
                     .onTapGesture {
-                        viewModel.isPreviewVisible = false
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            viewModel.isPreviewVisible = false
+                        }
                     }
                 
                 VStack(spacing: 16) {
@@ -113,8 +116,13 @@ struct ContentView: View {
                     x: UIScreen.main.bounds.width / 2,
                     y: 100  // Position over the header
                 )
-                .transition(.scale.combined(with: .opacity))
-                .animation(.spring(response: 0.3, dampingFraction: 0.8), value: viewModel.isPreviewVisible)
+                .transition(
+                    .asymmetric(
+                        insertion: .scale(scale: 0.9).combined(with: .opacity),
+                        removal: .scale(scale: 0.95).combined(with: .opacity)
+                    )
+                )
+                .animation(.spring(response: 1.2, dampingFraction: 0.5), value: viewModel.isPreviewVisible)
             }
         }
         .edgesIgnoringSafeArea(.bottom)
