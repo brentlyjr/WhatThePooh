@@ -18,86 +18,55 @@ struct RideView: View {
     }
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible())], spacing: 5) {
-                    ForEach(sortedRides.indices, id: \.self) { index in
-                        let entity = sortedRides[index]
-                        
-                        // For this current entity we are processing, calculate its row color and the waittime column string
-                        let (column3, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
-                                            
-                        if (entity.status != "UNKNOWN") {
-                            HStack(spacing: 1) {
-                                Button(action: {
-                                    rideController.toggleFavorite(for: entity)
-                                }) {
-                                    Image(systemName: entity.isFavorited ? "heart.fill" : "heart")
-                                        .foregroundColor(entity.isFavorited ? .red : .gray)
-                                        .imageScale(.large)
-                                }
-                                .buttonStyle(BorderlessButtonStyle())
-                                .frame(maxWidth: 40)
-                                
-                                Text(entity.name)
-                                    .font(.footnote)
-                                    .lineLimit(nil)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                Text(column3)
-                                    .font(.footnote)
-                                    .frame(width: 80)
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.flexible())], spacing: 5) {
+                ForEach(sortedRides.indices, id: \.self) { index in
+                    let entity = sortedRides[index]
+                    
+                    // For this current entity we are processing, calculate its row color and the waittime column string
+                    let (column3, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
+                                        
+                    if (entity.status != "UNKNOWN") {
+                        HStack(spacing: 1) {
+                            Button(action: {
+                                rideController.toggleFavorite(for: entity)
+                            }) {
+                                Image(systemName: entity.isFavorited ? "heart.fill" : "heart")
+                                    .foregroundColor(entity.isFavorited ? .red : .gray)
+                                    .imageScale(.large)
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(1)
-                            .frame(minHeight: 40, maxHeight: 40)
-                            .background(color)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                viewModel.selectedRide = entity
-                                viewModel.isPreviewVisible = true
-                            }
+                            .buttonStyle(BorderlessButtonStyle())
+                            .frame(maxWidth: 40)
+                            
+                            Text(entity.name)
+                                .font(.footnote)
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text(column3)
+                                .font(.footnote)
+                                .frame(width: 80)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(1)
+                        .frame(minHeight: 40, maxHeight: 40)
+                        .background(color)
+                        .cornerRadius(8)
+                        .onTapGesture {
+                            viewModel.selectedRide = entity
+                            viewModel.isPreviewVisible = true
                         }
                     }
                 }
-                .padding()
             }
-            
-            // Preview popup with full-screen overlay
-            if viewModel.isPreviewVisible, let ride = viewModel.selectedRide {
-                Color.black.opacity(0.3)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        viewModel.isPreviewVisible = false
-                    }
-                
-                VStack {
-                    Text(ride.name)
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                }
-                .frame(width: 200)
-                .background(Color.white)
-                .cornerRadius(10)
-                .shadow(radius: 10, x: 0, y: 5)
-                .position(
-                    x: UIScreen.main.bounds.width / 2,
-                    y: UIScreen.main.bounds.height / 2
-                )
-                .transition(.scale.combined(with: .opacity))
-                .animation(.spring(response: 0.3, dampingFraction: 0.8), value: viewModel.isPreviewVisible)
-            }
+            .padding()
         }
-        .contentShape(Rectangle())
         .onAppear {
             // Load all the entities for our park. Lookup the currently selected park
             if let selectedPark = parkStore.currentSelectedPark {
                 rideController.fetchRidesForPark(for: selectedPark.id) {
                     rideController.updateRideStatus() {
-                    //    rideController.updateFavoriteStatus()
-                    //    rideController.updateRideView()
                         // Starts a time to refresh the data in the view periodically
                         DispatchQueue.main.async {
                             rideController.startStatusUpdates()
