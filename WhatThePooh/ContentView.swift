@@ -14,9 +14,6 @@ struct ContentView: View {
     @StateObject var parkStore = ParkStore()
     @StateObject private var rideController: RideController
 
-    @State private var showSortModal = false
-    @State private var showFilterModal = false
-
     init(notificationManager: Notifications) {
         _rideController = StateObject(wrappedValue: RideController(notificationManager: notificationManager))
     }
@@ -39,7 +36,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity)
 
             // Fixed Bottom Drawer
-            BottomDrawer(showSortModal: $showSortModal, showFilterModal: $showFilterModal)
+            BottomDrawerView(showSortModal: $viewModel.showSortModal, showFilterModal: $viewModel.showFilterModal)
                 .environmentObject(viewModel)
         }
         .edgesIgnoringSafeArea(.bottom) // Optional, depending on styling
@@ -53,11 +50,11 @@ struct ContentView: View {
             }
         }
         
-        .sheet(isPresented: $showSortModal) {
+        .sheet(isPresented: $viewModel.showSortModal) {
             SortModalView()
                 .environmentObject(viewModel)
         }
-        .sheet(isPresented: $showFilterModal) {
+        .sheet(isPresented: $viewModel.showFilterModal) {
             FilterModalView()
         }
         .fullScreenCover(isPresented: $viewModel.showDebugWindow) {

@@ -14,30 +14,7 @@ struct RideView: View {
     @EnvironmentObject var notificationManager: Notifications
 
     var sortedRides: [Ride] {
-        // First, filter rides based on the showFavoritesOnly flag
-        let filteredRides = viewModel.showFavoritesOnly ?
-        rideController.visibleRideArray.filter { $0.isFavorited } :
-        rideController.visibleRideArray
-        
-        switch viewModel.sortOrder {
-        case .favorited:
-            // Favorites come first; if both rides have the same favorited status, sort by name.
-            return filteredRides.sorted {
-                if $0.isFavorited != $1.isFavorited {
-                    return $0.isFavorited && !$1.isFavorited
-                } else {
-                    return $0.name < $1.name
-                }
-            }
-        case .name:
-            return filteredRides.sorted { $0.name < $1.name }
-        case .waitTime:
-            // Assuming waitTime is an optional Int (Int?) in your Ride model,
-            // we provide a default value (like Int.max) if waitTime is nil.
-            return filteredRides.sorted {
-                ($0.waitTime ?? Int.max) < ($1.waitTime ?? Int.max)
-            }
-        }
+        viewModel.sortRides(rideController.visibleRideArray)
     }
     
     var body: some View {

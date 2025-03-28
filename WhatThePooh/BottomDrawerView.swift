@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BottomDrawer: View {
+struct BottomDrawerView: View {
     @Binding var showSortModal: Bool
     @Binding var showFilterModal: Bool
     @EnvironmentObject var viewModel: SharedViewModel
