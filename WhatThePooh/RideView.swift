@@ -83,8 +83,8 @@ struct RideView: View {
             if let selectedPark = parkStore.currentSelectedPark {
                 rideController.fetchRidesForPark(for: selectedPark.id) {
                     rideController.updateRideStatus() {
-                        rideController.updateFavoriteStatus()
-                        rideController.updateRideView()
+                    //    rideController.updateFavoriteStatus()
+                    //    rideController.updateRideView()
                         // Starts a time to refresh the data in the view periodically
                         DispatchQueue.main.async {
                             rideController.startStatusUpdates()

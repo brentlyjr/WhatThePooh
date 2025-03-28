@@ -33,10 +33,10 @@ struct ParkSelectionView: View {
                         rideController.updateRideStatus() {
 
                             // Apply the favorites to this list from our cache
-                            rideController.updateFavoriteStatus()
+                        //    rideController.updateFavoriteStatus()
 
                             // And tell the view to refresh
-                            rideController.updateRideView()
+                        //    rideController.updateRideView()
                         }
                     }
                 }) {

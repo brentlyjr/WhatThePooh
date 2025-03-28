@@ -61,7 +61,7 @@ class RideController: ObservableObject {
     }
     
     // This updates the ride status from the API. This just updates our internal copy
-    func updateRideStatus(completion: @escaping () -> Void) {
+    func updateRideStatus_synchronous(completion: @escaping () -> Void) {
         
         // Setting up a completion block around our ride query
         let dispatchGroup = DispatchGroup()
@@ -78,7 +78,12 @@ class RideController: ObservableObject {
                 
                 // We are basically keeping the old status so we can compare to see if it has changed later
                 self?.parkRideArray[index].oldStatus = ride.status
-                
+
+                // Basicaly make sure the favorite status matches what our cache has (replaces its own function)
+                if let rideID = self?.parkRideArray[index].id {
+                    self?.parkRideArray[index].isFavorited = self?.favoriteIDs.contains(rideID) ?? false
+                }
+
                 dispatchGroup.leave()
             }
         }
@@ -88,12 +93,53 @@ class RideController: ObservableObject {
         }
     }
 
-    // Apply the persisted favorite state to each ride.
-    func updateFavoriteStatus() {
-        for index in self.parkRideArray.indices {
-            self.parkRideArray[index].isFavorited = favoriteIDs.contains(self.parkRideArray[index].id)
+    // This updates the ride status from the API. This just updates our internal copy
+    func updateRideStatus(completion: @escaping () -> Void) {
+        for index in parkRideArray.indices {
+            let ride = parkRideArray[index]
+            
+            self.fetchStatus(for: ride) { [weak self] status, waitTime, lastUpdated in
+                guard let self = self else { return }
+                
+                // Update internal copy
+                self.parkRideArray[index].status = status
+                self.parkRideArray[index].waitTime = waitTime
+                self.parkRideArray[index].lastUpdated = lastUpdated
+                self.parkRideArray[index].oldStatus = ride.status
+                
+                // Update favorite status
+                let rideID = self.parkRideArray[index].id
+                self.parkRideArray[index].isFavorited = self.favoriteIDs.contains(rideID)
+                
+                // Update visibleRideArray on the main thread
+                DispatchQueue.main.async {
+                    // If visibleRideArray doesn't have the ride (first time) then add it.
+                    if self.visibleRideArray.count != self.parkRideArray.count {
+                        // For first time, simply replace it with the updated internal array.
+                        self.visibleRideArray = self.parkRideArray
+                    } else {
+                        // Otherwise, update the existing ride at the same index.
+                        self.visibleRideArray[index].status = self.parkRideArray[index].status
+                        self.visibleRideArray[index].waitTime = self.parkRideArray[index].waitTime
+                        self.visibleRideArray[index].lastUpdated = self.parkRideArray[index].lastUpdated
+                        self.visibleRideArray[index].oldStatus = self.parkRideArray[index].oldStatus
+                        self.visibleRideArray[index].isFavorited = self.parkRideArray[index].isFavorited
+                    }
+                }
+            }
         }
+        
+        // You might also want to call completion after all fetches finish.
+        // One way to do this is to use a DispatchGroup to track when all fetchStatus calls are done.
     }
+    
+    
+    // Apply the persisted favorite state to each ride.
+//    func updateFavoriteStatus() {
+//        for index in self.parkRideArray.indices {
+//            self.parkRideArray[index].isFavorited = favoriteIDs.contains(self.parkRideArray[index].id)
+//        }
+//    }
     
     func updateRideView() {
         DispatchQueue.main.async { [weak self] in
@@ -207,8 +253,8 @@ class RideController: ObservableObject {
             print("[\(timestamp)] Fetching new ride statuses...")
             
             self?.updateRideStatus() {
-                self?.updateFavoriteStatus()
-                self?.updateRideView()
+            //    self?.updateFavoriteStatus()
+            //    self?.updateRideView()
             }
         }
     }
