@@ -41,53 +41,79 @@ struct RideView: View {
     }
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible())], spacing: 5) {
-                ForEach(sortedRides.indices, id: \.self) { index in
-                    let entity = sortedRides[index]
-                    
-                    // For this current entity we are processing, calculate its row color and the waittime column string
-                    let (column3, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
-                                        
-                    if (entity.status != "UNKNOWN") {
-                        HStack(spacing: 1) {
-                            
-                            // This first item in our row is our favorite icon, this shows whether it is one of
-                            // the favorited rides by showing a filled red heart. Otherwise, it is a empty heart
-                            Button(action: {
-                                rideController.toggleFavorite(for: entity)
-                            }) {
-                                Image(systemName: entity.isFavorited ? "heart.fill" : "heart")
-                                    .foregroundColor(entity.isFavorited ? .red : .gray)
-                                    .imageScale(.large)
+        ZStack {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.flexible())], spacing: 5) {
+                    ForEach(sortedRides.indices, id: \.self) { index in
+                        let entity = sortedRides[index]
+                        
+                        // For this current entity we are processing, calculate its row color and the waittime column string
+                        let (column3, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
+                                            
+                        if (entity.status != "UNKNOWN") {
+                            HStack(spacing: 1) {
+                                Button(action: {
+                                    rideController.toggleFavorite(for: entity)
+                                }) {
+                                    Image(systemName: entity.isFavorited ? "heart.fill" : "heart")
+                                        .foregroundColor(entity.isFavorited ? .red : .gray)
+                                        .imageScale(.large)
+                                }
+                                .buttonStyle(BorderlessButtonStyle())
+                                .frame(maxWidth: 40)
+                                
+                                Text(entity.name)
+                                    .font(.footnote)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Text(column3)
+                                    .font(.footnote)
+                                    .frame(width: 80)
                             }
-                            .buttonStyle(BorderlessButtonStyle())
-                            .frame(maxWidth: 40)
-                            
-                            // The next item in our row is the name of the ride. This is the longest item and will wrap
-                            // to two lines if necessary
-                            Text(entity.name)
-                                .font(.footnote)
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            // The third item in our row is the wait time and/or status of the ride. We have a
-                            // calculation done in statusAttributes() that deternines what is shown here
-                            Text(column3)
-                                .font(.footnote)
-                                .frame(width: 80)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(1)
+                            .frame(minHeight: 40, maxHeight: 40)
+                            .background(color)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                viewModel.selectedRide = entity
+                                viewModel.isPreviewVisible = true
+                            }
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(1)
-                        .frame(minHeight: 40, maxHeight: 40)
-                        .background(color)
-                        .cornerRadius(8)
                     }
                 }
+                .padding()
             }
-            .padding()
+            
+            // Preview popup with full-screen overlay
+            if viewModel.isPreviewVisible, let ride = viewModel.selectedRide {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        viewModel.isPreviewVisible = false
+                    }
+                
+                VStack {
+                    Text(ride.name)
+                        .font(.headline)
+                        .foregroundColor(.black)
+                        .padding()
+                }
+                .frame(width: 200)
+                .background(Color.white)
+                .cornerRadius(10)
+                .shadow(radius: 10, x: 0, y: 5)
+                .position(
+                    x: UIScreen.main.bounds.width / 2,
+                    y: UIScreen.main.bounds.height / 2
+                )
+                .transition(.scale.combined(with: .opacity))
+                .animation(.spring(response: 0.3, dampingFraction: 0.8), value: viewModel.isPreviewVisible)
+            }
         }
+        .contentShape(Rectangle())
         .onAppear {
             // Load all the entities for our park. Lookup the currently selected park
             if let selectedPark = parkStore.currentSelectedPark {

@@ -43,6 +43,16 @@ struct ContentView: View {
                 .environmentObject(viewModel)
         }
         .edgesIgnoringSafeArea(.bottom) // Optional, depending on styling
+        
+        // Make the entire view tappable to dismiss the preview
+        // This ensures the preview can be dismissed by tapping anywhere in the app
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if viewModel.isPreviewVisible {
+                viewModel.isPreviewVisible = false
+            }
+        }
+        
         .sheet(isPresented: $showSortModal) {
             SortModalView()
                 .environmentObject(viewModel)
@@ -53,7 +63,6 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $viewModel.showDebugWindow) {
             DebugView()
                 .environmentObject(viewModel)
-
         }
     }
 }
