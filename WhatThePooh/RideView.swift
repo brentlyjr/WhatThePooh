@@ -42,15 +42,18 @@ struct RideView: View {
     
     var body: some View {
         ScrollView {
-            Grid(alignment: .leading, horizontalSpacing: 1, verticalSpacing: 5) {
+            LazyVGrid(columns: [GridItem(.flexible())], spacing: 5) {
                 ForEach(sortedRides.indices, id: \.self) { index in
                     let entity = sortedRides[index]
                     
                     // For this current entity we are processing, calculate its row color and the waittime column string
-                    let (column2, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
+                    let (column3, color) = statusAttributes(status: entity.status, waitTime: entity.waitTime, lastUpdated: entity.lastUpdated)
                                         
                     if (entity.status != "UNKNOWN") {
-                        GridRow {
+                        HStack(spacing: 1) {
+                            
+                            // This first item in our row is our favorite icon, this shows whether it is one of
+                            // the favorited rides by showing a filled red heart. Otherwise, it is a empty heart
                             Button(action: {
                                 rideController.toggleFavorite(for: entity)
                             }) {
@@ -59,18 +62,25 @@ struct RideView: View {
                                     .imageScale(.large)
                             }
                             .buttonStyle(BorderlessButtonStyle())
+                            .frame(maxWidth: 40)
                             
+                            // The next item in our row is the name of the ride. This is the longest item and will wrap
+                            // to two lines if necessary
                             Text(entity.name)
                                 .font(.footnote)
                                 .lineLimit(nil)
                                 .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            Text(column2)
+                            // The third item in our row is the wait time and/or status of the ride. We have a
+                            // calculation done in statusAttributes() that deternines what is shown here
+                            Text(column3)
                                 .font(.footnote)
+                                .frame(width: 80)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading) // Stretch the row to fill the column
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(1)
-                        .frame(minHeight: 40, maxHeight: 40) // Add this line to set a minimum height for each GridRow
+                        .frame(minHeight: 40, maxHeight: 40)
                         .background(color)
                         .cornerRadius(8)
                     }
@@ -117,17 +127,21 @@ struct RideView: View {
         
         switch calculatedStatus {
         case "CLOSED":
-            return ("Closed (\(minutes!) mins)", Color.blue.opacity(0.2))
+        //    return ("Closed (\(minutes!) mins)", Color.blue.opacity(0.2))
+            return ("Closed", Color.blue.opacity(0.2))
         case "OPERATING":
             if let unwrappedWaitTime = waitTime {
                 return ("\(unwrappedWaitTime) mins", Color.green.opacity(0.2))
             } else {
-                return ("Operating (\(minutes!) mins)", Color.green.opacity(0.2))
+            //    return ("Operating (\(minutes!) mins)", Color.green.opacity(0.2))
+                return ("Operating", Color.green.opacity(0.2))
             }
         case "DOWN":
-            return ("Down (\(minutes!) mins)", Color.red.opacity(0.2))
+        //    return ("Down (\(minutes!) mins)", Color.red.opacity(0.2))
+            return ("Down", Color.red.opacity(0.2))
         case "REFURBISHMENT":
-            return ("Refurb (\(minutes!) mins)", Color.yellow.opacity(0.2))
+        //    return ("Refurb (\(minutes!) mins)", Color.yellow.opacity(0.2))
+            return ("Refurb", Color.yellow.opacity(0.2))
         default:
             return ("Unknown (\(minutes!) mins)", Color.clear)
         }
