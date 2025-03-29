@@ -13,26 +13,41 @@ struct HeaderView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("What The Pooh!")
-                    .fontWeight(.bold)
-                    .font(.largeTitle)
-                    .onTapGesture {
-                        viewModel.showDebugWindow = true  // Open debug screen
-                    }
+            HStack(spacing: 16) {
+                // Park Selection Dropdown
+                ParkSelectionView()
+                
+                Spacer()
+                
+                // Heart Icon
+                Image(systemName: "heart.fill")
+                    .foregroundColor(.blue)
+                    .font(.title2)
+                
+                // Bell Icon
+                Image(systemName: "bell.fill")
+                    .foregroundColor(.blue)
+                    .font(.title2)
+                
+                // Pooh image with debug functionality
                 Image("PoohImage")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 80, height: 80)
+                    .frame(width: 40, height: 40)
                     .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                    .shadow(radius: 7)
+                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                    .shadow(radius: 3)
                     .onTapGesture {
+                        // Open debug window
+                        viewModel.showDebugWindow = true
+                        
+                        // Keep existing functionality
                         Utilities.playSound()
                         notificationManager.sendStatusChangeNotification(rideName: "Star Wars: Rise of the Resistance", newStatus: "Down")
                     }
             }
-            ParkSelectionView()
+            .padding(.horizontal)
+            .padding(.vertical, 8)
         }
     }
 }

@@ -12,7 +12,6 @@ struct ParkSelectionView: View {
     @EnvironmentObject var parkStore: ParkStore
 
     var body: some View {
-        
         // Filter parks to only show those with isVisible true
         let visibleParks = parkStore.parks.filter { $0.isVisible }
         
@@ -22,45 +21,45 @@ struct ParkSelectionView: View {
         Menu {
             ForEach(visibleParks) { park in
                 Button(action: {
-
                     // We are going to switch the newly selected park
                     updateSelectedPark(to: park)
 
                     // Now fetch all the rides for that park
                     rideController.fetchRidesForPark(for: park.id) {
-
                         // Now upddate their statuses individually
                         rideController.updateRideStatus() {
-
-                            // Apply the favorites to this list from our cache
-                        //    rideController.updateFavoriteStatus()
-
-                            // And tell the view to refresh
-                        //    rideController.updateRideView()
                         }
                     }
                 }) {
                     Text(park.name)
+                        .font(.subheadline)
                 }
             }
         } label: {
-            HStack {
+            HStack(spacing: 8) {
                 if let park = selectedPark {
                     Text(park.name)
+                        .foregroundColor(.blue)
+                        .font(.subheadline)
                 } else {
                     Text("Select a Park")
+                        .foregroundColor(.blue)
+                        .font(.subheadline)
                 }
                 Image(systemName: "chevron.down")
+                    .foregroundColor(.blue)
+                    .imageScale(.small)
             }
-            .padding()
-            .background(Color(.systemGray5))
+            .frame(maxWidth: 200)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(Color(.systemGray6))
             .cornerRadius(8)
         }
-        .padding()
+        .buttonStyle(PlainButtonStyle())
     }
 
     private func updateSelectedPark(to newPark: Park) {
-
         // Loop through all the parks. If the park is not the new one we selected, turn its isSelected
         // status to false. Unless you are the newly selected park, then turn it true!
         for index in parkStore.parks.indices {
