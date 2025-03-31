@@ -14,6 +14,9 @@ struct RideResponse: Decodable {
 }
 
 class RideController: ObservableObject {
+    // Singleton instance
+    static let shared = RideController(notificationManager: Notifications.shared)
+    
     // This is our published object that links to our RideView - Any updates to this
     // object will trigger a view update
     @Published var visibleRideArray: [Ride] = []
@@ -31,7 +34,7 @@ class RideController: ObservableObject {
     
     private let notificationManager: Notifications
     
-    init(notificationManager: Notifications) {
+    private init(notificationManager: Notifications) {
         self.notificationManager = notificationManager
         loadFavorites()
     }
@@ -245,7 +248,6 @@ class RideController: ObservableObject {
     
     // Sets a timer to reguarly query ride statuses and update them
     func startStatusUpdates() -> Void {
-
         // timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
 
@@ -257,6 +259,22 @@ class RideController: ObservableObject {
             //    self?.updateRideView()
             }
         }
+    }
+    
+    // Stop the status update timer
+    func stopStatusUpdates() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    // Handle app entering background
+    func applicationDidEnterBackground() {
+        stopStatusUpdates()
+    }
+    
+    // Handle app entering foreground
+    func applicationWillEnterForeground() {
+        startStatusUpdates()
     }
     
     private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {

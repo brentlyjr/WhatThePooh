@@ -11,10 +11,10 @@ struct ContentView: View {
     @EnvironmentObject var notificationManager: Notifications
     @StateObject var viewModel = SharedViewModel()
     @StateObject var parkStore = ParkStore()
-    @StateObject private var rideController: RideController
+    @StateObject private var rideController = RideController.shared
 
     init() {
-        _rideController = StateObject(wrappedValue: RideController(notificationManager: Notifications.shared))
+        // No need to initialize rideController here anymore since we're using the singleton
     }
 
     var body: some View {
