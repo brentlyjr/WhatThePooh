@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool
     {
-        logger.log("willFinishLaunchingWithOptions() main launch")
+        AppLogger.shared.log("willFinishLaunchingWithOptions() main launch")
         
         return true
     }
@@ -29,31 +29,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        logger.log("Application main launch")
+        AppLogger.shared.log("Application main launch")
         
         let success = BGTaskScheduler.shared.register(forTaskWithIdentifier: self.refreshTaskIdentifier, using: nil) { task in
             self.handleAppRefreshTask(task: task as! BGAppRefreshTask)
         }
 
         if !success {
-            logger.error("Failed to register background task with identifier \(self.refreshTaskIdentifier)")
+            AppLogger.shared.log("Failed to register background task with identifier \(self.refreshTaskIdentifier)")
         }
 
         return true
     }
-    
-    // this code is
-//    private func registerBackgroundTasks() {
-//        let refreshTaskIdentifier = "com.brentlyjr.WhatThePooh.refresh"
-//        
-//        let success = BGTaskScheduler.shared.register(forTaskWithIdentifier: refreshTaskIdentifier, using: nil) { task in
-//            self.handleAppRefreshTask(task: task as! BGAppRefreshTask)
-//        }
-//        
-//        if !success {
-//            logger.error("Failed to register background task with identifier \(refreshTaskIdentifier)")
-//        }
-//    }
     
     // Schedule a BGAppRefreshTask for periodic background fetch
     func scheduleAppRefresh() {
@@ -62,22 +49,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             try BGTaskScheduler.shared.submit(request)
-            logger.log("\(self.refreshTaskIdentifier) - task scheduled!")
+            AppLogger.shared.log("\(self.refreshTaskIdentifier) - task scheduled!")
         } catch let error as NSError {
-            logger.log("Could not schedule app refresh: \(error)")
-            logger.error("Could not schedule app refresh: \(error), \(error.userInfo)")
+            AppLogger.shared.log("Could not schedule app refresh: \(error)")
+            AppLogger.shared.log("Could not schedule app refresh: \(error), \(error.userInfo)")
         }
     }
     
-    
     private func handleAppRefreshTask(task: BGAppRefreshTask) {
-        logger.info("Background app refresh task started")
+        AppLogger.shared.log("Background app refresh task started")
         
         task.expirationHandler = {
-            self.logger.error("Background app refresh task expired before completion")
+            AppLogger.shared.log("Background app refresh task expired before completion")
         }
 
-        logger.log("Firing notification at: \(Date())")
+        AppLogger.shared.log("Firing notification at: \(Date())")
 
 //    TODO: Need to actually call code to check and send notifications, if needed
         // Simulate fetching ride statuses — replace with actual API call
@@ -93,13 +79,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Handle app entering background
     func applicationDidEnterBackground(_ application: UIApplication) {
-        logger.log("Application did enter background")
+        AppLogger.shared.log("Application did enter background")
         RideController.shared.applicationDidEnterBackground()
     }
     
     // Handle app entering foreground
     func applicationWillEnterForeground(_ application: UIApplication) {
-        logger.log("Application will enter foreground")
+        AppLogger.shared.log("Application will enter foreground")
         RideController.shared.applicationWillEnterForeground()
     }
 }

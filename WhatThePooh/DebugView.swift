@@ -9,19 +9,7 @@ import SwiftUI
 
 struct DebugView: View {
     @EnvironmentObject var viewModel: SharedViewModel
-
-    // Function to retrieve all UserDefaults data
-    func getUserDefaultsData() -> String {
-        let defaults = UserDefaults.standard.dictionaryRepresentation()
-        var output = "UserDefaults Data:\n\n"
-        
-        for (key, value) in defaults {
-            output += "\(key): \(value)\n"
-        }
-        
-        return output
-    }
-    
+    @State private var logMessages: String = ""
     
     var body: some View {
         VStack {
@@ -39,21 +27,44 @@ struct DebugView: View {
                 .padding()
             }
             .safeAreaInset(edge: .top) { Spacer().frame(height: 50) } // Pushes content down
-            Spacer()
-
-            // Scrollable Text View for Displaying UserDefaults
-            ScrollView {
-                Text(getUserDefaultsData())
-                    .font(.system(.body, design: .monospaced)) // Monospace for better readability
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            
+            // Log Messages Section
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("Log Messages")
+                        .font(.headline)
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    Button("Clear Logs") {
+                        AppLogger.shared.clearLogs()
+                        logMessages = AppLogger.shared.getLogMessagesAsString()
+                    }
+                    .padding(.horizontal)
+                }
+                
+                ScrollView {
+                    Text(logMessages)
+                        .font(.system(size: 10, design: .monospaced)) // Custom small size
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .frame(height: 400) // Made taller since we removed the UserDefaults section
+                .background(Color.black.opacity(0.1))
+                .cornerRadius(10)
+                .padding(.horizontal)
             }
-            .background(Color.black.opacity(0.1))
-            .cornerRadius(10)
-            .padding()            
+            
+            Spacer()
         }
         .background(Color.blue)
         .foregroundColor(.white)
         .ignoresSafeArea()
+        .onAppear {
+            // Get messages and reverse them for display
+            let messages = AppLogger.shared.getLogMessages()
+            logMessages = messages.joined(separator: "\n")
+        }
     }
 }
