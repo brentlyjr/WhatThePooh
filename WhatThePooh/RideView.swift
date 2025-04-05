@@ -116,7 +116,7 @@ struct RideView: View {
         //    return ("Refurb (\(minutes!) mins)", Color.yellow.opacity(0.2))
             return ("Refurb", Color.yellow.opacity(0.2))
         default:
-            return ("Unknown (\(minutes!) mins)", Color.clear)
+            return ("Unknown", Color.clear)
         }
     }
 }

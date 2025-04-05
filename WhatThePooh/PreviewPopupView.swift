@@ -9,6 +9,9 @@ import SwiftUI
 
 struct PreviewPopupView: View {
     @EnvironmentObject var viewModel: SharedViewModel
+    @State private var forecastData: RideForecastData?
+    @State private var isLoadingForecast = false
+    @State private var currentRideId: String? = nil
     
     var body: some View {
         if viewModel.isPreviewVisible, let ride = viewModel.selectedRide {
@@ -63,6 +66,17 @@ struct PreviewPopupView: View {
                         .foregroundColor(.white.opacity(0.8))
                         .padding(.bottom)
                 }
+                
+                // Forecast Chart - only show if we have data for the current ride
+                if currentRideId == ride.id {
+                    if isLoadingForecast {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .frame(height: 200)
+                    } else if let forecastData = forecastData, !forecastData.entries.isEmpty {
+                        RideForecastChart(forecastData: forecastData)
+                    }
+                }
             }
             .frame(width: UIScreen.main.bounds.width - 40)
             .background(
@@ -85,7 +99,7 @@ struct PreviewPopupView: View {
             )
             .position(
                 x: UIScreen.main.bounds.width / 2,
-                y: 100  // Position over the header
+                y: (currentRideId == ride.id && forecastData != nil && !forecastData!.entries.isEmpty) ? 250 : 150  // Position lower when showing graph
             )
             .transition(
                 .asymmetric(
@@ -94,6 +108,37 @@ struct PreviewPopupView: View {
                 )
             )
             .animation(.spring(response: 1.2, dampingFraction: 0.5), value: viewModel.isPreviewVisible)
+            .onAppear {
+                // Reset forecast data when a new ride is selected
+                if currentRideId != ride.id {
+                    currentRideId = ride.id
+                    forecastData = nil
+                    fetchRideForecast(for: ride.id)
+                }
+            }
+        }
+    }
+    
+    private func fetchRideForecast(for rideId: String) {
+        isLoadingForecast = true
+        
+        // Use the RideController to fetch the ride details
+        RideController.shared.performNetworkRequest(id: rideId) { data in
+            DispatchQueue.main.async {
+                self.isLoadingForecast = false
+                
+                // Only update the forecast data if we're still showing the same ride
+                if self.currentRideId == rideId {
+                    if let data = data,
+                       let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                       let forecastData = RideForecastData.parse(from: json) {
+                        self.forecastData = forecastData
+                    } else {
+                        AppLogger.shared.log("Failed to parse ride forecast data for ride: \(rideId)")
+                        self.forecastData = nil
+                    }
+                }
+            }
         }
     }
 } 

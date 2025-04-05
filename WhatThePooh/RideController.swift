@@ -42,7 +42,7 @@ class RideController: ObservableObject {
     // Retrieves all the entities (children) under a park - filters based on ATTRACTION
     // Stores them in a rideArray
     func fetchRidesForPark(for destinationID: String, completion: @escaping () -> Void) {
-        performNetworkRequest(endpoint: destinationID) { data in
+        performNetworkRequest(id: destinationID) { data in
             guard let data = data else {
                 print("No data received for park query.")
                 return
@@ -239,7 +239,7 @@ class RideController: ObservableObject {
     }
     
     private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {
-        performNetworkRequest(endpoint: entity.id) { data in
+        performNetworkRequest(id: entity.id) { data in
             guard let data = data else {
                 completion(nil, 0, nil)
                 return
@@ -265,14 +265,14 @@ class RideController: ObservableObject {
         }
     }
     
-    private func performNetworkRequest(endpoint: String, completion: @escaping (Data?) -> Void) {
-        guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(endpoint)/live") else {
+    func performNetworkRequest(id: String, completion: @escaping (Data?) -> Void) {
+        guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(id)/live") else {
             print("Invalid URL")
             completion(nil)
             return
         }
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
                 print("Network error: \(error.localizedDescription)")
                 completion(nil)
