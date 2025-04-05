@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             try BGTaskScheduler.shared.submit(request)
-            AppLogger.shared.log("\(self.refreshTaskIdentifier) - task scheduled!")
+        //    AppLogger.shared.log("\(self.refreshTaskIdentifier) - task scheduled!")
         } catch let error as NSError {
             AppLogger.shared.log("Could not schedule app refresh: \(error)")
             AppLogger.shared.log("Could not schedule app refresh: \(error), \(error.userInfo)")
@@ -57,13 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func handleAppRefreshTask(task: BGAppRefreshTask) {
-        AppLogger.shared.log("Background app refresh task started")
+        AppLogger.shared.log("Background task started update")
         
         task.expirationHandler = {
             AppLogger.shared.log("Background app refresh task expired before completion")
         }
 
-        AppLogger.shared.log("Firing notification at: \(Date())")
+        // AppLogger.shared.log("Firing notification at: \(Date())")
 
 //    TODO: Need to actually call code to check and send notifications, if needed
         // Simulate fetching ride statuses — replace with actual API call

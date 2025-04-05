@@ -32,7 +32,7 @@ class RideController: ObservableObject {
     private let favoritesKey = "favoriteRides"
     private var favoriteIDs: Set<String> = []
     
-    private let notificationManager: Notifications
+    private weak var notificationManager: Notifications?
     
     private init(notificationManager: Notifications) {
         self.notificationManager = notificationManager
@@ -96,7 +96,8 @@ class RideController: ObservableObject {
         }
     }
 
-    // This updates the ride status from the API. This just updates our internal copy
+    // This updates the ride status from the API. This updates our internal copy first and then
+    // copies the data over to the main array to trigger a view refresh
     func updateRideStatus(completion: @escaping () -> Void) {
         for index in parkRideArray.indices {
             let ride = parkRideArray[index]
@@ -113,6 +114,8 @@ class RideController: ObservableObject {
                 // Update favorite status
                 let rideID = self.parkRideArray[index].id
                 self.parkRideArray[index].isFavorited = self.favoriteIDs.contains(rideID)
+                
+                sendNotificationOnStatusChange(for: self.parkRideArray[index])
                 
                 // Update visibleRideArray on the main thread
                 DispatchQueue.main.async {
@@ -183,56 +186,15 @@ class RideController: ObservableObject {
 
     // This is the function that checks a ride's status and sends a notification if has changed
     private func sendNotificationOnStatusChange(for ride: Ride) {
-        print("Notification check for ride \(ride.name)")
-
-        // Now let's see if the status has changed for our entity, we also find out if this entity didn't have a value yet
-//        let (statusChanged, emptyValue ) = RideStatusManager.shared.checkStatus(for: ride)
-//        
-//        // Our ride status changed, but this is a boostrap case, so we don't send notification this time
-//        if statusChanged && emptyValue {
-//            print("First time getting status for ride \(ride.name)")
-//            print(" --> Current Status: \(String(describing: ride.status))")
-//        }
-//
-//        print(" --> Current Status: \(String(describing: ride.status))")
-//        print(" --> Previous Status: \(String(describing: ride.previousStatus))")
-//
-//        // Our ride status changed, and the value was not empty (IE, we had a previous stored state
-//        if statusChanged && !emptyValue, let status = ride.status {
-//            notificationManager.sendStatusChangeNotification(rideName: ride.name, newStatus: status)
-//        }
-
-        // Else, our status hasn't changed so don't do anything
+        // If our ride status changed, and the value was not empty (IE, we had a previous stored state
+        // Then we should be sending a status change notification.
+        if ride.oldStatus != ride.status && ride.oldStatus != nil, let status = ride.status {
+            print("Notification check for ride \(ride.name)")
+            print(" --> Previous Status: \(String(describing: ride.oldStatus))")
+            print(" --> Current Status: \(String(describing: ride.status))")
+            notificationManager?.sendStatusChangeNotification(rideName: ride.name, newStatus: status)
+        }
     }
-
-//    // This is the function that checks a ride's status and sends a notification if has changed
-//    private func sendNotificationOnStatusChange(for ride: Ride) {
-//        print("Notification check for ride \(ride.name)")
-//        
-//        // Get the previously stored status and update the stored value with the new one.
-//        let previousStatus = RideStatusManager.shared.checkStatus(for: ride)
-//        
-//        // Define if this is the first time getting a status.
-//        let isFirstTime = (previousStatus == nil || previousStatus?.isEmpty == true)
-//        
-//        // Determine if the status has changed (i.e. new status differs from what was stored)
-//        let statusChanged = (ride.status != previousStatus)
-//        
-//        print(" --> Current Status: \(String(describing: ride.status))")
-//        print(" --> Previous Status: \(String(describing: previousStatus))")
-//        
-//        if statusChanged {
-//            if isFirstTime {
-//                // This is the bootstrap case: first time receiving a status, so don't notify.
-//                print("First time getting status for ride \(ride.name)")
-//            } else if let status = ride.status {
-//                // Send notification if the status has changed and we have a valid current status.
-//                notificationManager.sendStatusChangeNotification(rideName: ride.name, newStatus: status)
-//            }
-//        }
-//
-//        // Else, our status hasn't changed so don't do anything
-//    }
     
     // Load persisted favorite ride IDs from UserDefaults.
     private func loadFavorites() {
@@ -251,8 +213,8 @@ class RideController: ObservableObject {
         // timer?.invalidate() // Cancel any existing timer
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
 
-            AppLogger.shared.log("Timer triggered a fetch of new statuses...")
-            
+            AppLogger.shared.log("Timer started update")
+
             self?.updateRideStatus() {
             //    self?.updateFavoriteStatus()
             //    self?.updateRideView()
