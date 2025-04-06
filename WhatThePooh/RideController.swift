@@ -42,9 +42,12 @@ class RideController: ObservableObject {
     // Retrieves all the entities (children) under a park - filters based on ATTRACTION
     // Stores them in a rideArray
     func fetchRidesForPark(for destinationID: String, completion: @escaping () -> Void) {
-        performNetworkRequest(id: destinationID) { data in
+        performNetworkRequest(id: destinationID) { [weak self] data in
+            guard let self = self else { return }
+            
             guard let data = data else {
                 print("No data received for park query.")
+                completion()
                 return
             }
             do {
@@ -59,84 +62,59 @@ class RideController: ObservableObject {
 
             } catch {
                 print("Decoding error for our park: \(error)")
+                completion()
             }
         }
     }
     
-    // This updates the ride status from the API. This just updates our internal copy
-    func updateRideStatus_synchronous(completion: @escaping () -> Void) {
-        
-        // Setting up a completion block around our ride query
-        let dispatchGroup = DispatchGroup()
-        
-        for index in parkRideArray.indices {
-            let ride = parkRideArray[index]
-
-            dispatchGroup.enter()
-
-            self.fetchStatus(for: ride) { [weak self] status, waitTime, lastUpdated in
-                self?.parkRideArray[index].status = status
-                self?.parkRideArray[index].waitTime = waitTime
-                self?.parkRideArray[index].lastUpdated = lastUpdated
-                
-                // We are basically keeping the old status so we can compare to see if it has changed later
-                self?.parkRideArray[index].oldStatus = ride.status
-
-                // Basicaly make sure the favorite status matches what our cache has (replaces its own function)
-                if let rideID = self?.parkRideArray[index].id {
-                    self?.parkRideArray[index].isFavorited = self?.favoriteIDs.contains(rideID) ?? false
-                }
-
-                dispatchGroup.leave()
-            }
-        }
-
-        dispatchGroup.notify(queue: .global()) {
-            completion()
-        }
-    }
 
     // This updates the ride status from the API. This updates our internal copy first and then
     // copies the data over to the main array to trigger a view refresh
     func updateRideStatus(completion: @escaping () -> Void) {
+        // Start all status updates asynchronously
         for index in parkRideArray.indices {
             let ride = parkRideArray[index]
+            
+            // Capture the index in a local variable to avoid potential issues with the closure
+            let currentIndex = index
             
             self.fetchStatus(for: ride) { [weak self] status, waitTime, lastUpdated in
                 guard let self = self else { return }
                 
                 // Update internal copy
-                self.parkRideArray[index].status = status
-                self.parkRideArray[index].waitTime = waitTime
-                self.parkRideArray[index].lastUpdated = lastUpdated
-                self.parkRideArray[index].oldStatus = ride.status
+                self.parkRideArray[currentIndex].status = status
+                self.parkRideArray[currentIndex].waitTime = waitTime
+                self.parkRideArray[currentIndex].lastUpdated = lastUpdated
+                self.parkRideArray[currentIndex].oldStatus = ride.status
                 
                 // Update favorite status
-                let rideID = self.parkRideArray[index].id
-                self.parkRideArray[index].isFavorited = self.favoriteIDs.contains(rideID)
+                let rideID = self.parkRideArray[currentIndex].id
+                self.parkRideArray[currentIndex].isFavorited = self.favoriteIDs.contains(rideID)
                 
-                sendNotificationOnStatusChange(for: self.parkRideArray[index])
+                self.sendNotificationOnStatusChange(for: self.parkRideArray[currentIndex])
                 
                 // Update visibleRideArray on the main thread
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    
                     // If visibleRideArray doesn't have the ride (first time) then add it.
                     if self.visibleRideArray.count != self.parkRideArray.count {
                         // For first time, simply replace it with the updated internal array.
                         self.visibleRideArray = self.parkRideArray
                     } else {
                         // Otherwise, update the existing ride at the same index.
-                        self.visibleRideArray[index].status = self.parkRideArray[index].status
-                        self.visibleRideArray[index].waitTime = self.parkRideArray[index].waitTime
-                        self.visibleRideArray[index].lastUpdated = self.parkRideArray[index].lastUpdated
-                        self.visibleRideArray[index].oldStatus = self.parkRideArray[index].oldStatus
-                        self.visibleRideArray[index].isFavorited = self.parkRideArray[index].isFavorited
+                        self.visibleRideArray[currentIndex].status = self.parkRideArray[currentIndex].status
+                        self.visibleRideArray[currentIndex].waitTime = self.parkRideArray[currentIndex].waitTime
+                        self.visibleRideArray[currentIndex].lastUpdated = self.parkRideArray[currentIndex].lastUpdated
+                        self.visibleRideArray[currentIndex].oldStatus = self.parkRideArray[currentIndex].oldStatus
+                        self.visibleRideArray[currentIndex].isFavorited = self.parkRideArray[currentIndex].isFavorited
                     }
                 }
             }
         }
         
-        // You might also want to call completion after all fetches finish.
-        // One way to do this is to use a DispatchGroup to track when all fetchStatus calls are done.
+        // Call completion immediately since we're not waiting for all updates to finish
+        completion()
     }
     
     
@@ -210,14 +188,17 @@ class RideController: ObservableObject {
     
     // Sets a timer to reguarly query ride statuses and update them
     func startStatusUpdates() -> Void {
-        // timer?.invalidate() // Cancel any existing timer
+        // Cancel any existing timer first
+        stopStatusUpdates()
+        
+        // Create a new timer with a weak reference to self
         timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
-
+            guard let self = self else { return }
+            
             AppLogger.shared.log("Timer started update")
-
-            self?.updateRideStatus() {
-            //    self?.updateFavoriteStatus()
-            //    self?.updateRideView()
+            
+            self.updateRideStatus {
+                // Empty completion handler
             }
         }
     }
@@ -239,15 +220,13 @@ class RideController: ObservableObject {
     }
     
     private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {
-        performNetworkRequest(id: entity.id) { data in
+        performNetworkRequest(id: entity.id) { [weak self] data in
+            // No need to use self here, so we can remove the guard
             guard let data = data else {
                 completion(nil, 0, nil)
                 return
             }
-            // Log raw JSON response
-            //            if let jsonString = String(data: data, encoding: .utf8) {
-            //                print("Raw JSON Response: \(jsonString)")
-            //            }
+            
             do {
                 if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let liveData = json["liveData"] as? [[String: Any]],
@@ -258,9 +237,12 @@ class RideController: ObservableObject {
                     let standby = queue?["STANDBY"] as? [String: Any]
                     let waitTime = standby?["waitTime"] as? Int
                     completion(status, waitTime, lastUpdated)
+                } else {
+                    completion(nil, 0, nil)
                 }
             } catch {
                 print("Error parsing status JSON: \(error)")
+                completion(nil, 0, nil)
             }
         }
     }

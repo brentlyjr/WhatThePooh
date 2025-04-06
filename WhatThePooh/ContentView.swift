@@ -11,7 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var notificationManager: Notifications
     @StateObject var viewModel = SharedViewModel()
     @StateObject var parkStore = ParkStore()
-    @StateObject private var rideController = RideController.shared
+    @ObservedObject private var rideController = RideController.shared
 
     init() {
         // No need to initialize rideController here anymore since we're using the singleton

@@ -28,7 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-    ) -> Bool {
+    ) -> Bool
+    {
         AppLogger.shared.log("Application main launch")
         
         let success = BGTaskScheduler.shared.register(forTaskWithIdentifier: self.refreshTaskIdentifier, using: nil) { task in

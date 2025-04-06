@@ -82,9 +82,9 @@ struct RideView: View {
         
         // So for some parks, the status is not always accurate (IE, don't use REFURBISH, etc)
         // So for those odd cases, I am going to potentially change the status for display
-        var calculatedStatus = status
+        let  calculatedStatus = status
         
-        let minutes = Utilities.minutesSince(lastUpdated ?? Utilities.getTimeNowUTCString())
+        // let minutes = Utilities.minutesSince(lastUpdated ?? Utilities.getTimeNowUTCString())
         
         // Japan, stuff can be "DOWN" for months, so if has been down for more than 2 days, let's
         // call it refurbished.
