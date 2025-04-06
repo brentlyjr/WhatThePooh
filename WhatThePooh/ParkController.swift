@@ -48,7 +48,6 @@ class ParkController {
             
             do {
                 let parkData = try JSONDecoder().decode(ParkData.self, from: data)
-                print("Successfully decoded schedule with \(parkData.schedule.count) entries")
                 completion(parkData.schedule)
             } catch {
                 print("Decoding error: \(error)")

@@ -77,7 +77,12 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
-        print(" ** Ride \(rideName) status updated to \(newStatus). Sending notification. **")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        let currentDateTime = dateFormatter.string(from: Date())
+        
+        print(" ** [\(currentDateTime)] Ride \(rideName) status updated to \(newStatus). Sending notification. **")
         Task {
             do {
                 try await UNUserNotificationCenter.current().add(request)

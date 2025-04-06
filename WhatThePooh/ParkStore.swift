@@ -57,7 +57,6 @@ class ParkStore: ObservableObject {
                 if let schedules = schedules {
                     // Update the park with the operating hours
                     park.operatingHours = schedules
-                    print("Loaded \(schedules.count) operating hours for \(park.name)")
                     
                     // If this is the selected park, log today's hours
                     if let todayHours = park.todayHours {
