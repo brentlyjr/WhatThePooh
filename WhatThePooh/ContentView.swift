@@ -55,6 +55,24 @@ struct ContentView: View {
             DebugView()
                 .environmentObject(viewModel)
         }
+        .onAppear {
+            setupNotificationObserver()
+        }
+    }
+    
+    private func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            forName: .openRideDetails,
+            object: nil,
+            queue: .main
+        ) { notification in
+            if let rideID = notification.userInfo?["rideID"] as? String,
+               let ride = rideController.visibleRideArray.first(where: { $0.id == rideID }) {
+                // Update the view model to show the popup
+                viewModel.selectedRide = ride
+                viewModel.isPreviewVisible = true
+            }
+        }
     }
 }
 

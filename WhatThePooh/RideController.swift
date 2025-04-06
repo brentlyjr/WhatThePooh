@@ -166,11 +166,17 @@ class RideController: ObservableObject {
     private func sendNotificationOnStatusChange(for ride: Ride) {
         // If our ride status changed, and the value was not empty (IE, we had a previous stored state
         // Then we should be sending a status change notification.
-        if ride.oldStatus != ride.status && ride.oldStatus != nil, let status = ride.status {
+        if ride.oldStatus != ride.status && ride.oldStatus != nil {
+            // Use weak reference to avoid retain cycles
             print("Notification check for ride \(ride.name)")
             print(" --> Previous Status: \(String(describing: ride.oldStatus))")
             print(" --> Current Status: \(String(describing: ride.status))")
-            notificationManager?.sendStatusChangeNotification(rideName: ride.name, newStatus: status)
+            weak var notifications = Notifications.shared
+            notifications?.sendStatusChangeNotification(
+                rideName: ride.name, 
+                newStatus: ride.status ?? "Unknown",
+                rideID: ride.id
+            )
         }
     }
     

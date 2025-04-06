@@ -7,7 +7,13 @@
 
 import UserNotifications
 
-class Notifications: ObservableObject {
+
+// Define a notification name for opening ride details
+extension Notification.Name {
+    static let openRideDetails = Notification.Name("openRideDetails")
+}
+
+class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
 
     // Singleton of Notification class
     static let shared = Notifications()
@@ -15,11 +21,16 @@ class Notifications: ObservableObject {
     // Published state
     @Published private(set) var permissionGranted = false
     
-    private init() {
+    private override init() {
+        super.init()
+        
         // Check initial permission status
         Task {
             await checkPermissionStatus()
         }
+        
+        // Set this class as the delegate for UNUserNotificationCenter
+        UNUserNotificationCenter.current().delegate = self
     }
     
     // Check current permission status
@@ -52,13 +63,16 @@ class Notifications: ObservableObject {
     }
     
     // Send a status change notification
-    func sendStatusChangeNotification(rideName: String, newStatus: String) {
+    func sendStatusChangeNotification(rideName: String, newStatus: String, rideID: String) {
         guard permissionGranted else { return }
         
         let content = UNMutableNotificationContent()
         content.title = "\(rideName) Status Update"
         content.body = "The ride is now \(newStatus)."
         content.sound = .default
+        
+        // Add the ride ID to the notification's userInfo
+        content.userInfo = ["rideID": rideID]
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -77,6 +91,26 @@ class Notifications: ObservableObject {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Show the notification as a banner with sound
         completionHandler([.banner, .sound])
+    }
+    
+    // Handle notification taps
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                              didReceive response: UNNotificationResponse,
+                              withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        // Extract the ride ID from the notification
+        if let rideID = userInfo["rideID"] as? String {
+            // Post a notification that your app can observe
+            NotificationCenter.default.post(name: .openRideDetails, 
+                                         object: nil, 
+                                         userInfo: ["rideID": rideID])
+            
+            AppLogger.shared.log("Notification tapped for ride ID: \(rideID)")
+        }
+        
+        completionHandler()
     }
 }
