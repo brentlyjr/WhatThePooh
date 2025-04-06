@@ -46,6 +46,28 @@ class ParkStore: ObservableObject {
                 Park(id: "ca888437-ebb4-4d50-aed2-d227f7096968", name: "Paris Walt Disney Studios", isSelected: false, isVisible: false)
             ]
         }
+        
+        // Fetch operating hours for each park
+        fetchOperatingHoursForAllParks()
+    }
+    
+    private func fetchOperatingHoursForAllParks() {
+        for park in parks {
+            ParkController.shared.fetchParkSchedule(for: park.id) { schedules in
+                if let schedules = schedules {
+                    // Update the park with the operating hours
+                    park.operatingHours = schedules
+                    print("Loaded \(schedules.count) operating hours for \(park.name)")
+                    
+                    // If this is the selected park, log today's hours
+                    if let todayHours = park.todayHours {
+                        print("Today's hours for \(park.name): \(todayHours.openingTime) - \(todayHours.closingTime)")
+                    }
+                } else {
+                    print("Failed to fetch operating hours for park: \(park.name)")
+                }
+            }
+        }
     }
     
     private func saveParks() {

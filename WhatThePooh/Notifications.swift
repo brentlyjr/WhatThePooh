@@ -108,7 +108,7 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
                                          object: nil, 
                                          userInfo: ["rideID": rideID])
             
-            AppLogger.shared.log("Notification tapped for ride ID: \(rideID)")
+            print("Notification tapped for ride ID: \(rideID)")
         }
         
         completionHandler()

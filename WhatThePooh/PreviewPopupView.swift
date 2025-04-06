@@ -134,7 +134,7 @@ struct PreviewPopupView: View {
                        let forecastData = RideForecastData.parse(from: json) {
                         self.forecastData = forecastData
                     } else {
-                        AppLogger.shared.log("Failed to parse ride forecast data for ride: \(rideId)")
+                        print("Failed to parse ride forecast data for ride: \(rideId)")
                         self.forecastData = nil
                     }
                 }
