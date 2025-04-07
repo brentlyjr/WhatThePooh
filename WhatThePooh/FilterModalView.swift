@@ -15,7 +15,7 @@ struct FilterModalView: View {
         NavigationView {
             List {
                 Toggle("Show Favorites Only", isOn: $viewModel.showFavoritesOnly)
-                Toggle("Show Open Rides Only", isOn: .constant(false))
+                Toggle("Show Open Rides Only", isOn: $viewModel.showOpenRidesOnly)
             }
             .navigationTitle("Filter Options")
             .toolbar {

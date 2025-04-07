@@ -8,10 +8,10 @@
 import SwiftUI
 
 class SharedViewModel: ObservableObject {
-    // Filter and sort state
-    @Published var selectedFilter: RideFilter = .all
+    // Filter and sort states for our RideView
     @Published var sortOrder: RideSortOrder = .name
     @Published var showFavoritesOnly: Bool = false
+    @Published var showOpenRidesOnly: Bool = false
     
     // Modal state of our two bottom drawer popups
     @Published var showSortModal: Bool = false
@@ -30,11 +30,20 @@ class SharedViewModel: ObservableObject {
     
     // Helper function to sort rides based on current sort order
     func sortRides(_ rides: [Ride]) -> [Ride] {
-        // First, filter rides based on the showFavoritesOnly flag
-        let filteredRides = showFavoritesOnly ?
-            rides.filter { $0.isFavorited } :
-            rides
+        // First, apply filters
+        var filteredRides = rides
         
+        // Apply favorites filter if enabled
+        if showFavoritesOnly {
+            filteredRides = filteredRides.filter { $0.isFavorited }
+        }
+        
+        // Apply open rides filter if enabled
+        if showOpenRidesOnly {
+            filteredRides = filteredRides.filter { $0.status == "OPERATING" }
+        }
+        
+        // Then apply sorting
         switch sortOrder {
         case .favorited:
             // Favorites come first; if both rides have the same favorited status, sort by name
@@ -53,11 +62,6 @@ class SharedViewModel: ObservableObject {
             }
         }
     }
-}
-
-enum RideFilter {
-    case all
-    case favorites
 }
 
 enum RideSortOrder {
