@@ -33,7 +33,7 @@ class RideController: ObservableObject {
     private var favoriteIDs: Set<String> = []
     
     private weak var notificationManager: Notifications?
-    
+        
     private init(notificationManager: Notifications) {
         self.notificationManager = notificationManager
         loadFavorites()
@@ -70,7 +70,7 @@ class RideController: ObservableObject {
 
     // This updates the ride status from the API. This updates our internal copy first and then
     // copies the data over to the main array to trigger a view refresh
-    func updateRideStatus(completion: @escaping () -> Void) {
+    func updateRideStatus() -> Void {
         // Start all status updates asynchronously
         for index in parkRideArray.indices {
             let ride = parkRideArray[index]
@@ -81,74 +81,43 @@ class RideController: ObservableObject {
             self.fetchStatus(for: ride) { [weak self] status, waitTime, lastUpdated in
                 guard let self = self else { return }
                 
-                // Update internal copy
-                self.parkRideArray[currentIndex].status = status
-                self.parkRideArray[currentIndex].waitTime = waitTime
-                self.parkRideArray[currentIndex].lastUpdated = lastUpdated
-                self.parkRideArray[currentIndex].oldStatus = ride.status
-                
-                // Update favorite status
-                let rideID = self.parkRideArray[currentIndex].id
-                self.parkRideArray[currentIndex].isFavorited = self.favoriteIDs.contains(rideID)
-                
-                self.sendNotificationOnStatusChange(for: self.parkRideArray[currentIndex])
-                
-                // Update visibleRideArray on the main thread
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
+                    // Batch update all properties atomically
+                    self.parkRideArray[currentIndex].status = status
+                    self.parkRideArray[currentIndex].waitTime = waitTime
+                    self.parkRideArray[currentIndex].lastUpdated = lastUpdated
+                    self.parkRideArray[currentIndex].oldStatus = ride.status
                     
-                    // If visibleRideArray doesn't have the ride (first time) then add it.
-                    if self.visibleRideArray.count != self.parkRideArray.count {
-                        // For first time, simply replace it with the updated internal array.
-                        self.visibleRideArray = self.parkRideArray
-                    } else {
-                        // Otherwise, update the existing ride at the same index.
-                        self.visibleRideArray[currentIndex].status = self.parkRideArray[currentIndex].status
-                        self.visibleRideArray[currentIndex].waitTime = self.parkRideArray[currentIndex].waitTime
-                        self.visibleRideArray[currentIndex].lastUpdated = self.parkRideArray[currentIndex].lastUpdated
-                        self.visibleRideArray[currentIndex].oldStatus = self.parkRideArray[currentIndex].oldStatus
-                        self.visibleRideArray[currentIndex].isFavorited = self.parkRideArray[currentIndex].isFavorited
+                    // Update favorite status
+                    let rideID = self.parkRideArray[currentIndex].id
+                    self.parkRideArray[currentIndex].isFavorited = self.favoriteIDs.contains(rideID)
+
+                    // Send notification about the status change
+                    self.sendNotificationOnStatusChange(for: self.parkRideArray[currentIndex])
+                    
+                    // Update visibleRideArray on the main thread
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        
+                        // If visibleRideArray doesn't have the ride (first time) then add it
+                        if self.visibleRideArray.count != self.parkRideArray.count {
+                            // For first time, simply replace it with the updated internal array
+                            self.visibleRideArray = self.parkRideArray
+                        } else {
+                            // Otherwise, update the existing ride at the same index
+                            self.visibleRideArray[currentIndex].status = self.parkRideArray[currentIndex].status
+                            self.visibleRideArray[currentIndex].waitTime = self.parkRideArray[currentIndex].waitTime
+                            self.visibleRideArray[currentIndex].lastUpdated = self.parkRideArray[currentIndex].lastUpdated
+                            self.visibleRideArray[currentIndex].oldStatus = self.parkRideArray[currentIndex].oldStatus
+                            self.visibleRideArray[currentIndex].isFavorited = self.parkRideArray[currentIndex].isFavorited
+                        }
+                        
+                        // Notify SwiftUI that we've updated the observable object
+                        self.objectWillChange.send()
                     }
                 }
-            }
-        }
-        
-        // Call completion immediately since we're not waiting for all updates to finish
-        completion()
-    }
-    
-    
-    // Apply the persisted favorite state to each ride.
-//    func updateFavoriteStatus() {
-//        for index in self.parkRideArray.indices {
-//            self.parkRideArray[index].isFavorited = favoriteIDs.contains(self.parkRideArray[index].id)
-//        }
-//    }
-    
-    func updateRideView() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            // Ensure visibleRideArray has the same count as parkRideArray before updating
-            guard self.visibleRideArray.count == self.parkRideArray.count else {
-                self.visibleRideArray = self.parkRideArray // Just replace if structure differs
-                return
-            }
-            
-            // Update only the necessary fields
-            for index in self.visibleRideArray.indices {
-                let newRide = self.parkRideArray[index]
-                var visibleRide = self.visibleRideArray[index]
-                
-                visibleRide.status = newRide.status
-                visibleRide.oldStatus = newRide.oldStatus
-                visibleRide.waitTime = newRide.waitTime
-                visibleRide.lastUpdated = newRide.lastUpdated
-                
-                self.visibleRideArray[index] = visibleRide // Assign back to trigger SwiftUI updates
-            }
         }
     }
+
     
     // Toggle the favorite state for a ride.
     func toggleFavorite(for ride: Ride) {
@@ -203,9 +172,7 @@ class RideController: ObservableObject {
             
             AppLogger.shared.log("Timer started update")
             
-            self.updateRideStatus {
-                // Empty completion handler
-            }
+            self.updateRideStatus()
         }
     }
     

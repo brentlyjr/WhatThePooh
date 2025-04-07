@@ -27,8 +27,7 @@ struct ParkSelectionView: View {
                     // Now fetch all the rides for that park
                     rideController.fetchRidesForPark(for: park.id) {
                         // Now upddate their statuses individually
-                        rideController.updateRideStatus() {
-                        }
+                        rideController.updateRideStatus()
                     }
                 }) {
                     Text(park.name)

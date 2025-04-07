@@ -68,7 +68,7 @@ struct RideView: View {
             // Load all the entities for our park. Lookup the currently selected park
             if let selectedPark = parkStore.currentSelectedPark {
                 rideController.fetchRidesForPark(for: selectedPark.id) {
-                    rideController.updateRideStatus() { }
+                    rideController.updateRideStatus()
                     // Starts a time to refresh the data in the view periodically
                     DispatchQueue.main.async {
                         rideController.startStatusUpdates()
