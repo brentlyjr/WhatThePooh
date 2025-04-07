@@ -110,9 +110,6 @@ class RideController: ObservableObject {
                             self.visibleRideArray[currentIndex].oldStatus = self.parkRideArray[currentIndex].oldStatus
                             self.visibleRideArray[currentIndex].isFavorited = self.parkRideArray[currentIndex].isFavorited
                         }
-                        
-                        // Notify SwiftUI that we've updated the observable object
-                        self.objectWillChange.send()
                     }
                 }
         }

@@ -47,9 +47,11 @@ struct ContentView: View {
         .sheet(isPresented: $viewModel.showSortModal) {
             SortModalView()
                 .environmentObject(viewModel)
+                .presentationDetents([.medium])
         }
         .sheet(isPresented: $viewModel.showFilterModal) {
             FilterModalView()
+                .presentationDetents([.medium])
         }
         .fullScreenCover(isPresented: $viewModel.showDebugWindow) {
             DebugView()
