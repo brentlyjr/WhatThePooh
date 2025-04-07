@@ -12,7 +12,20 @@ struct SortModalView: View {
     @EnvironmentObject var viewModel: SharedViewModel
     
     var body: some View {
-        NavigationView {
+        VStack(spacing: 0) {
+            // Custom header
+            HStack {
+                Text("Sort Options")
+                    .font(.headline)
+                Spacer()
+                Button("Done") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .foregroundColor(.blue)
+            }
+            .padding()
+            
+            // List content
             List {
                 Button(action: {
                     viewModel.sortOrder = .name
@@ -62,14 +75,7 @@ struct SortModalView: View {
                     }
                 }
             }
-            .navigationTitle("Sort Options")
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
+            .listStyle(InsetGroupedListStyle())
         }
     }
 }

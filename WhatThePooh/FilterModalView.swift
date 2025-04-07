@@ -12,19 +12,25 @@ struct FilterModalView: View {
     @EnvironmentObject var viewModel: SharedViewModel
 
     var body: some View {
-        NavigationView {
+        VStack(spacing: 0) {
+            // Custom header
+            HStack {
+                Text("Filter Options")
+                    .font(.headline)
+                Spacer()
+                Button("Done") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .foregroundColor(.blue)
+            }
+            .padding()
+            
+            // List content
             List {
                 Toggle("Show Favorites Only", isOn: $viewModel.showFavoritesOnly)
                 Toggle("Show Open Rides Only", isOn: $viewModel.showOpenRidesOnly)
             }
-            .navigationTitle("Filter Options")
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
+            .listStyle(InsetGroupedListStyle())
         }
     }
 }
