@@ -9,11 +9,12 @@ import SwiftUI
 
 struct FilterModalView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewModel: SharedViewModel
 
     var body: some View {
         NavigationView {
             List {
-                Toggle("Show Favorites Only", isOn: .constant(false))
+                Toggle("Show Favorites Only", isOn: $viewModel.showFavoritesOnly)
                 Toggle("Show Open Rides Only", isOn: .constant(false))
             }
             .navigationTitle("Filter Options")
