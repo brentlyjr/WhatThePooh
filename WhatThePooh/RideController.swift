@@ -24,6 +24,9 @@ class RideController: ObservableObject {
     // This is our internal ride array. This spans all of our parks and will allow us
     // to get the updated status for all rides that we may have favorited
     private var parkRideArray: [Ride] = []
+    
+    // Serial queue for synchronizing updates to parkRideArray
+    private let updateQueue = DispatchQueue(label: "com.whatthepooh.rideupdate")
 
     // An internal timer that will fetch updated statuses while we are in the foreground
     private var timer: Timer?
@@ -81,6 +84,8 @@ class RideController: ObservableObject {
             self.fetchStatus(for: ride) { [weak self] status, waitTime, lastUpdated in
                 guard let self = self else { return }
                 
+                // Use serial queue to synchronize updates to parkRideArray
+                self.updateQueue.async {
                     // Batch update all properties atomically
                     self.parkRideArray[currentIndex].status = status
                     self.parkRideArray[currentIndex].waitTime = waitTime
@@ -112,6 +117,7 @@ class RideController: ObservableObject {
                         }
                     }
                 }
+            }
         }
     }
 
