@@ -137,9 +137,6 @@ class RideController: ObservableObject {
         // Then we should be sending a status change notification.
         if ride.oldStatus != ride.status && ride.oldStatus != nil {
             // Use weak reference to avoid retain cycles
-            print("Notification check for ride \(ride.name)")
-            print(" --> Previous Status: \(String(describing: ride.oldStatus))")
-            print(" --> Current Status: \(String(describing: ride.status))")
             weak var notifications = Notifications.shared
             notifications?.sendStatusChangeNotification(
                 rideName: ride.name, 

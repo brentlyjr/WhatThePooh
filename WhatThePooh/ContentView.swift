@@ -19,7 +19,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
+            VStack(spacing: 4) {
                 // Fixed Header
                 HeaderView()
                     .environmentObject(parkStore)

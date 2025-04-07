@@ -62,7 +62,8 @@ struct RideView: View {
                     }
                 }
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom)
         }
         .onAppear {
             // Load all the entities for our park. Lookup the currently selected park
