@@ -27,11 +27,23 @@ struct SortModalView: View {
                 }
                 
                 Button(action: {
-                    viewModel.sortOrder = .waitTime
+                    viewModel.sortOrder = .waitTimeLowToHigh
                 }) {
                     HStack {
-                        Text("Sort by Wait Time")
-                        if viewModel.sortOrder == .waitTime {
+                        Text("Sort by Wait Time (Low to High)")
+                        if viewModel.sortOrder == .waitTimeLowToHigh {
+                            Spacer()
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+                
+                Button(action: {
+                    viewModel.sortOrder = .waitTimeHighToLow
+                }) {
+                    HStack {
+                        Text("Sort by Wait Time (High to Low)")
+                        if viewModel.sortOrder == .waitTimeHighToLow {
                             Spacer()
                             Image(systemName: "checkmark")
                         }

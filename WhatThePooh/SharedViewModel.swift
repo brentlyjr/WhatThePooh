@@ -56,16 +56,47 @@ class SharedViewModel: ObservableObject {
             }
         case .name:
             return filteredRides.sorted { $0.name < $1.name }
-        case .waitTime:
-            return filteredRides.sorted {
-                ($0.waitTime ?? Int.max) < ($1.waitTime ?? Int.max)
+        case .waitTimeLowToHigh:
+            // First separate rides with wait times from those without
+            let ridesWithWaitTime = filteredRides.filter { $0.waitTime != nil }
+            let ridesWithoutWaitTime = filteredRides.filter { $0.waitTime == nil }
+            
+            // Sort rides with wait times from low to high
+            let sortedRidesWithWaitTime = ridesWithWaitTime.sorted { 
+                ($0.waitTime ?? 0) < ($1.waitTime ?? 0) 
             }
+            
+            // Sort rides without wait times by name
+            let sortedRidesWithoutWaitTime = ridesWithoutWaitTime.sorted { 
+                $0.name < $1.name 
+            }
+            
+            // Combine the two arrays, with rides with wait times first
+            return sortedRidesWithWaitTime + sortedRidesWithoutWaitTime
+        case .waitTimeHighToLow:
+            // First separate rides with wait times from those without
+            let ridesWithWaitTime = filteredRides.filter { $0.waitTime != nil }
+            let ridesWithoutWaitTime = filteredRides.filter { $0.waitTime == nil }
+            
+            // Sort rides with wait times from high to low
+            let sortedRidesWithWaitTime = ridesWithWaitTime.sorted { 
+                ($0.waitTime ?? 0) > ($1.waitTime ?? 0) 
+            }
+            
+            // Sort rides without wait times by name
+            let sortedRidesWithoutWaitTime = ridesWithoutWaitTime.sorted { 
+                $0.name < $1.name 
+            }
+            
+            // Combine the two arrays, with rides with wait times first
+            return sortedRidesWithWaitTime + sortedRidesWithoutWaitTime
         }
     }
 }
 
 enum RideSortOrder {
     case name
-    case waitTime
+    case waitTimeLowToHigh
+    case waitTimeHighToLow
     case favorited
 }
