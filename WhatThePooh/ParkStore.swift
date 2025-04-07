@@ -14,15 +14,18 @@ class ParkStore: ObservableObject {
         }
     }
     
+    @Published var currentSelectedPark: Park? {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+    
     private let parksKey = "parksKey"
     
-    // Computed property to get the currently selected park.
-    var currentSelectedPark: Park? {
-        parks.first { $0.isSelected }
-    }
-
     init() {
         loadParks()
+        // Initialize currentSelectedPark
+        currentSelectedPark = parks.first { $0.isSelected }
     }
     
     private func loadParks() {
@@ -58,9 +61,11 @@ class ParkStore: ObservableObject {
                     // Update the park with the operating hours
                     park.operatingHours = schedules
                     
-                    // If this is the selected park, log today's hours
-                    if let todayHours = park.todayHours {
-                        print("Today's hours for \(park.name): \(todayHours.openingTime) - \(todayHours.closingTime)")
+                    // If this is the selected park, update currentSelectedPark
+                    if park.isSelected {
+                        DispatchQueue.main.async {
+                            self.currentSelectedPark = park
+                        }
                     }
                 } else {
                     print("Failed to fetch operating hours for park: \(park.name)")
@@ -73,6 +78,15 @@ class ParkStore: ObservableObject {
         if let encoded = try? JSONEncoder().encode(parks) {
             UserDefaults.standard.set(encoded, forKey: parksKey)
         }
+    }
+    
+    // Function to update the selected park
+    func updateSelectedPark(to newPark: Park) {
+        for index in parks.indices {
+            parks[index].isSelected = (parks[index].id == newPark.id)
+        }
+        currentSelectedPark = newPark
+        saveParks() // Explicitly save to UserDefaults when selection changes
     }
 }
 

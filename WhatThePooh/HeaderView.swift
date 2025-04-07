@@ -10,9 +10,23 @@ import SwiftUI
 struct HeaderView: View {
     @EnvironmentObject var viewModel: SharedViewModel
     @EnvironmentObject var notificationManager: Notifications
+    @EnvironmentObject var parkStore: ParkStore
+    
+    // Time formatter for 12-hour format with AM/PM
+    private func formatTime(_ timeString: String) -> String {
+        let inputFormatter = ISO8601DateFormatter()
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "h:mm a"
+        
+        if let date = inputFormatter.date(from: timeString) {
+            return outputFormatter.string(from: date)
+        }
+        return timeString // Return original string if parsing fails
+    }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack(spacing: 16) {
                 // Park Selection Dropdown
                 ParkSelectionView()
@@ -51,7 +65,20 @@ struct HeaderView: View {
                     }
             }
             .padding(.horizontal)
-            .padding(.vertical, 8)
+            .padding(.vertical, 4)
+            
+            // Operating Hours Display
+            if let selectedPark = parkStore.currentSelectedPark,
+               let todayHours = selectedPark.todayHours {
+                HStack {
+                    Text("Today's Hours: \(formatTime(todayHours.openingTime)) - \(formatTime(todayHours.closingTime))")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 1)
+            }
         }
     }
 }

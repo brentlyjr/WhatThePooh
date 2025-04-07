@@ -16,17 +16,17 @@ struct ParkSelectionView: View {
         let visibleParks = parkStore.parks.filter { $0.isVisible }
         
         // Find the currently selected park
-        let selectedPark = parkStore.parks.first { $0.isSelected }
+        let selectedPark = parkStore.currentSelectedPark
 
         Menu {
             ForEach(visibleParks) { park in
                 Button(action: {
-                    // We are going to switch the newly selected park
-                    updateSelectedPark(to: park)
+                    // Update the selected park
+                    parkStore.updateSelectedPark(to: park)
 
                     // Now fetch all the rides for that park
                     rideController.fetchRidesForPark(for: park.id) {
-                        // Now upddate their statuses individually
+                        // Now update their statuses individually
                         rideController.updateRideStatus()
                     }
                 }) {
@@ -56,13 +56,5 @@ struct ParkSelectionView: View {
             .cornerRadius(8)
         }
         .buttonStyle(PlainButtonStyle())
-    }
-
-    private func updateSelectedPark(to newPark: Park) {
-        // Loop through all the parks. If the park is not the new one we selected, turn its isSelected
-        // status to false. Unless you are the newly selected park, then turn it true!
-        for index in parkStore.parks.indices {
-            parkStore.parks[index].isSelected = (parkStore.parks[index].id == newPark.id)
-        }
     }
 }
