@@ -21,9 +21,21 @@ class Park: Identifiable, Codable  {
     // Operating hours for the park
     var operatingHours: [ParkSchedule] = []
     
+    // Park's timezone from the API
+    var timezone: String = "UTC"
+    
     // Computed property to get today's operating hours
     var todayHours: ParkSchedule? {
-        let today = ISO8601DateFormatter().string(from: Date()).prefix(10) // YYYY-MM-DD
+        // Get the park's timezone from the stored value
+        let parkTimezone = TimeZone(identifier: timezone) ?? TimeZone.current
+        
+        // Create a date formatter that uses the park's timezone
+        let formatter = ISO8601DateFormatter()
+        formatter.timeZone = parkTimezone
+        
+        // Get today's date in the park's timezone
+        let today = formatter.string(from: Date()).prefix(10) // YYYY-MM-DD
+        
         return operatingHours.first { $0.date == today && $0.type == "OPERATING" }
     }
     
@@ -34,6 +46,7 @@ class Park: Identifiable, Codable  {
         self.isSelected = isSelected
         self.isVisible = isVisible
         self.operatingHours = []
+        self.timezone = "UTC"
     }
     
     // MARK: - Codable Implementation
@@ -44,6 +57,7 @@ class Park: Identifiable, Codable  {
         case isSelected
         case isVisible
         case operatingHours
+        case timezone
     }
     
     required init(from decoder: Decoder) throws {
@@ -53,6 +67,7 @@ class Park: Identifiable, Codable  {
         isSelected = try container.decode(Bool.self, forKey: .isSelected)
         isVisible = try container.decode(Bool.self, forKey: .isVisible)
         operatingHours = try container.decodeIfPresent([ParkSchedule].self, forKey: .operatingHours) ?? []
+        timezone = try container.decodeIfPresent(String.self, forKey: .timezone) ?? "UTC"
     }
     
     func encode(to encoder: Encoder) throws {
@@ -62,6 +77,7 @@ class Park: Identifiable, Codable  {
         try container.encode(isSelected, forKey: .isSelected)
         try container.encode(isVisible, forKey: .isVisible)
         try container.encode(operatingHours, forKey: .operatingHours)
+        try container.encode(timezone, forKey: .timezone)
     }
 }
 

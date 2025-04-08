@@ -56,10 +56,15 @@ class ParkStore: ObservableObject {
     
     private func fetchOperatingHoursForAllParks() {
         for park in parks {
-            ParkController.shared.fetchParkSchedule(for: park.id) { schedules in
+            ParkController.shared.fetchParkSchedule(for: park.id) { schedules, timezone in
                 if let schedules = schedules {
                     // Update the park with the operating hours
                     park.operatingHours = schedules
+                    
+                    // Set the park's timezone
+                    if let timezone = timezone {
+                        park.timezone = timezone
+                    }
                     
                     // If this is the selected park, update currentSelectedPark
                     if park.isSelected {

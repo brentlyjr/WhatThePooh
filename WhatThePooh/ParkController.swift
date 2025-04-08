@@ -13,45 +13,45 @@ class ParkController {
     
     private init() {}
     
-    func fetchParkSchedule(for entityId: String, completion: @escaping ([ParkSchedule]?) -> Void) {
+    func fetchParkSchedule(for entityId: String, completion: @escaping ([ParkSchedule]?, String?) -> Void) {
         let urlString = "https://api.themeparks.wiki/v1/entity/\(entityId)/schedule"
         guard let url = URL(string: urlString) else {
             print("\(ISO8601DateFormatter().string(from: Date())) - Invalid URL: \(urlString)")
-            completion(nil)
+            completion(nil, nil)
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("\(ISO8601DateFormatter().string(from: Date())) - Network error: \(error.localizedDescription)")
-                completion(nil)
+                completion(nil, nil)
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("\(ISO8601DateFormatter().string(from: Date())) - Invalid response type")
-                completion(nil)
+                completion(nil, nil)
                 return
             }
             
             guard httpResponse.statusCode == 200 else {
                 print("\(ISO8601DateFormatter().string(from: Date())) - HTTP error: \(httpResponse.statusCode)")
-                completion(nil)
+                completion(nil, nil)
                 return
             }
             
             guard let data = data else {
                 print("\(ISO8601DateFormatter().string(from: Date())) - No data received")
-                completion(nil)
+                completion(nil, nil)
                 return
             }
             
             do {
                 let parkData = try JSONDecoder().decode(ParkData.self, from: data)
-                completion(parkData.schedule)
+                completion(parkData.schedule, parkData.timezone)
             } catch {
                 print("\(ISO8601DateFormatter().string(from: Date())) - Decoding error: \(error)")
-                completion(nil)
+                completion(nil, nil)
             }
         }
         
