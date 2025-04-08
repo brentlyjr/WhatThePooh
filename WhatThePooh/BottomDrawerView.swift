@@ -72,7 +72,8 @@ struct BottomDrawerView: View {
                 Spacer()
             }
             .frame(height: 50)
-            .padding(.vertical, 8)
+            .padding(.vertical, 0)
+            .padding(.bottom, 16)
             .background(Color(.systemGray6))
         }
         .background(Color(.systemGray6))

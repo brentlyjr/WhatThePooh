@@ -13,6 +13,34 @@ struct SettingsView: View {
     @EnvironmentObject var notificationManager: Notifications
     @EnvironmentObject var parkStore: ParkStore
     
+    struct CompactToggleStyle: ToggleStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            HStack {
+                configuration.label
+                    .font(.subheadline)
+                Spacer()
+                Button(action: {
+                    configuration.isOn.toggle()
+                }) {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(configuration.isOn ? Color.blue : Color.gray.opacity(0.4))
+                        .frame(width: 40, height: 24)
+                        .overlay(
+                            Circle()
+                                .fill(Color.white)
+                                .shadow(radius: 1)
+                                .frame(width: 20, height: 20)
+                                .offset(x: configuration.isOn ? 8 : -8)
+                                .animation(.easeInOut(duration: 0.2), value: configuration.isOn)
+                        )
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding(.vertical, 1) // smaller height!
+        }
+    }
+    
+    
     var body: some View {
         NavigationView {
             List {
@@ -52,7 +80,7 @@ struct SettingsView: View {
                             }
                         ))
                         .font(.subheadline)
-                        .toggleStyle(SwitchToggleStyle(tint: .blue))
+                        .toggleStyle(CompactToggleStyle())
                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                     }
                 }
