@@ -18,7 +18,12 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
     // Singleton of Notification class
     static let shared = Notifications()
     
-    // Published state
+    // This is our main notification array. This is a list of the rides across
+    // all parks that are "favorited" so we can monitor their status and
+    // send notifications for them on status change
+    private var rideNotificationArray: [Ride] = []
+
+    // Published state that determines if we can send notifications
     @Published private(set) var permissionGranted = false
     
     private override init() {

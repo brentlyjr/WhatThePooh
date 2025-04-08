@@ -83,7 +83,7 @@ class RideController: ObservableObject {
                     self.parkRideArray[index].isFavorited = self.favoriteIDs.contains(ride.id)
 
                     // Send notification about the status change
-                    // self.sendNotificationOnStatusChange(for: self.parkRideArray[currentIndex])
+                    self.sendNotificationOnStatusChange(for: self.parkRideArray[index])
                 }
             }
         }

@@ -12,7 +12,6 @@ import UserNotifications
 struct WhatThePoohApp: App {
     // Initialize our core services
     @StateObject private var notificationManager = Notifications.shared
-    private let notificationDelegate = NotificationDelegate()
     
     // Initialize app delegate for background tasks
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -20,7 +19,7 @@ struct WhatThePoohApp: App {
     init() {
         // Configure notification center
         let center = UNUserNotificationCenter.current()
-        center.delegate = notificationDelegate
+        center.delegate = notificationManager
         
         // Request notification permissions
         Task {
