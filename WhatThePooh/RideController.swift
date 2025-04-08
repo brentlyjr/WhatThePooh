@@ -19,15 +19,8 @@ class RideController: ObservableObject {
     
     // This is our published object that links to our RideView - Any updates to this
     // object will trigger a view update
-    @Published var visibleRideArray: [Ride] = []
-
-    // This is our internal ride array. This spans all of our parks and will allow us
-    // to get the updated status for all rides that we may have favorited
-    private var parkRideArray: [Ride] = []
+    @Published var parkRideArray: [Ride] = []
     
-    // Serial queue for synchronizing updates to parkRideArray
-    private let updateQueue = DispatchQueue(label: "com.whatthepooh.rideupdate")
-
     // An internal timer that will fetch updated statuses while we are in the foreground
     private var timer: Timer?
     
@@ -36,7 +29,7 @@ class RideController: ObservableObject {
     private var favoriteIDs: Set<String> = []
     
     private weak var notificationManager: Notifications?
-        
+    
     private init(notificationManager: Notifications) {
         self.notificationManager = notificationManager
         loadFavorites()
@@ -44,13 +37,12 @@ class RideController: ObservableObject {
     
     // Retrieves all the entities (children) under a park - filters based on ATTRACTION
     // Stores them in a rideArray
-    func fetchRidesForPark(for destinationID: String, completion: @escaping () -> Void) {
+    func fetchRidesForPark(for destinationID: String) -> Void {
         performNetworkRequest(id: destinationID) { [weak self] data in
             guard let self = self else { return }
             
             guard let data = data else {
-                print("No data received for park query.")
-                completion()
+                print("\(ISO8601DateFormatter().string(from: Date())) - No data received for park query.")
                 return
             }
             do {
@@ -60,80 +52,55 @@ class RideController: ObservableObject {
                 // Decode the list of parks into our local park array
                 self.parkRideArray = response.liveData.filter { $0.entityType == .attraction }
                 
-                // Execute our completion handler so we can chain funtions together
-                completion()
-
+                // Now fetch all the ride statuses for the list of rides for this park
+                updateRideStatus()
+                
             } catch {
-                print("Decoding error for our park: \(error)")
-                completion()
+                print("\(ISO8601DateFormatter().string(from: Date())) - Decoding error for our park: \(error)")
             }
         }
     }
     
-
     // This updates the ride status from the API. This updates our internal copy first and then
     // copies the data over to the main array to trigger a view refresh
     func updateRideStatus() -> Void {
         // Start all status updates asynchronously
         for index in parkRideArray.indices {
             let ride = parkRideArray[index]
-            
-            // Capture the index in a local variable to avoid potential issues with the closure
-            let currentIndex = index
-            
+                        
             self.fetchStatus(for: ride) { [weak self] status, waitTime, lastUpdated in
-                guard let self = self else { return }
+                // Update visibleRideArray on the main thread
+                DispatchQueue.main.async { [weak self] in
+
+                    guard let self = self else { return }
                 
-                // Use serial queue to synchronize updates to parkRideArray
-                self.updateQueue.async {
-                    // Batch update all properties atomically
-                    self.parkRideArray[currentIndex].status = status
-                    self.parkRideArray[currentIndex].waitTime = waitTime
-                    self.parkRideArray[currentIndex].lastUpdated = lastUpdated
-                    self.parkRideArray[currentIndex].oldStatus = ride.status
-                    
+                    self.parkRideArray[index].status = status
+                    self.parkRideArray[index].waitTime = waitTime
+                    self.parkRideArray[index].lastUpdated = lastUpdated
+                    self.parkRideArray[index].oldStatus = ride.status
+
                     // Update favorite status
-                    let rideID = self.parkRideArray[currentIndex].id
-                    self.parkRideArray[currentIndex].isFavorited = self.favoriteIDs.contains(rideID)
+                    self.parkRideArray[index].isFavorited = self.favoriteIDs.contains(ride.id)
 
                     // Send notification about the status change
-                    self.sendNotificationOnStatusChange(for: self.parkRideArray[currentIndex])
-                    
-                    // Update visibleRideArray on the main thread
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        
-                        // If visibleRideArray doesn't have the ride (first time) then add it
-                        if self.visibleRideArray.count != self.parkRideArray.count {
-                            // For first time, simply replace it with the updated internal array
-                            self.visibleRideArray = self.parkRideArray
-                        } else {
-                            // Otherwise, update the existing ride at the same index
-                            self.visibleRideArray[currentIndex].status = self.parkRideArray[currentIndex].status
-                            self.visibleRideArray[currentIndex].waitTime = self.parkRideArray[currentIndex].waitTime
-                            self.visibleRideArray[currentIndex].lastUpdated = self.parkRideArray[currentIndex].lastUpdated
-                            self.visibleRideArray[currentIndex].oldStatus = self.parkRideArray[currentIndex].oldStatus
-                            self.visibleRideArray[currentIndex].isFavorited = self.parkRideArray[currentIndex].isFavorited
-                        }
-                    }
+                    // self.sendNotificationOnStatusChange(for: self.parkRideArray[currentIndex])
                 }
             }
         }
     }
-
     
     // Toggle the favorite state for a ride.
     func toggleFavorite(for ride: Ride) {
-        guard let index = visibleRideArray.firstIndex(where: { $0.id == ride.id }) else { return }
-        visibleRideArray[index].isFavorited.toggle()
-        if visibleRideArray[index].isFavorited {
+        guard let index = parkRideArray.firstIndex(where: { $0.id == ride.id }) else { return }
+        parkRideArray[index].isFavorited.toggle()
+        if parkRideArray[index].isFavorited {
             favoriteIDs.insert(ride.id)
         } else {
             favoriteIDs.remove(ride.id)
         }
         saveFavorites()
     }
-
+    
     // This is the function that checks a ride's status and sends a notification if has changed
     private func sendNotificationOnStatusChange(for ride: Ride) {
         // If our ride status changed, and the value was not empty (IE, we had a previous stored state
@@ -182,6 +149,7 @@ class RideController: ObservableObject {
         timer = nil
     }
     
+    
     // Handle app entering background
     func applicationDidEnterBackground() {
         stopStatusUpdates()
@@ -191,7 +159,7 @@ class RideController: ObservableObject {
     func applicationWillEnterForeground() {
         startStatusUpdates()
     }
-    
+
     private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {
         performNetworkRequest(id: entity.id) { [weak self] data in
             // No need to use self here, so we can remove the guard
@@ -214,7 +182,7 @@ class RideController: ObservableObject {
                     completion(nil, 0, nil)
                 }
             } catch {
-                print("Error parsing status JSON: \(error)")
+                print("\(ISO8601DateFormatter().string(from: Date())) - Error parsing status JSON: \(error)")
                 completion(nil, 0, nil)
             }
         }
@@ -222,14 +190,14 @@ class RideController: ObservableObject {
     
     func performNetworkRequest(id: String, completion: @escaping (Data?) -> Void) {
         guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(id)/live") else {
-            print("Invalid URL")
+            print("\(ISO8601DateFormatter().string(from: Date())) - Invalid URL")
             completion(nil)
             return
         }
         
         URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             if let error = error {
-                print("Network error: \(error.localizedDescription)")
+                print("\(ISO8601DateFormatter().string(from: Date())) - Network error: \(error.localizedDescription)")
                 completion(nil)
                 return
             }

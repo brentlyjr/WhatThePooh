@@ -75,7 +75,7 @@ struct ContentView: View {
             queue: .main
         ) { notification in
             if let rideID = notification.userInfo?["rideID"] as? String,
-               let ride = rideController.visibleRideArray.first(where: { $0.id == rideID }) {
+               let ride = rideController.parkRideArray.first(where: { $0.id == rideID }) {
                 // Update the view model to show the popup
                 viewModel.selectedRide = ride
                 viewModel.isPreviewVisible = true

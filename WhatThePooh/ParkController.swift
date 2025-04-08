@@ -16,32 +16,32 @@ class ParkController {
     func fetchParkSchedule(for entityId: String, completion: @escaping ([ParkSchedule]?) -> Void) {
         let urlString = "https://api.themeparks.wiki/v1/entity/\(entityId)/schedule"
         guard let url = URL(string: urlString) else {
-            print("Invalid URL: \(urlString)")
+            print("\(ISO8601DateFormatter().string(from: Date())) - Invalid URL: \(urlString)")
             completion(nil)
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                print("Network error: \(error.localizedDescription)")
+                print("\(ISO8601DateFormatter().string(from: Date())) - Network error: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
-                print("Invalid response type")
+                print("\(ISO8601DateFormatter().string(from: Date())) - Invalid response type")
                 completion(nil)
                 return
             }
             
             guard httpResponse.statusCode == 200 else {
-                print("HTTP error: \(httpResponse.statusCode)")
+                print("\(ISO8601DateFormatter().string(from: Date())) - HTTP error: \(httpResponse.statusCode)")
                 completion(nil)
                 return
             }
             
             guard let data = data else {
-                print("No data received")
+                print("\(ISO8601DateFormatter().string(from: Date())) - No data received")
                 completion(nil)
                 return
             }
@@ -50,7 +50,7 @@ class ParkController {
                 let parkData = try JSONDecoder().decode(ParkData.self, from: data)
                 completion(parkData.schedule)
             } catch {
-                print("Decoding error: \(error)")
+                print("\(ISO8601DateFormatter().string(from: Date())) - Decoding error: \(error)")
                 completion(nil)
             }
         }

@@ -25,10 +25,7 @@ struct ParkSelectionView: View {
                     parkStore.updateSelectedPark(to: park)
 
                     // Now fetch all the rides for that park
-                    rideController.fetchRidesForPark(for: park.id) {
-                        // Now update their statuses individually
-                        rideController.updateRideStatus()
-                    }
+                    rideController.fetchRidesForPark(for: park.id)
                 }) {
                     Text(park.name)
                         .font(.subheadline)

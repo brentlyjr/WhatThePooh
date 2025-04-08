@@ -14,7 +14,7 @@ struct RideView: View {
     @EnvironmentObject var notificationManager: Notifications
 
     var sortedRides: [Ride] {
-        viewModel.sortRides(rideController.visibleRideArray)
+        viewModel.sortRides(rideController.parkRideArray)
     }
     
     var body: some View {
@@ -68,12 +68,11 @@ struct RideView: View {
         .onAppear {
             // Load all the entities for our park. Lookup the currently selected park
             if let selectedPark = parkStore.currentSelectedPark {
-                rideController.fetchRidesForPark(for: selectedPark.id) {
-                    rideController.updateRideStatus()
-                    // Starts a time to refresh the data in the view periodically
-                    DispatchQueue.main.async {
-                        rideController.startStatusUpdates()
-                    }
+                rideController.fetchRidesForPark(for: selectedPark.id)
+
+                // Starts a time to refresh the data in the view periodically
+                DispatchQueue.main.async {
+                    rideController.startStatusUpdates()
                 }
             }
         }
