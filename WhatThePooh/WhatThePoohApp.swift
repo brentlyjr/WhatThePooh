@@ -17,13 +17,10 @@ struct WhatThePoohApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     init() {
-        // Configure notification center
-        let center = UNUserNotificationCenter.current()
-        center.delegate = notificationManager
-        
         // Request notification permissions
         Task {
             do {
+                let center = UNUserNotificationCenter.current()
                 let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
                 print("Notification permission granted: \(granted)")
             } catch {
@@ -37,6 +34,9 @@ struct WhatThePoohApp: App {
             ContentView()
                 .environmentObject(notificationManager)
                 .onAppear {
+                    // Set up notification center delegate
+                    UNUserNotificationCenter.current().delegate = notificationManager
+                    
                     // Ensure notification permissions are requested
                     notificationManager.requestNotificationPermissionIfNeeded()
                     // Schedule background refresh

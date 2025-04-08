@@ -20,7 +20,7 @@ struct BottomDrawerView: View {
                 .frame(height: 0.5)
             
             // Button row
-            HStack(spacing: 40) {
+            HStack(spacing: 0) {
                 Spacer()
                 
                 // Sort button
@@ -33,6 +33,8 @@ struct BottomDrawerView: View {
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Sort Rides")
                 
+                Spacer()
+                
                 // Favorites button
                 Button(action: { viewModel.showFavoritesOnly.toggle() }) {
                     Image(systemName: "heart.fill")
@@ -43,6 +45,8 @@ struct BottomDrawerView: View {
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Show Favorites Only")
                 
+                Spacer()
+                
                 // Filter button
                 Button(action: { showFilterModal = true }) {
                     Image(systemName: "line.horizontal.3.decrease.circle")
@@ -52,6 +56,18 @@ struct BottomDrawerView: View {
                 }
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Filter Rides")
+                
+                Spacer()
+                
+                // Settings button
+                Button(action: { viewModel.showSettingsModal = true }) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.blue)
+                }
+                .buttonStyle(BottomDrawerButtonStyle())
+                .help("Settings")
                 
                 Spacer()
             }

@@ -18,6 +18,7 @@ class SharedViewModel: ObservableObject {
     // Modal state of our two bottom drawer popups
     @Published var showSortModal: Bool = false
     @Published var showFilterModal: Bool = false
+    @Published var showSettingsModal: Bool = false
     
     // State for managing the ride preview popup
     // selectedRide: The currently selected ride to show in the preview

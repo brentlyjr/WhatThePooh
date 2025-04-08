@@ -49,11 +49,14 @@ class RideController: ObservableObject {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(RideResponse.self, from: data)
                 
-                // Decode the list of parks into our local park array
-                self.parkRideArray = response.liveData.filter { $0.entityType == .attraction }
-                
-                // Now fetch all the ride statuses for the list of rides for this park
-                updateRideStatus()
+                // Update parkRideArray on the main thread
+                DispatchQueue.main.async {
+                    // Decode the list of parks into our local park array
+                    self.parkRideArray = response.liveData.filter { $0.entityType == .attraction }
+                    
+                    // Now fetch all the ride statuses for the list of rides for this park
+                    self.updateRideStatus()
+                }
                 
             } catch {
                 print("\(ISO8601DateFormatter().string(from: Date())) - Decoding error for our park: \(error)")

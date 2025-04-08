@@ -59,6 +59,12 @@ struct ContentView: View {
                 .presentationDetents([.height(440)])
                 .interactiveDismissDisabled(false)
         }
+        .fullScreenCover(isPresented: $viewModel.showSettingsModal) {
+            SettingsView()
+                .environmentObject(viewModel)
+                .environmentObject(notificationManager)
+                .environmentObject(parkStore)
+        }
         .fullScreenCover(isPresented: $viewModel.showDebugWindow) {
             DebugView()
                 .environmentObject(viewModel)
