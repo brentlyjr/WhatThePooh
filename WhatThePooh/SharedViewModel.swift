@@ -12,6 +12,8 @@ class SharedViewModel: ObservableObject {
     @Published var sortOrder: RideSortOrder = .name
     @Published var showFavoritesOnly: Bool = false
     @Published var showOpenRidesOnly: Bool = false
+    @Published var maxWaitTime: Int = 20
+    @Published var filterByWaitTime: Bool = false
     
     // Modal state of our two bottom drawer popups
     @Published var showSortModal: Bool = false
@@ -41,6 +43,18 @@ class SharedViewModel: ObservableObject {
         // Apply open rides filter if enabled
         if showOpenRidesOnly {
             filteredRides = filteredRides.filter { $0.status == "OPERATING" }
+        }
+        
+        // Apply wait time filter if enabled
+        if filterByWaitTime {
+            filteredRides = filteredRides.filter { 
+                // Include rides with wait time less than or equal to maxWaitTime
+                // Also include rides with no wait time (nil) as they're likely not operating
+                if let waitTime = $0.waitTime {
+                    return waitTime <= maxWaitTime
+                }
+                return true
+            }
         }
         
         // Then apply sorting

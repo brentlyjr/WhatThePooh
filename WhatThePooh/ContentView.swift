@@ -35,7 +35,10 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity)
 
                 // Fixed Bottom Drawer
-                BottomDrawerView(showSortModal: $viewModel.showSortModal, showFilterModal: $viewModel.showFilterModal)
+                BottomDrawerView(
+                    showSortModal: $viewModel.showSortModal, 
+                    showFilterModal: $viewModel.showFilterModal
+                )
                     .environmentObject(viewModel)
             }
             
@@ -47,13 +50,13 @@ struct ContentView: View {
         .sheet(isPresented: $viewModel.showSortModal) {
             SortModalView()
                 .environmentObject(viewModel)
-                .presentationDetents([.height(260)])
+                .presentationDetents([.height(280)])
                 .interactiveDismissDisabled(false)
         }
         .sheet(isPresented: $viewModel.showFilterModal) {
             FilterModalView()
                 .environmentObject(viewModel)
-                .presentationDetents([.height(200)])
+                .presentationDetents([.height(440)])
                 .interactiveDismissDisabled(false)
         }
         .fullScreenCover(isPresented: $viewModel.showDebugWindow) {
