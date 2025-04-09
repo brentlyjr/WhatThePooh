@@ -8,8 +8,18 @@
 import SwiftUI
 
 class ParkStore: ObservableObject {
+    private var isInitialLoad = true
     @Published var parks: [Park] = [] {
         didSet {
+            if !isInitialLoad {
+                // When parks array changes (after initial load), check for any invisible parks and remove them from favorites
+                for park in parks {
+                    if !park.isVisible && favoriteParkIDs.contains(park.id) {
+                        favoriteParkIDs.remove(park.id)
+                    }
+                }
+                saveFavoriteParks()
+            }
             saveParks()
         }
     }
@@ -21,11 +31,15 @@ class ParkStore: ObservableObject {
     }
     
     private let parksKey = "parksKey"
+    private let favoriteParkKey = "favoriteParks"
+    private var favoriteParkIDs: Set<String> = []
     
     init() {
-        loadParks()
+        loadFavoriteParks() // Load favorites first
+        loadParks()        // Then load parks
         // Initialize currentSelectedPark
         currentSelectedPark = parks.first { $0.isSelected }
+        isInitialLoad = false // Mark initial load as complete
     }
     
     private func loadParks() {
@@ -92,6 +106,32 @@ class ParkStore: ObservableObject {
         }
         currentSelectedPark = newPark
         saveParks() // Explicitly save to UserDefaults when selection changes
+    }
+    
+    // MARK: - Favorite Parks Management
+    
+    private func loadFavoriteParks() {
+        if let storedIDs = UserDefaults.standard.array(forKey: favoriteParkKey) as? [String] {
+            favoriteParkIDs = Set(storedIDs)
+        }
+    }
+    
+    private func saveFavoriteParks() {
+        UserDefaults.standard.set(Array(favoriteParkIDs), forKey: favoriteParkKey)
+    }
+    
+    func toggleFavoritePark(id: String) {
+        if favoriteParkIDs.contains(id) {
+            favoriteParkIDs.remove(id)
+        } else {
+            favoriteParkIDs.insert(id)
+        }
+        saveFavoriteParks()
+        objectWillChange.send()
+    }
+    
+    func isParkFavorited(id: String) -> Bool {
+        return favoriteParkIDs.contains(id)
     }
 }
 

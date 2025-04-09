@@ -32,17 +32,20 @@ struct HeaderView: View {
                 ParkSelectionView()
                 
                 Spacer()
-                
-                // Heart Icon
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.blue)
-                    .font(.title2)
-                
+                                
                 // Bell Icon
-                Image(systemName: "bell.fill")
+                Image(systemName: parkStore.currentSelectedPark != nil && parkStore.isParkFavorited(id: parkStore.currentSelectedPark!.id) ? "bell.fill" : "bell")
                     .foregroundColor(.blue)
                     .font(.title2)
-                
+                    .onTapGesture {
+                        if let park = parkStore.currentSelectedPark {
+                            parkStore.toggleFavoritePark(id: park.id)
+                        }
+                    }
+
+                Spacer()
+                                
+
                 // Pooh image with debug functionality
                 Image("PoohImage")
                     .resizable()

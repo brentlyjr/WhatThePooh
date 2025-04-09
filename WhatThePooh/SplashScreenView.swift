@@ -41,7 +41,8 @@ struct SplashScreenView: View {
                 
                 // App Title
                 Text("What The Pooh!")
-                    .font(.title)
+                    .font(.system(size: 36, weight: .bold, design: .serif))
+                    .italic()
                     .bold()
                     .foregroundColor(.white)
                     .offset(x: 0)
