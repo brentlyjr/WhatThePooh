@@ -8,24 +8,28 @@
 import SwiftUI
 
 struct SplashScreenView: View {
-    @State private var titleOffset: CGFloat = 100
     @State private var titleOpacity: Double = 0
     
     var body: some View {
         // Main container that fills the screen
         ZStack {
+            
             // Background that fills the entire screen
             Color.blue
                 .edgesIgnoringSafeArea(.all)
-                .overlay(
-                    // White border
-                    RoundedRectangle(cornerRadius: 50)
-                        .stroke(Color.white, lineWidth: 20)
-                        .edgesIgnoringSafeArea(.all)
-                )
             
             // Content
             VStack(spacing: 20) {
+                
+                Spacer()
+                // App Title
+                Text("What The Pooh!")
+                    .font(.custom("Chalkboard SE", size: 40))
+                    .bold()
+                    .foregroundColor(.white)
+                    .opacity(titleOpacity)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                
                 // App Icon
                 Image("PoohImage")
                     .resizable()
@@ -38,25 +42,19 @@ struct SplashScreenView: View {
                             .frame(width: 140, height: 140)
                     )
                     .opacity(1)
-                
-                // App Title
-                Text("What The Pooh!")
-                    .font(.system(size: 36, weight: .bold, design: .serif))
-                    .italic()
-                    .bold()
-                    .foregroundColor(.white)
-                    .offset(x: 0)
-                    .opacity(titleOpacity)
+                Spacer()
+                Spacer()
+
             }
         }
         .onAppear {
-            // Play sound using existing Utilities class
+            // Play Pooh sound using existing Utilities class
             Utilities.playSound()
-                        
+            
             // Animate title slide in and fade in
             withAnimation(.easeIn(duration: 1.0)) {
                 titleOpacity = 1
             }
         }
     }
-} 
+}
