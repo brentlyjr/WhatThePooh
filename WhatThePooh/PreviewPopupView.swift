@@ -150,8 +150,8 @@ struct PreviewPopupView: View {
     private func fetchRideForecast(for rideId: String) {
         isLoadingForecast = true
         
-        // Use the RideController to fetch the ride details
-        RideController.shared.performNetworkRequest(id: rideId) { data in
+        // Use the NetworkService to fetch the ride details
+        NetworkService.shared.performNetworkRequest(id: rideId) { data in
             DispatchQueue.main.async {
                 self.isLoadingForecast = false
                 

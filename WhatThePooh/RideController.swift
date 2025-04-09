@@ -38,7 +38,7 @@ class RideController: ObservableObject {
     // Retrieves all the entities (children) under a park - filters based on ATTRACTION
     // Stores them in a rideArray
     func fetchRidesForPark(for destinationID: String) -> Void {
-        performNetworkRequest(id: destinationID) { [weak self] data in
+        NetworkService.shared.performNetworkRequest(id: destinationID) { [weak self] data in
             guard let self = self else { return }
             
             guard let data = data else {
@@ -164,7 +164,7 @@ class RideController: ObservableObject {
     }
 
     private func fetchStatus(for entity: Ride, completion: @escaping (String?, Int?, String?) -> Void) {
-        performNetworkRequest(id: entity.id) { [weak self] data in
+        NetworkService.shared.performNetworkRequest(id: entity.id) { data in
             // No need to use self here, so we can remove the guard
             guard let data = data else {
                 completion(nil, 0, nil)
@@ -189,22 +189,5 @@ class RideController: ObservableObject {
                 completion(nil, 0, nil)
             }
         }
-    }
-    
-    func performNetworkRequest(id: String, completion: @escaping (Data?) -> Void) {
-        guard let url = URL(string: "https://api.themeparks.wiki/v1/entity/\(id)/live") else {
-            print("\(ISO8601DateFormatter().string(from: Date())) - Invalid URL")
-            completion(nil)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            if let error = error {
-                print("\(ISO8601DateFormatter().string(from: Date())) - Network error: \(error.localizedDescription)")
-                completion(nil)
-                return
-            }
-            completion(data)
-        }.resume()
     }
 }
