@@ -56,4 +56,16 @@ struct Ride: Identifiable, Decodable {
         // This setting will be loaded from user preferences
         isFavorited = false
     }
+
+    // Convenience initializer for creating rides programmatically
+    init(id: String, name: String, entityType: EntityType, status: String? = nil, waitTime: Int? = nil, lastUpdated: String? = nil, isFavorited: Bool = false) {
+        self.id = id
+        self.name = name
+        self.entityType = entityType
+        self.status = status
+        self.oldStatus = nil
+        self.waitTime = waitTime
+        self.lastUpdated = lastUpdated
+        self.isFavorited = isFavorited
+    }
 }
