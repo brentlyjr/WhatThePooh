@@ -13,11 +13,16 @@ struct WhatThePoohApp: App {
     // Initialize our core services
     @StateObject private var notificationManager = Notifications.shared
     @StateObject private var viewModel = SharedViewModel()
+    @StateObject private var parkStore = ParkStore()
     
     // Initialize app delegate for background tasks
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     init() {
+        // Initialize ParkRideManager with park IDs from ParkStore
+        let parkIds = ParkStore().parks.map { $0.id }
+        ParkRideManager.shared.initialize(with: parkIds)
+        
         // Request notification permissions
         Task {
             do {
@@ -36,6 +41,7 @@ struct WhatThePoohApp: App {
                 ContentView()
                     .environmentObject(notificationManager)
                     .environmentObject(viewModel)
+                    .environmentObject(parkStore)
                 
                 if !viewModel.hasSeenSplash {
                     SplashScreenView()
