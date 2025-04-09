@@ -1,6 +1,5 @@
 # Files to not upload to Git
 
 .DS_Store
-WhatThePooh.xcodeproj/*
 WhatThePooh/Preview\ Content/
 WhatThePooh/Secrets.plist
