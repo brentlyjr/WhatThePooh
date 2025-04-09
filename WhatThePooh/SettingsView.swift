@@ -14,16 +14,21 @@ struct SettingsView: View {
     @EnvironmentObject var parkStore: ParkStore
     
     struct CompactToggleStyle: ToggleStyle {
+        var isDisabled: Bool = false
+        
         func makeBody(configuration: Configuration) -> some View {
             HStack {
                 configuration.label
                     .font(.subheadline)
+                    .foregroundColor(isDisabled ? .gray : .primary)
                 Spacer()
                 Button(action: {
-                    configuration.isOn.toggle()
+                    if !isDisabled {
+                        configuration.isOn.toggle()
+                    }
                 }) {
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(configuration.isOn ? Color.blue : Color.gray.opacity(0.4))
+                        .fill(configuration.isOn ? (isDisabled ? Color.gray : Color.blue) : Color.gray.opacity(0.4))
                         .frame(width: 40, height: 24)
                         .overlay(
                             Circle()
@@ -35,8 +40,9 @@ struct SettingsView: View {
                         )
                 }
                 .buttonStyle(PlainButtonStyle())
+                .disabled(isDisabled)
             }
-            .padding(.vertical, 1) // smaller height!
+            .padding(.vertical, 1)
         }
     }
     
@@ -80,8 +86,19 @@ struct SettingsView: View {
                             }
                         ))
                         .font(.subheadline)
-                        .toggleStyle(CompactToggleStyle())
+                        .toggleStyle(CompactToggleStyle(isDisabled: park.id == parkStore.currentSelectedPark?.id))
                         .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        .overlay(
+                            Group {
+                                if park.id == parkStore.currentSelectedPark?.id {
+                                    Text("Currently Selected")
+                                        .font(.caption)
+                                        .foregroundColor(.black)
+                                        .padding(.trailing, 8)
+                                }
+                            },
+                            alignment: .trailing
+                        )
                     }
                 }
                 
