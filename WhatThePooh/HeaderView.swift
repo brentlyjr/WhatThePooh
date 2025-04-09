@@ -57,11 +57,11 @@ struct HeaderView: View {
                         
                         // Keep existing functionality
                         Utilities.playSound()
-                        notificationManager.sendStatusChangeNotification(
-                            rideName: "Star Wars: Rise of the Resistance",
-                            newStatus: "Down",
-                            rideID: "34b1d70f-11c4-42df-935e-d5582c9f1a8e"
-                        )
+//                        notificationManager.sendStatusChangeNotification(
+//                            rideName: "Star Wars: Rise of the Resistance",
+//                            newStatus: "Down",
+//                            rideID: "34b1d70f-11c4-42df-935e-d5582c9f1a8e"
+//                        )
                     }
             }
             .padding(.horizontal)

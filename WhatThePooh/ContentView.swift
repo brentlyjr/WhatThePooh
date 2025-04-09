@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var notificationManager: Notifications
-    @StateObject var viewModel = SharedViewModel()
+    @EnvironmentObject var viewModel: SharedViewModel
     @StateObject var parkStore = ParkStore()
     @ObservedObject private var rideController = RideController.shared
 

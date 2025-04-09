@@ -12,6 +12,7 @@ import UserNotifications
 struct WhatThePoohApp: App {
     // Initialize our core services
     @StateObject private var notificationManager = Notifications.shared
+    @StateObject private var viewModel = SharedViewModel()
     
     // Initialize app delegate for background tasks
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -31,17 +32,32 @@ struct WhatThePoohApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(notificationManager)
-                .onAppear {
-                    // Set up notification center delegate
-                    UNUserNotificationCenter.current().delegate = notificationManager
-                    
-                    // Ensure notification permissions are requested
-                    notificationManager.requestNotificationPermissionIfNeeded()
-                    // Schedule background refresh
-                    appDelegate.scheduleAppRefresh()
+            ZStack {
+                ContentView()
+                    .environmentObject(notificationManager)
+                    .environmentObject(viewModel)
+                
+                if !viewModel.hasSeenSplash {
+                    SplashScreenView()
+                        .transition(.opacity)
                 }
+            }
+            .onAppear {
+                // Set up notification center delegate
+                UNUserNotificationCenter.current().delegate = notificationManager
+                
+                // Ensure notification permissions are requested
+                notificationManager.requestNotificationPermissionIfNeeded()
+                // Schedule background refresh
+                appDelegate.scheduleAppRefresh()
+                
+                // Mark splash screen as seen after delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    withAnimation {
+                        viewModel.hasSeenSplash = true
+                    }
+                }
+            }
         }
     }
 }

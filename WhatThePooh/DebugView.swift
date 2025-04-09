@@ -10,6 +10,7 @@ import SwiftUI
 struct DebugView: View {
     @EnvironmentObject var viewModel: SharedViewModel
     @State private var logMessages: String = ""
+    @State private var favoriteRides: [String] = []
     
     var body: some View {
         VStack {
@@ -27,6 +28,27 @@ struct DebugView: View {
                 .padding()
             }
             .safeAreaInset(edge: .top) { Spacer().frame(height: 50) } // Pushes content down
+            
+            // Favorite Rides Section
+            VStack(alignment: .leading) {
+                Text("Favorite Rides")
+                    .font(.headline)
+                    .padding(.horizontal)
+                
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(favoriteRides, id: \.self) { rideId in
+                            Text(rideId)
+                                .font(.system(size: 12, design: .monospaced))
+                                .padding(.horizontal)
+                        }
+                    }
+                }
+                .frame(height: 100)
+                .background(Color.black.opacity(0.1))
+                .cornerRadius(10)
+                .padding(.horizontal)
+            }
             
             // Log Messages Section
             VStack(alignment: .leading) {
@@ -46,11 +68,11 @@ struct DebugView: View {
                 
                 ScrollView {
                     Text(logMessages)
-                        .font(.system(size: 10, design: .monospaced)) // Custom small size
+                        .font(.system(size: 10, design: .monospaced))
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(height: 400) // Made taller since we removed the UserDefaults section
+                .frame(height: 400)
                 .background(Color.black.opacity(0.1))
                 .cornerRadius(10)
                 .padding(.horizontal)
@@ -65,6 +87,11 @@ struct DebugView: View {
             // Get messages and reverse them for display
             let messages = AppLogger.shared.getLogMessages()
             logMessages = messages.joined(separator: "\n")
+            
+            // Load favorite rides
+            if let storedIDs = UserDefaults.standard.array(forKey: "favoriteRides") as? [String] {
+                favoriteRides = storedIDs
+            }
         }
     }
 }

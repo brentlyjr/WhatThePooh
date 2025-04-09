@@ -86,7 +86,7 @@ class RideController: ObservableObject {
                     self.parkRideArray[index].isFavorited = self.favoriteIDs.contains(ride.id)
 
                     // Send notification about the status change
-                    self.sendNotificationOnStatusChange(for: self.parkRideArray[index])
+                    // self.sendNotificationOnStatusChange(for: self.parkRideArray[index])
                 }
             }
         }
@@ -137,7 +137,7 @@ class RideController: ObservableObject {
         stopStatusUpdates()
         
         // Create a new timer with a weak reference to self
-        timer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             
             AppLogger.shared.log("Timer started update")

@@ -107,6 +107,9 @@ class SharedViewModel: ObservableObject {
             return sortedRidesWithWaitTime + sortedRidesWithoutWaitTime
         }
     }
+
+    // New property to track splash screen visibility
+    @Published var hasSeenSplash: Bool = false
 }
 
 enum RideSortOrder {
