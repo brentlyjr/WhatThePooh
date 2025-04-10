@@ -107,7 +107,7 @@ struct RideView: View {
                 return ("\(unwrappedWaitTime) mins", Color.green.opacity(0.2))
             } else {
             //    return ("Operating (\(minutes!) mins)", Color.green.opacity(0.2))
-                return ("Operating", Color.green.opacity(0.2))
+                return ("Open", Color.green.opacity(0.2))
             }
         case "DOWN":
         //    return ("Down (\(minutes!) mins)", Color.red.opacity(0.2))
