@@ -12,6 +12,12 @@ struct BottomDrawerView: View {
     @Binding var showFilterModal: Bool
     @EnvironmentObject var viewModel: SharedViewModel
     
+    private var isAnyFilterActive: Bool {
+        viewModel.showFavoritesOnly || 
+        viewModel.rideStatusFilter != .all || 
+        viewModel.filterByWaitTime
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             // Top separator line
@@ -49,7 +55,7 @@ struct BottomDrawerView: View {
                 
                 // Filter button
                 Button(action: { showFilterModal = true }) {
-                    Image(systemName: "line.horizontal.3.decrease.circle")
+                    Image(systemName: isAnyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.blue)
