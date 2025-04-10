@@ -31,8 +31,6 @@ struct HeaderView: View {
                 // Park Selection Dropdown
                 ParkSelectionView()
                 
- //               Spacer()
-                                
                 // Bell Icon
                 Image(systemName: parkStore.currentSelectedPark != nil && parkStore.isParkFavorited(id: parkStore.currentSelectedPark!.id) ? "bell.fill" : "bell")
                     .foregroundColor(.blue)
@@ -44,7 +42,6 @@ struct HeaderView: View {
                     }
 
                 Spacer()
-                                
 
                 // Pooh image with debug functionality
                 Image("PoohImage")
@@ -69,6 +66,7 @@ struct HeaderView: View {
             }
             .padding(.horizontal)
             .padding(.vertical, 4)
+            .frame(height: 60) // Fixed height to accommodate two lines
             
             // Operating Hours Display
             if let selectedPark = parkStore.currentSelectedPark,
