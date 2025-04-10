@@ -11,7 +11,7 @@ class SharedViewModel: ObservableObject {
     // Filter and sort states for our RideView
     @Published var sortOrder: RideSortOrder = .name
     @Published var showFavoritesOnly: Bool = false
-    @Published var showOpenRidesOnly: Bool = false
+    @Published var rideStatusFilter: RideStatusFilter = .all
     @Published var maxWaitTime: Int = 20
     @Published var filterByWaitTime: Bool = false
     
@@ -41,9 +41,15 @@ class SharedViewModel: ObservableObject {
             filteredRides = filteredRides.filter { $0.isFavorited }
         }
         
-        // Apply open rides filter if enabled
-        if showOpenRidesOnly {
+        // Apply ride status filter
+        switch rideStatusFilter {
+        case .open:
             filteredRides = filteredRides.filter { $0.status == "OPERATING" }
+        case .nonOpen:
+            filteredRides = filteredRides.filter { $0.status != "OPERATING" }
+        case .all:
+            // No filtering needed
+            break
         }
         
         // Apply wait time filter if enabled
@@ -117,4 +123,10 @@ enum RideSortOrder {
     case waitTimeLowToHigh
     case waitTimeHighToLow
     case favorited
+}
+
+enum RideStatusFilter {
+    case all
+    case open
+    case nonOpen
 }

@@ -56,17 +56,10 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
                     let granted = try await UNUserNotificationCenter.current()
                         .requestAuthorization(options: [.alert, .badge, .sound])
                     
-                    // Wait a moment for the system to fully update the permission status
-                    try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
-                    
-                    // Check the actual status after the delay
-                    let currentSettings = await UNUserNotificationCenter.current().notificationSettings()
-                    let isAuthorized = currentSettings.authorizationStatus == .authorized
-                    
-                    print("Notification permission status after request: \(isAuthorized)")
+                    print("Notification permission granted: \(granted)")
                     
                     DispatchQueue.main.async {
-                        self.permissionGranted = isAuthorized
+                        self.permissionGranted = granted
                     }
                 } catch {
                     print("Error requesting notification permission: \(error.localizedDescription)")

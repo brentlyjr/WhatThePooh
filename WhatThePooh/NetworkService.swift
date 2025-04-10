@@ -1,3 +1,10 @@
+//
+//  NetworkService.swift
+//  WhatThePooh
+//
+//  Created by Brent Cromley on 4/7/25.
+//
+
 import Foundation
 
 class NetworkService {
