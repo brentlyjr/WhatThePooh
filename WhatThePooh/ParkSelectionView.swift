@@ -46,7 +46,7 @@ struct ParkSelectionView: View {
                     .foregroundColor(.blue)
                     .imageScale(.small)
             }
-            .frame(maxWidth: 200)
+            .frame(maxWidth: 400)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(Color(.systemGray6))

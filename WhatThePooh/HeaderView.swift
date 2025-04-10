@@ -31,7 +31,7 @@ struct HeaderView: View {
                 // Park Selection Dropdown
                 ParkSelectionView()
                 
-                Spacer()
+ //               Spacer()
                                 
                 // Bell Icon
                 Image(systemName: parkStore.currentSelectedPark != nil && parkStore.isParkFavorited(id: parkStore.currentSelectedPark!.id) ? "bell.fill" : "bell")

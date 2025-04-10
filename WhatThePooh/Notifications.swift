@@ -24,7 +24,7 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
     private var rideNotificationArray: [Ride] = []
 
     // Published state that determines if we can send notifications
-    @Published private(set) var permissionGranted = false
+    @Published var permissionGranted = false
     
     private override init() {
         super.init()
@@ -55,8 +55,18 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
                 do {
                     let granted = try await UNUserNotificationCenter.current()
                         .requestAuthorization(options: [.alert, .badge, .sound])
+                    
+                    // Wait a moment for the system to fully update the permission status
+                    try await Task.sleep(nanoseconds: 500_000_000) // 0.5 seconds
+                    
+                    // Check the actual status after the delay
+                    let currentSettings = await UNUserNotificationCenter.current().notificationSettings()
+                    let isAuthorized = currentSettings.authorizationStatus == .authorized
+                    
+                    print("Notification permission status after request: \(isAuthorized)")
+                    
                     DispatchQueue.main.async {
-                        self.permissionGranted = granted
+                        self.permissionGranted = isAuthorized
                     }
                 } catch {
                     print("Error requesting notification permission: \(error.localizedDescription)")

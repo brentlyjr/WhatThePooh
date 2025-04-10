@@ -13,11 +13,8 @@ class ParkRideManager {
     // Singleton instance
     static let shared = ParkRideManager()
     
-    // Dictionary to store park IDs and their corresponding ride arrays
-//    private var parkRideArray: [String: [String]] = [:]
-    
-    // New dictionary to store SimpleParkRide objects
-    private var parkRides: [String: [SimpleParkRide]] = [:]
+    // Dictionary to store park IDs and their array of SimpleParkRide
+    private var parkRideArray: [String: [SimpleParkRide]] = [:]
     
     // Flag to track if the manager has been initialized
     private var isInitialized = false
@@ -35,13 +32,12 @@ class ParkRideManager {
         
         // Set up the parks with empty ride arrays
         for parkId in parkIds {
-//            parkRideArray[parkId] = []
-            parkRides[parkId] = []
+            parkRideArray[parkId] = []
         }
         
         isInitialized = true
         
-        print("ParkRideManager initialized with \(parkRides.count) parks")
+        print("ParkRideManager initialized with \(parkRideArray.count) parks")
         
         // Load rides for all parks
         for parkId in parkIds {
@@ -109,18 +105,16 @@ class ParkRideManager {
     }
     
     private func updateRides(_ rides: [SimpleParkRide], for parkId: String) {
-        // Update both the simple array of IDs and the full ride objects
-//        parkRideArray[parkId] = rides.map { $0.rideId }
-        parkRides[parkId] = rides
+        parkRideArray[parkId] = rides
     }
     
     // Get all park IDs currently managed by ParkRideManager
     func getAllParkIds() -> [String] {
-        return Array(parkRides.keys)
+        return Array(parkRideArray.keys)
     }
     
     // Get all Rides for a specific park
     func getRides(for parkId: String) -> [SimpleParkRide] {
-        return parkRides[parkId] ?? []
+        return parkRideArray[parkId] ?? []
     }
 } 

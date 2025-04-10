@@ -22,17 +22,6 @@ struct WhatThePoohApp: App {
         // Initialize ParkRideManager with park IDs from ParkStore
         let parkIds = ParkStore().parks.map { $0.id }
         ParkRideManager.shared.initialize(with: parkIds)
-        
-        // Request notification permissions
-        Task {
-            do {
-                let center = UNUserNotificationCenter.current()
-                let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
-                print("Notification permission granted: \(granted)")
-            } catch {
-                print("Notification permission error: \(error.localizedDescription)")
-            }
-        }
     }
 
     var body: some Scene {
