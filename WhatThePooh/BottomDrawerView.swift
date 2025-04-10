@@ -61,7 +61,7 @@ struct BottomDrawerView: View {
                 
                 // Settings button
                 Button(action: { viewModel.showSettingsModal = true }) {
-                    Image(systemName: "gearshape.fill")
+                    Image(systemName: "gearshape")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.blue)
