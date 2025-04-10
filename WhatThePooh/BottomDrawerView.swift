@@ -37,10 +37,10 @@ struct BottomDrawerView: View {
                 
                 // Favorites button
                 Button(action: { viewModel.showFavoritesOnly.toggle() }) {
-                    Image(systemName: "heart.fill")
+                    Image(systemName: viewModel.showFavoritesOnly ? "heart.fill" : "heart")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(.red)
+                        .foregroundColor(.blue)
                 }
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Show Favorites Only")
