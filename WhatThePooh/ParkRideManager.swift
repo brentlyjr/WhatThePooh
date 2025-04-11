@@ -1,5 +1,5 @@
 //
-//  ParkController.swift
+//  ParkRideManager.swift
 //  WhatThePooh
 //
 //  Created by Brent Cromley on 4/9/25.
@@ -13,7 +13,8 @@ struct SimpleParkRide {
     let name: String
     let waitTime: Int
     let lastUpdated: Date
-    let status: String
+    let status: String?
+    let prevStatus: String?  // New field to track previous status
 }
 
 class ParkRideManager {
@@ -25,6 +26,10 @@ class ParkRideManager {
     
     // Flag to track if the manager has been initialized
     private var isInitialized = false
+    
+    // Timer for periodic updates
+    private var updateTimer: Timer?
+    private let updateInterval: TimeInterval = 120  // 2 minutes
     
     // Private initializer to enforce singleton pattern
     private init() { }
@@ -48,11 +53,42 @@ class ParkRideManager {
         
         // Load rides for all parks
         for parkId in parkIds {
-            loadRidesForPark(for: parkId)
+            updateRidesForPark(for: parkId)
+        }
+        
+        // Start the update timer
+        startUpdateTimer()
+    }
+    
+    // Start the timer for periodic updates
+    private func startUpdateTimer() {
+        // Cancel any existing timer
+        updateTimer?.invalidate()
+        
+        // Create a new timer that fires every updateInterval seconds
+        updateTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { [weak self] _ in
+            self?.updateAllParks()
+        }
+        
+        print("Started update timer with interval of \(updateInterval) seconds")
+    }
+    
+    // Stop the update timer
+    func stopUpdateTimer() {
+        updateTimer?.invalidate()
+        updateTimer = nil
+        print("Stopped update timer")
+    }
+    
+    // Update all parks
+    private func updateAllParks() {
+        print("Updating all parks...")
+        for parkId in parkRideArray.keys {
+            updateRidesForPark(for: parkId)
         }
     }
     
-    private func loadRidesForPark(for parkId: String) {
+    private func updateRidesForPark(for parkId: String) {
         NetworkService.shared.performNetworkRequest(id: parkId) { [weak self] data in
             guard let self = self else { return }
             
@@ -66,9 +102,30 @@ class ParkRideManager {
                    let liveData = json["liveData"] as? [[String: Any]] {
                     
                     let rides = self.parseRides(from: liveData, for: parkId)
-                    self.updateRides(rides, for: parkId)
                     
-                    print("Loaded \(rides.count) rides for park \(parkId)")
+                    // Copy status over from our existing ride array
+                    let updatedRides = self.updateRidesWithPreviousStatus(rides, for: parkId)
+                    
+                    // Now update our main array
+                    self.updateRides(updatedRides, for: parkId)
+                    
+                    let parkName = ParkStore().parks.first(where: { $0.id == parkId })?.name ?? "Unknown Park"
+                    let isFavorite = ParkStore().isParkFavorited(id: parkId)
+                    let parkDisplayName = isFavorite ? "\(parkName) (*)" : parkName
+
+                    // print("Updated \(rides.count) rides for park \(parkName)")
+
+                    // If this is a favorited park for notifications (let's see if anything changed
+                    for ride in updatedRides {
+                        if let prevStatus = ride.prevStatus,
+                           let currentStatus = ride.status,
+                           prevStatus != currentStatus {
+                            print("Status changed for ride '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus)")
+                        }
+                    }
+                    
+                    // If this is our selected Park from the popup, let's copy this fresh data into our Ride Array
+                    
                 }
             } catch {
                 print("Error parsing ride data for park \(parkId): \(error)")
@@ -97,7 +154,8 @@ class ParkRideManager {
                 name: name,
                 waitTime: waitTime,
                 lastUpdated: lastUpdated,
-                status: status
+                status: status,
+                prevStatus: nil  // Initial parse always has nil prevStatus
             )
         }
     }
@@ -113,6 +171,39 @@ class ParkRideManager {
     
     private func updateRides(_ rides: [SimpleParkRide], for parkId: String) {
         parkRideArray[parkId] = rides
+    }
+    
+    private func updateRidesWithPreviousStatus(_ newRides: [SimpleParkRide], for parkId: String) -> [SimpleParkRide] {
+        // Create a dictionary of existing rides for easy lookup
+        let existingRides = parkRideArray[parkId] ?? []
+        let existingRideDict = Dictionary(uniqueKeysWithValues: existingRides.map { ($0.rideId, $0) })
+        
+        // Update prevStatus for each new ride
+        return newRides.map { ride -> SimpleParkRide in
+            if let existingRide = existingRideDict[ride.rideId] {
+                // Create new SimpleParkRide with the previous status
+                return SimpleParkRide(
+                    parkId: ride.parkId,
+                    rideId: ride.rideId,
+                    name: ride.name,
+                    waitTime: ride.waitTime,
+                    lastUpdated: ride.lastUpdated,
+                    status: ride.status,
+                    prevStatus: existingRide.status
+                )
+            } else {
+                // For new rides, prevStatus is nil
+                return SimpleParkRide(
+                    parkId: ride.parkId,
+                    rideId: ride.rideId,
+                    name: ride.name,
+                    waitTime: ride.waitTime,
+                    lastUpdated: ride.lastUpdated,
+                    status: ride.status,
+                    prevStatus: nil
+                )
+            }
+        }
     }
     
     // Get all park IDs currently managed by ParkRideManager
