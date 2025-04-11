@@ -32,7 +32,7 @@ struct RideView: View {
                                 rideController.toggleFavorite(for: entity)
                             }) {
                                 Image(systemName: entity.isFavorited ? "heart.fill" : "heart")
-                                    .foregroundColor(entity.isFavorited ? .red : .gray)
+                                    .foregroundColor(AppColors.teal())
                                     .imageScale(.large)
                             }
                             .buttonStyle(BorderlessButtonStyle())
@@ -100,23 +100,19 @@ struct RideView: View {
         
         switch calculatedStatus {
         case "CLOSED":
-        //    return ("Closed (\(minutes!) mins)", Color.blue.opacity(0.2))
-            return ("Closed", Color.blue.opacity(0.2))
+            return ("Closed", Color.clear)
         case "OPERATING":
             if let unwrappedWaitTime = waitTime {
-                return ("\(unwrappedWaitTime) mins", Color.green.opacity(0.2))
+                return ("\(unwrappedWaitTime) mins", AppColors.sage(opacity: 0.5))
             } else {
-            //    return ("Operating (\(minutes!) mins)", Color.green.opacity(0.2))
-                return ("Open", Color.green.opacity(0.2))
+                return ("Open", AppColors.sage(opacity: 0.5))
             }
         case "DOWN":
-        //    return ("Down (\(minutes!) mins)", Color.red.opacity(0.2))
-            return ("Down", Color.red.opacity(0.2))
+            return ("Down", AppColors.coral(opacity: 0.3))
         case "REFURBISHMENT":
-        //    return ("Refurb (\(minutes!) mins)", Color.yellow.opacity(0.2))
-            return ("Refurb", Color.yellow.opacity(0.2))
+            return ("Refurb", AppColors.sand(opacity: 0.8))
         default:
-            return ("Unknown", Color.clear)
+            return ("Loading", Color.clear)
         }
     }
 }

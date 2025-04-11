@@ -33,7 +33,7 @@ struct HeaderView: View {
                 
                 // Bell Icon
                 Image(systemName: parkStore.currentSelectedPark != nil && parkStore.isParkFavorited(id: parkStore.currentSelectedPark!.id) ? "bell.fill" : "bell")
-                    .foregroundColor(.blue)
+                    .foregroundColor(AppColors.teal())
                     .font(.title2)
                     .onTapGesture {
                         if let park = parkStore.currentSelectedPark {

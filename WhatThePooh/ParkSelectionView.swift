@@ -35,21 +35,21 @@ struct ParkSelectionView: View {
             HStack(spacing: 8) {
                 if let park = selectedPark {
                     Text(park.name)
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.teal())
                         .font(.subheadline)
                 } else {
                     Text("Select a Park")
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.teal())
                         .font(.subheadline)
                 }
                 Image(systemName: "chevron.down")
-                    .foregroundColor(.blue)
+                    .foregroundColor(AppColors.teal())
                     .imageScale(.small)
             }
             .frame(maxWidth: 400)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
-            .background(Color(.systemGray6))
+            .background(AppColors.sand())
             .cornerRadius(8)
         }
         .buttonStyle(PlainButtonStyle())

@@ -87,8 +87,8 @@ struct PreviewPopupView: View {
                             .fill(
                                 LinearGradient(
                                     gradient: Gradient(colors: [
-                                        Color(red: 0.4, green: 0.6, blue: 0.9),
-                                        Color(red: 0.2, green: 0.4, blue: 0.8)
+                                        AppColors.ochre(opacity: 1),
+                                        AppColors.sand(opacity: 1)
                                     ]),
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing

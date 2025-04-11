@@ -34,7 +34,7 @@ struct BottomDrawerView: View {
                     Image(systemName: "arrow.up.arrow.down")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.teal())
                 }
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Sort Rides")
@@ -46,7 +46,7 @@ struct BottomDrawerView: View {
                     Image(systemName: viewModel.showFavoritesOnly ? "heart.fill" : "heart")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.teal())
                 }
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Show Favorites Only")
@@ -58,7 +58,7 @@ struct BottomDrawerView: View {
                     Image(systemName: isAnyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.teal())
                 }
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Filter Rides")
@@ -70,7 +70,7 @@ struct BottomDrawerView: View {
                     Image(systemName: "gearshape")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(.blue)
+                        .foregroundColor(AppColors.teal())
                 }
                 .buttonStyle(BottomDrawerButtonStyle())
                 .help("Settings")
@@ -80,9 +80,9 @@ struct BottomDrawerView: View {
             .frame(height: 50)
             .padding(.vertical, 0)
             .padding(.bottom, 16)
-            .background(Color(.systemGray6))
+            .background(AppColors.sand())
         }
-        .background(Color(.systemGray6))
+        .background(AppColors.sand())
         .clipShape(
             RoundedCorner(radius: 16, corners: [.topLeft, .topRight])
         )
