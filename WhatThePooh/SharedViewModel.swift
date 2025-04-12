@@ -31,6 +31,76 @@ class SharedViewModel: ObservableObject {
     // window that will display internal stats
     @Published var showDebugWindow: Bool = false
     
+    // Status colors for ride statuses
+    @Published var openColor: Color = AppColors.sage(opacity: 1.0)
+    @Published var downColor: Color = AppColors.coral(opacity: 1.0)
+    @Published var refurbColor: Color = AppColors.sand(opacity: 1.0)
+    @Published var closedColor: Color = Color.clear
+    
+    // UserDefaults keys for status colors
+    private let openColorKey = "openColor"
+    private let downColorKey = "downColor"
+    private let refurbColorKey = "refurbColor"
+    private let closedColorKey = "closedColor"
+    
+    init() {
+        // Load saved colors from UserDefaults
+        loadStatusColors()
+    }
+    
+    // Load status colors from UserDefaults
+    private func loadStatusColors() {
+        if let openColorData = UserDefaults.standard.data(forKey: openColorKey),
+           let downColorData = UserDefaults.standard.data(forKey: downColorKey),
+           let refurbColorData = UserDefaults.standard.data(forKey: refurbColorKey),
+           let closedColorData = UserDefaults.standard.data(forKey: closedColorKey) {
+            
+            if let openColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: openColorData) {
+                self.openColor = Color(openColor)
+            }
+            
+            if let downColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: downColorData) {
+                self.downColor = Color(downColor)
+            }
+            
+            if let refurbColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: refurbColorData) {
+                self.refurbColor = Color(refurbColor)
+            }
+            
+            if let closedColor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: closedColorData) {
+                self.closedColor = Color(closedColor)
+            }
+        }
+    }
+    
+    // Save status colors to UserDefaults
+    func saveStatusColors() {
+        if let openColorData = try? NSKeyedArchiver.archivedData(withRootObject: UIColor(openColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(openColorData, forKey: openColorKey)
+        }
+        
+        if let downColorData = try? NSKeyedArchiver.archivedData(withRootObject: UIColor(downColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(downColorData, forKey: downColorKey)
+        }
+        
+        if let refurbColorData = try? NSKeyedArchiver.archivedData(withRootObject: UIColor(refurbColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(refurbColorData, forKey: refurbColorKey)
+        }
+        
+        if let closedColorData = try? NSKeyedArchiver.archivedData(withRootObject: UIColor(closedColor), requiringSecureCoding: false) {
+            UserDefaults.standard.set(closedColorData, forKey: closedColorKey)
+        }
+    }
+    
+    // Reset status colors to defaults
+    func resetStatusColors() {
+        openColor = AppColors.sage(opacity: 0.5)
+        downColor = AppColors.coral(opacity: 0.3)
+        refurbColor = AppColors.sand(opacity: 0.8)
+        closedColor = Color.clear
+        saveStatusColors()
+    }
+    
     // Helper function to sort rides based on current sort order
     func sortRides(_ rides: [Ride]) -> [Ride] {
         // First, apply filters

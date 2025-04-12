@@ -79,10 +79,9 @@ struct RideView: View {
     }
     
     private func statusAttributes(status: String?, waitTime: Int?, lastUpdated: String?) -> (String, Color) {
-        
         // So for some parks, the status is not always accurate (IE, don't use REFURBISH, etc)
         // So for those odd cases, I am going to potentially change the status for display
-        let  calculatedStatus = status
+        let calculatedStatus = status
         
         // let minutes = Utilities.minutesSince(lastUpdated ?? Utilities.getTimeNowUTCString())
         
@@ -100,17 +99,17 @@ struct RideView: View {
         
         switch calculatedStatus {
         case "CLOSED":
-            return ("Closed", Color.clear)
+            return ("Closed", viewModel.closedColor)
         case "OPERATING":
             if let unwrappedWaitTime = waitTime {
-                return ("\(unwrappedWaitTime) mins", AppColors.sage(opacity: 0.5))
+                return ("\(unwrappedWaitTime) mins", viewModel.openColor)
             } else {
-                return ("Open", AppColors.sage(opacity: 0.5))
+                return ("Open", viewModel.openColor)
             }
         case "DOWN":
-            return ("Down", AppColors.coral(opacity: 0.3))
+            return ("Down", viewModel.downColor)
         case "REFURBISHMENT":
-            return ("Refurb", AppColors.sand(opacity: 0.8))
+            return ("Refurb", viewModel.refurbColor)
         default:
             return ("Loading", Color.clear)
         }
