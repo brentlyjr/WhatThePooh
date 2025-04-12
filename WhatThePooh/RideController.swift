@@ -68,6 +68,7 @@ class RideController: ObservableObject {
     // copies the data over to the main array to trigger a view refresh
     func updateRideStatus() -> Void {
         // Start all status updates asynchronously
+        print("Fetching ride updates from RideController")
         for index in parkRideArray.indices {
             let ride = parkRideArray[index]
                         
@@ -189,5 +190,28 @@ class RideController: ObservableObject {
                 completion(nil, 0, nil)
             }
         }
+    }
+    
+    // Update the rides array with new data
+    func updateRides(_ newRides: [Ride]) {
+        // Create a mutable copy of the array
+        var updatedRides = newRides
+        
+        // Preserve favorite status for existing rides
+        for index in updatedRides.indices {
+            if let existingRide = parkRideArray.first(where: { $0.id == updatedRides[index].id }) {
+                updatedRides[index].isFavorited = existingRide.isFavorited
+            }
+        }
+        
+        // Update the array on the main thread
+        DispatchQueue.main.async {
+            self.parkRideArray = updatedRides
+        }
+    }
+    
+    // Check if a ride is favorited
+    func isRideFavorited(id: String) -> Bool {
+        return favoriteIDs.contains(id)
     }
 }

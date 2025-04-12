@@ -171,6 +171,33 @@ class ParkRideManager {
     
     private func updateRides(_ rides: [SimpleParkRide], for parkId: String) {
         parkRideArray[parkId] = rides
+        
+        // Update RideController if this is the selected park
+        // updateRideController(for: parkId, with: rides)
+    }
+    
+    private func convertToRide(_ simpleRide: SimpleParkRide) -> Ride {
+        return Ride(
+            id: simpleRide.rideId,
+            name: simpleRide.name,
+            entityType: .attraction,
+            status: simpleRide.status,
+            waitTime: simpleRide.waitTime,
+            lastUpdated: ISO8601DateFormatter().string(from: simpleRide.lastUpdated),
+            isFavorited: RideController.shared.isRideFavorited(id: simpleRide.rideId)
+        )
+    }
+    
+    private func updateRideController(for parkId: String, with rides: [SimpleParkRide]) {
+        // Only update if this is the currently selected park
+        if parkId == ParkStore().currentSelectedPark?.id {
+            let convertedRides = rides.map { convertToRide($0) }
+            
+            // Update on main thread since this affects UI
+            DispatchQueue.main.async {
+                RideController.shared.updateRides(convertedRides)
+            }
+        }
     }
     
     private func updateRidesWithPreviousStatus(_ newRides: [SimpleParkRide], for parkId: String) -> [SimpleParkRide] {
