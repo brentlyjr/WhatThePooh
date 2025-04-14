@@ -81,8 +81,26 @@ struct RideView: View {
     private func statusAttributes(status: String?, waitTime: Int?, lastUpdated: String?) -> (String, Color) {
         // So for some parks, the status is not always accurate (IE, don't use REFURBISH, etc)
         // So for those odd cases, I am going to potentially change the status for display
-        let calculatedStatus = status
+        var calculatedStatus = status
+
+        // TODO: i have noticed the first time through this the status appears to be 'nil'.
+        // Why is that, it should never be nil unless something went wrong.
+                
+        // TODO: Is there a better way to do this then to call "isParkOpen()" everytime
+        // I am worried that is re-parsing the string every time, which doesn't seem efficient
         
+        // Check park open/closed status
+        if let selectedPark = parkStore.currentSelectedPark {
+            print("Park '\(selectedPark.name)' is currently \(selectedPark.isOpen ? "OPEN" : "CLOSED")")
+
+            // If the Park isn't open, but the ride status says "OPEN", let's mark is CLOSED.
+            // Shanghai and some parks do this incorrectly. They leave the ride open even
+            // after the park has closed.
+            if (!selectedPark.isOpen && status == "OPERATING") {
+                calculatedStatus = "CLOSED"
+            }
+        }
+
         // let minutes = Utilities.minutesSince(lastUpdated ?? Utilities.getTimeNowUTCString())
         
         // Japan, stuff can be "DOWN" for months, so if has been down for more than 2 days, let's

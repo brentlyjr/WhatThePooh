@@ -121,10 +121,16 @@ class ParkRideManager {
                            let currentStatus = ride.status,
                            prevStatus != currentStatus {
                             print("Status changed for ride '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus)")
+                            if (isFavorite) {
+                                print("*** SENDING NOTIFICATION THAT STATUS HAS CHANGED ****")
+                            }
                         }
                     }
                     
                     // If this is our selected Park from the popup, let's copy this fresh data into our Ride Array
+                    
+                    // TODO: But we probably don't want to do it if we are in the background. Can we determine if we are
+                    // in the background or foreground? would be good cause then we would know whether to trigger copy
                     
                 }
             } catch {
@@ -171,6 +177,9 @@ class ParkRideManager {
     
     private func updateRides(_ rides: [SimpleParkRide], for parkId: String) {
         parkRideArray[parkId] = rides
+        
+        // TODO: oh, the copy stuff is here, this is what would check background and foreground.
+        // or should we move this copy stuff out into the main loop?
         
         // Update RideController if this is the selected park
         // updateRideController(for: parkId, with: rides)

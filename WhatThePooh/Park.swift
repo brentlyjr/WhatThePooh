@@ -39,6 +39,29 @@ class Park: Identifiable, Codable  {
         return operatingHours.first { $0.date == today && $0.type == "OPERATING" }
     }
     
+    // Computed property to check if the park is currently open
+    var isOpen: Bool {
+        guard let todayHours = todayHours else {
+            return false // No operating hours available
+        }
+        
+        // Get current UTC time
+        let now = Date()
+        
+        // Parse opening and closing times from ISO 8601 format
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [.withInternetDateTime]
+        
+        guard let openingDate = isoFormatter.date(from: todayHours.openingTime),
+              let closingDate = isoFormatter.date(from: todayHours.closingTime) else {
+            print("Failed to parse opening/closing times: \(todayHours.openingTime), \(todayHours.closingTime)")
+            return false
+        }
+        
+        // Simple comparison: is current time between opening and closing?
+        return now >= openingDate && now <= closingDate
+    }
+    
     // Initializer
     init(id: String, name: String, isSelected: Bool, isVisible: Bool) {
         self.id = id
