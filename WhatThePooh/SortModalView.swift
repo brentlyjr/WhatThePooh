@@ -29,6 +29,7 @@ struct SortModalView: View {
             List {
                 Button(action: {
                     viewModel.sortOrder = .name
+                    viewModel.saveSortOrder()
                 }) {
                     HStack {
                         Text("Sort by Name")
@@ -41,6 +42,7 @@ struct SortModalView: View {
                 
                 Button(action: {
                     viewModel.sortOrder = .waitTimeLowToHigh
+                    viewModel.saveSortOrder()
                 }) {
                     HStack {
                         Text("Sort by Wait Time (Low to High)")
@@ -53,6 +55,7 @@ struct SortModalView: View {
                 
                 Button(action: {
                     viewModel.sortOrder = .waitTimeHighToLow
+                    viewModel.saveSortOrder()
                 }) {
                     HStack {
                         Text("Sort by Wait Time (High to Low)")
@@ -65,6 +68,7 @@ struct SortModalView: View {
                 
                 Button(action: {
                     viewModel.sortOrder = .favorited
+                    viewModel.saveSortOrder()
                 }) {
                     HStack {
                         Text("Sort by Favorites")

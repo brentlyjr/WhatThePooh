@@ -43,9 +43,50 @@ class SharedViewModel: ObservableObject {
     private let refurbColorKey = "refurbColor"
     private let closedColorKey = "closedColor"
     
+    // UserDefaults key for sort order
+    private let sortOrderKey = "sortOrder"
+    
     init() {
         // Load saved colors from UserDefaults
         loadStatusColors()
+        
+        // Load saved sort order from UserDefaults
+        loadSortOrder()
+    }
+    
+    // Load sort order from UserDefaults
+    private func loadSortOrder() {
+        if let savedSortOrderString = UserDefaults.standard.string(forKey: sortOrderKey) {
+            switch savedSortOrderString {
+            case "name":
+                sortOrder = .name
+            case "waitTimeLowToHigh":
+                sortOrder = .waitTimeLowToHigh
+            case "waitTimeHighToLow":
+                sortOrder = .waitTimeHighToLow
+            case "favorited":
+                sortOrder = .favorited
+            default:
+                sortOrder = .name // Default if the saved value is invalid
+            }
+        }
+    }
+    
+    // Save sort order to UserDefaults
+    func saveSortOrder() {
+        var sortOrderString: String
+        switch sortOrder {
+        case .name:
+            sortOrderString = "name"
+        case .waitTimeLowToHigh:
+            sortOrderString = "waitTimeLowToHigh"
+        case .waitTimeHighToLow:
+            sortOrderString = "waitTimeHighToLow"
+        case .favorited:
+            sortOrderString = "favorited"
+        }
+        
+        UserDefaults.standard.set(sortOrderString, forKey: sortOrderKey)
     }
     
     // Load status colors from UserDefaults

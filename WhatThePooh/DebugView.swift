@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DebugView: View {
     @EnvironmentObject var viewModel: SharedViewModel
+    @EnvironmentObject var parkStore: ParkStore
     @State private var logMessages: String = ""
     @State private var favoriteRides: [String] = []
     
@@ -56,6 +57,15 @@ struct DebugView: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
             }
+            
+            // Add a button to clear parks and reload defaults
+            Button(action: {
+                parkStore.clearParksAndReload()
+            }) {
+                Text("Clear Parks and Reload Defaults")
+                    .foregroundColor(.white)
+            }
+            .padding()
             
             Spacer()
         }

@@ -133,6 +133,24 @@ class ParkStore: ObservableObject {
     func isParkFavorited(id: String) -> Bool {
         return favoriteParkIDs.contains(id)
     }
+    
+    // Clear parks from UserDefaults and reload defaults
+    func clearParksAndReload() {
+        // Remove parks from UserDefaults
+        UserDefaults.standard.removeObject(forKey: parksKey)
+        
+        // Reset isInitialLoad to true so loadParks() will use defaults
+        isInitialLoad = true
+        
+        // Reload parks from defaults
+        loadParks()
+        
+        // Reset isInitialLoad to false
+        isInitialLoad = false
+        
+        // Log the action
+        AppLogger.shared.log("Cleared parks from UserDefaults and reloaded defaults")
+    }
 }
 
 
