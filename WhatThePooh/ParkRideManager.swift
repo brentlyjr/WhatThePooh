@@ -12,7 +12,7 @@ struct SimpleParkRide {
     let parkId: String
     let rideId: String
     let name: String
-    let waitTime: Int
+    let waitTime: Int?
     let lastUpdated: Date
     let status: String?
     let prevStatus: String?  // New field to track previous status
@@ -168,13 +168,13 @@ class ParkRideManager: ObservableObject {
         }
     }
     
-    private func extractWaitTime(from rideData: [String: Any]) -> Int {
+    private func extractWaitTime(from rideData: [String: Any]) -> Int? {
         if let queue = rideData["queue"] as? [String: Any],
            let standby = queue["STANDBY"] as? [String: Any],
            let waitTime = standby["waitTime"] as? Int {
             return waitTime
         }
-        return 0
+        return nil
     }
     
     private func updateRides(_ rides: [SimpleParkRide], for parkId: String) {
