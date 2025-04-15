@@ -135,9 +135,9 @@ class SharedViewModel: ObservableObject {
     
     // Reset status colors to defaults
     func resetStatusColors() {
-        openColor = AppColors.sage(opacity: 1.0)
-        downColor = AppColors.coral(opacity: 1.0)
-        refurbColor = AppColors.sand(opacity: 1.0)
+        openColor = AppColors.sage(opacity: 0.5)
+        downColor = AppColors.coral(opacity: 0.5)
+        refurbColor = AppColors.sand(opacity: 0.5)
         closedColor = Color.clear
         saveStatusColors()
     }
