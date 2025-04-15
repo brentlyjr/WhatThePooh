@@ -110,7 +110,6 @@ struct SettingsView: View {
         List {
             statusColorsSection
             aboutSection
-            debugSection
         }
         .tag(1)
     }
