@@ -12,6 +12,7 @@ struct RideView: View {
     @EnvironmentObject var rideController: RideController
     @EnvironmentObject var parkStore: ParkStore
     @EnvironmentObject var notificationManager: Notifications
+    @EnvironmentObject var parkRideManager: ParkRideManager
 
     var sortedRides: [Ride] {
         viewModel.sortRides(rideController.parkRideArray)
@@ -68,11 +69,13 @@ struct RideView: View {
         .onAppear {
             // Load all the entities for our park. Lookup the currently selected park
             if let selectedPark = parkStore.currentSelectedPark {
-                rideController.fetchRidesForPark(for: selectedPark.id)
+                // rideController.fetchRidesForPark(for: selectedPark.id)
+                parkRideManager.updateRidesForPark(for: selectedPark.id)
 
                 // Starts a time to refresh the data in the view periodically
                 DispatchQueue.main.async {
-                    rideController.startStatusUpdates()
+                    parkRideManager.startUpdateTimer()
+                    // rideController.startStatusUpdates()
                 }
             }
         }
@@ -91,7 +94,6 @@ struct RideView: View {
         
         // Check park open/closed status
         if let selectedPark = parkStore.currentSelectedPark {
-            print("Park '\(selectedPark.name)' is currently \(selectedPark.isOpen ? "OPEN" : "CLOSED")")
 
             // If the Park isn't open, but the ride status says "OPEN", let's mark is CLOSED.
             // Shanghai and some parks do this incorrectly. They leave the ride open even
@@ -109,15 +111,8 @@ struct RideView: View {
         //            calculatedStatus = "REFURBISHMENT"
         //        }
         
-        // Once again, we are making some assumptions. If the ride is closed, but it hasn't been closed
-        // for very long, then we should assume it is DOWN
-        //        if status == "CLOSED" && minutes! < 240 {
-        //            calculatedStatus = "DOWN"
-        //        }
-        
+        // Now that we have our calculated status, let's return the appropriate color and text
         switch calculatedStatus {
-        case "CLOSED":
-            return ("Closed", viewModel.closedColor)
         case "OPERATING":
             if let unwrappedWaitTime = waitTime {
                 return ("\(unwrappedWaitTime) mins", viewModel.openColor)
@@ -127,9 +122,11 @@ struct RideView: View {
         case "DOWN":
             return ("Down", viewModel.downColor)
         case "REFURBISHMENT":
-            return ("Refurb", viewModel.refurbColor)
+            return ("Refurbishment", viewModel.refurbColor)
+        case "CLOSED":
+            return ("Closed", viewModel.closedColor)
         default:
-            return ("Loading", Color.clear)
+            return ("Unknown", Color.gray)
         }
     }
 }

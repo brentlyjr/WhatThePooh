@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ParkSelectionView: View {
-    @EnvironmentObject var rideController: RideController
     @EnvironmentObject var parkStore: ParkStore
+    @EnvironmentObject var parkRideManager: ParkRideManager
 
     var body: some View {
         // Filter parks to only show those with isVisible true
@@ -25,7 +25,7 @@ struct ParkSelectionView: View {
                     parkStore.updateSelectedPark(to: park)
 
                     // Now fetch all the rides for that park
-                    rideController.fetchRidesForPark(for: park.id)
+                    parkRideManager.updateRidesForPark(for: park.id)
                 }) {
                     Text(park.name)
                         .font(.subheadline)

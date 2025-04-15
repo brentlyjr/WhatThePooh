@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 struct SimpleParkRide {
     let parkId: String
@@ -17,19 +18,22 @@ struct SimpleParkRide {
     let prevStatus: String?  // New field to track previous status
 }
 
-class ParkRideManager {
+class ParkRideManager: ObservableObject {
     // Singleton instance
     static let shared = ParkRideManager()
     
     // Dictionary to store park IDs and their array of SimpleParkRide
     private var parkRideArray: [String: [SimpleParkRide]] = [:]
     
+    // Published property to notify observers when rides are updated
+    @Published private(set) var lastUpdated: Date = Date()
+    
     // Flag to track if the manager has been initialized
     private var isInitialized = false
     
     // Timer for periodic updates
     private var updateTimer: Timer?
-    private let updateInterval: TimeInterval = 120  // 2 minutes
+    private let updateInterval: TimeInterval = 60  // 2 minutes
     
     // Private initializer to enforce singleton pattern
     private init() { }
@@ -49,8 +53,6 @@ class ParkRideManager {
         
         isInitialized = true
         
-        print("ParkRideManager initialized with \(parkRideArray.count) parks")
-        
         // Load rides for all parks
         for parkId in parkIds {
             updateRidesForPark(for: parkId)
@@ -61,7 +63,7 @@ class ParkRideManager {
     }
     
     // Start the timer for periodic updates
-    private func startUpdateTimer() {
+    func startUpdateTimer() {
         // Cancel any existing timer
         updateTimer?.invalidate()
         
@@ -88,7 +90,7 @@ class ParkRideManager {
         }
     }
     
-    private func updateRidesForPark(for parkId: String) {
+    func updateRidesForPark(for parkId: String) {
         NetworkService.shared.performNetworkRequest(id: parkId) { [weak self] data in
             guard let self = self else { return }
             
@@ -178,11 +180,16 @@ class ParkRideManager {
     private func updateRides(_ rides: [SimpleParkRide], for parkId: String) {
         parkRideArray[parkId] = rides
         
+        // Update the lastUpdated timestamp to notify observers
+        DispatchQueue.main.async {
+            self.lastUpdated = Date()
+        }
+        
         // TODO: oh, the copy stuff is here, this is what would check background and foreground.
         // or should we move this copy stuff out into the main loop?
         
         // Update RideController if this is the selected park
-        // updateRideController(for: parkId, with: rides)
+        updateRideController(for: parkId, with: rides)
     }
     
     private func convertToRide(_ simpleRide: SimpleParkRide) -> Ride {

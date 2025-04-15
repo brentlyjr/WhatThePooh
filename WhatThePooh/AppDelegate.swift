@@ -77,16 +77,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         task.setTaskCompleted(success: true)
     }
-    
-    // Handle app entering background
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        AppLogger.shared.log("Application did enter background")
-        RideController.shared.applicationDidEnterBackground()
     }
-    
-    // Handle app entering foreground
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        AppLogger.shared.log("Application will enter foreground")
-        RideController.shared.applicationWillEnterForeground()
-    }
-}

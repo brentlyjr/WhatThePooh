@@ -12,6 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var viewModel: SharedViewModel
     @EnvironmentObject var parkStore: ParkStore
     @ObservedObject private var rideController = RideController.shared
+    @EnvironmentObject var parkRideManager: ParkRideManager
 
     init() {
         // No need to initialize rideController here anymore since we're using the singleton
@@ -25,12 +26,14 @@ struct ContentView: View {
                     .environmentObject(parkStore)
                     .environmentObject(rideController)
                     .environmentObject(viewModel)
+                    .environmentObject(parkRideManager)
 
                 // Scrolling RideView
                 ScrollView {
                     RideView(viewModel: viewModel)
                         .environmentObject(rideController)
                         .environmentObject(parkStore)
+                        .environmentObject(parkRideManager)
                 }
                 .frame(maxWidth: .infinity)
 
