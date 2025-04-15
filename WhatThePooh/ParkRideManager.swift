@@ -69,7 +69,7 @@ class ParkRideManager: ObservableObject {
         
         // Create a new timer that fires every updateInterval seconds
         updateTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true) { [weak self] _ in
-            AppLogger.shared.log("Updating status' for all parks at \(Date())")
+            AppLogger.shared.log("Timer triggering update")
             self?.updateAllParks()
         }
         
@@ -85,7 +85,13 @@ class ParkRideManager: ObservableObject {
     
     // Update all parks
     private func updateAllParks() {
-        print("Updating status' for all parks at \(Date())")
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        let currentDateTime = dateFormatter.string(from: Date())
+        print("Updating status' for all parks at \(currentDateTime)")
+
         for parkId in parkRideArray.keys {
             updateRidesForPark(for: parkId)
         }

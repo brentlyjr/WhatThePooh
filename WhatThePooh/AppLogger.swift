@@ -25,7 +25,12 @@ class AppLogger {
     private init() {}
     
     func log(_ message: String) {
-        let timestamp = ISO8601DateFormatter().string(from: Date())
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        let timestamp = dateFormatter.string(from: Date())
+
         let logEntry = "[\(timestamp)] \(message)"
         
         // Add new message to the end of the array

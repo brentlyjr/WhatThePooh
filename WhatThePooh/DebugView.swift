@@ -29,27 +29,6 @@ struct DebugView: View {
             }
             .safeAreaInset(edge: .top) { Spacer().frame(height: 50) } // Pushes content down
             
-            // Favorite Rides Section
-            VStack(alignment: .leading) {
-                Text("Favorite Rides")
-                    .font(.headline)
-                    .padding(.horizontal)
-                
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 4) {
-                        ForEach(favoriteRides, id: \.self) { rideId in
-                            Text(rideId)
-                                .font(.system(size: 12, design: .monospaced))
-                                .padding(.horizontal)
-                        }
-                    }
-                }
-                .frame(height: 100)
-                .background(Color.black.opacity(0.1))
-                .cornerRadius(10)
-                .padding(.horizontal)
-            }
-            
             // Log Messages Section
             VStack(alignment: .leading) {
                 HStack {
