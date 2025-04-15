@@ -50,7 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         do {
             try BGTaskScheduler.shared.submit(request)
-        //    AppLogger.shared.log("\(self.refreshTaskIdentifier) - task scheduled!")
         } catch let error as NSError {
             AppLogger.shared.log("Could not schedule app refresh: \(error)")
             AppLogger.shared.log("Could not schedule app refresh: \(error), \(error.userInfo)")
@@ -58,23 +57,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func handleAppRefreshTask(task: BGAppRefreshTask) {
-        AppLogger.shared.log("Background task started update")
+        AppLogger.shared.log("Background task executing at \(Date())")
         
         task.expirationHandler = {
             AppLogger.shared.log("Background app refresh task expired before completion")
         }
 
-        // AppLogger.shared.log("Firing notification at: \(Date())")
-
-//    TODO: Need to actually call code to check and send notifications, if needed
+        // TODO: Need to actually call code to check and send notifications, if needed
+        // TODO: I wonder if just getting time here allows our timer to fire
         // Simulate fetching ride statuses — replace with actual API call
         //       fetchUpdatedRideStatuses()
-
-        // notificationManager.sendStatusChangeNotification(rideName: "Star Wars: Rise of the Resistance", newStatus: "Down")
 
         // Set ourselves up to run again
         scheduleAppRefresh()
 
         task.setTaskCompleted(success: true)
     }
-    }
+}

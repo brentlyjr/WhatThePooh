@@ -75,14 +75,16 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
         guard permissionGranted else { return }
         
         let content = UNMutableNotificationContent()
-        content.title = "\(rideName) Status Update"
-        content.body = "The ride is now \(newStatus)."
+        content.title = "Ride Status Changed"
+        content.body = "\(rideName) is now \(newStatus)"
         content.sound = .default
         
         // Add the ride ID to the notification's userInfo
         content.userInfo = ["rideID": rideID]
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+        // Create a trigger that will fire immediately (using a small delay to ensure delivery)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+        
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         let dateFormatter = DateFormatter()
