@@ -63,15 +63,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppLogger.shared.log("Background app refresh task expired before completion")
         }
 
-        // Trigger a notification here from the background to see if it works
+        // Create a dispatch group to track all network requests
+        let group = DispatchGroup()
         
+        // Enter the group before starting the update
+        group.enter()
         
-        // Call updateAllParks() to check ride statuses and send notifications if needed
-        ParkRideManager.shared.updateAllParks()
+        // Call updateAllParks() with a completion handler
+        ParkRideManager.shared.updateAllParks(completion: {
+            // Leave the group when all updates are complete
+            group.leave()
+        })
 
+        // Wait for the group to complete or timeout after a reasonable time
+        let timeout = DispatchTime.now() + .seconds(25) // 25 seconds max
+        let result = group.wait(timeout: timeout)
+        
+        if result == .timedOut {
+            AppLogger.shared.log("Background task timed out waiting for network requests")
+        } else {
+            AppLogger.shared.log("Background task completed successfully")
+        }
+        
         // Set ourselves up to run again
         scheduleAppRefresh()
 
+        // Mark the task as completed
         task.setTaskCompleted(success: true)
     }
 }

@@ -89,25 +89,40 @@ class ParkRideManager: ObservableObject {
     }
     
     // Update all parks
-    func updateAllParks() {
-
+    func updateAllParks(completion: (() -> Void)? = nil) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         let currentDateTime = dateFormatter.string(from: Date())
         print("Updating status' for all parks at \(currentDateTime)")
 
+        // Create a dispatch group to track all network requests
+        let group = DispatchGroup()
+        
         for parkId in parkRideArray.keys {
-            updateRidesForPark(for: parkId)
+            group.enter()
+            updateRidesForPark(for: parkId) {
+                group.leave()
+            }
+        }
+        
+        // When all requests are done, call the completion handler
+        group.notify(queue: .main) {
+            print("All park updates completed")
+            completion?()
         }
     }
     
-    func updateRidesForPark(for parkId: String) {
+    func updateRidesForPark(for parkId: String, completion: (() -> Void)? = nil) {
         NetworkService.shared.performNetworkRequest(id: parkId) { [weak self] data in
-            guard let self = self else { return }
+            guard let self = self else {
+                completion?()
+                return
+            }
             
             guard let data = data else {
                 print("No data received for park \(parkId)")
+                completion?()
                 return
             }
             
@@ -127,8 +142,6 @@ class ParkRideManager: ObservableObject {
                     let isFavorite = ParkStore().isParkFavorited(id: parkId)
                     let parkDisplayName = isFavorite ? "\(parkName) (*)" : parkName
 
-                    // print("Updated \(rides.count) rides for park \(parkName)")
-
                     // If this is a favorited park for notifications (let's see if anything changed
                     for ride in updatedRides {
                         if let prevStatus = ride.prevStatus,
@@ -146,16 +159,13 @@ class ParkRideManager: ObservableObject {
                             }
                         }
                     }
-                    
-                    // If this is our selected Park from the popup, let's copy this fresh data into our Ride Array
-                    
-                    // TODO: But we probably don't want to do it if we are in the background. Can we determine if we are
-                    // in the background or foreground? would be good cause then we would know whether to trigger copy
-                    
                 }
             } catch {
                 print("Error parsing ride data for park \(parkId): \(error)")
             }
+            
+            // Call completion handler when done
+            completion?()
         }
     }
     

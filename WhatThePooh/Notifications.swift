@@ -92,7 +92,6 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
         dateFormatter.timeStyle = .medium
         let currentDateTime = dateFormatter.string(from: Date())
         
-        print(" ** [\(currentDateTime)] Ride \(rideName) status updated to \(newStatus). Sending notification. **")
         Task {
             do {
                 try await UNUserNotificationCenter.current().add(request)

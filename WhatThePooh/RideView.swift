@@ -121,7 +121,7 @@ struct RideView: View {
         case "DOWN":
             return ("Down", viewModel.downColor)
         case "REFURBISHMENT":
-            return ("Refurbishment", viewModel.refurbColor)
+            return ("Refurb", viewModel.refurbColor)
         case "CLOSED":
             return ("Closed", viewModel.closedColor)
         default:
