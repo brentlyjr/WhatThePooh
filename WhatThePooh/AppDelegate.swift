@@ -63,10 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppLogger.shared.log("Background app refresh task expired before completion")
         }
 
-        // TODO: Need to actually call code to check and send notifications, if needed
-        // TODO: I wonder if just getting time here allows our timer to fire
-        // Simulate fetching ride statuses — replace with actual API call
-        //       fetchUpdatedRideStatuses()
+        // Trigger a notification here from the background to see if it works
+        
+        
+        // Call updateAllParks() to check ride statuses and send notifications if needed
+        ParkRideManager.shared.updateAllParks()
 
         // Set ourselves up to run again
         scheduleAppRefresh()

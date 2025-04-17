@@ -11,7 +11,6 @@ struct RideView: View {
     @ObservedObject var viewModel: SharedViewModel
     @EnvironmentObject var rideController: RideController
     @EnvironmentObject var parkStore: ParkStore
-    @EnvironmentObject var notificationManager: Notifications
     @EnvironmentObject var parkRideManager: ParkRideManager
 
     var sortedRides: [Ride] {
@@ -72,11 +71,11 @@ struct RideView: View {
                 // rideController.fetchRidesForPark(for: selectedPark.id)
                 parkRideManager.updateRidesForPark(for: selectedPark.id)
 
-                // Starts a time to refresh the data in the view periodically
-                DispatchQueue.main.async {
-                    parkRideManager.startUpdateTimer()
-                    // rideController.startStatusUpdates()
-                }
+                // No need to start the timer here as it's already started in ParkRideManager.initialize(with:)
+                // DispatchQueue.main.async {
+                //     parkRideManager.startUpdateTimer()
+                //     // rideController.startStatusUpdates()
+                // }
             }
         }
     }

@@ -10,7 +10,6 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var viewModel: SharedViewModel
-    @EnvironmentObject var notificationManager: Notifications
     @EnvironmentObject var parkStore: ParkStore
     @State private var selectedTab = 0
     

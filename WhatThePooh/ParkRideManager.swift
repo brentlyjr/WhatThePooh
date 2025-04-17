@@ -19,8 +19,8 @@ struct SimpleParkRide {
 }
 
 class ParkRideManager: ObservableObject {
-    // Singleton instance
-    static let shared = ParkRideManager()
+    // Singleton instance with dependency injection
+    static let shared = ParkRideManager(notificationManager: Notifications.shared)
     
     // Dictionary to store park IDs and their array of SimpleParkRide
     private var parkRideArray: [String: [SimpleParkRide]] = [:]
@@ -35,8 +35,13 @@ class ParkRideManager: ObservableObject {
     private var updateTimer: Timer?
     private let updateInterval: TimeInterval = 60  // 2 minutes
     
-    // Private initializer to enforce singleton pattern
-    private init() { }
+    // Weak reference to notification manager to avoid retain cycles
+    private weak var notificationManager: Notifications?
+    
+    // Private initializer to enforce singleton pattern with dependency injection
+    private init(notificationManager: Notifications) {
+        self.notificationManager = notificationManager
+    }
     
     // Initialize the ParkRideManager with park IDs
     func initialize(with parkIds: [String]) {
@@ -84,7 +89,7 @@ class ParkRideManager: ObservableObject {
     }
     
     // Update all parks
-    private func updateAllParks() {
+    func updateAllParks() {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -131,10 +136,9 @@ class ParkRideManager: ObservableObject {
                            prevStatus != currentStatus {
                             print("Status changed for ride '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus)")
                             if (isFavorite) {
-                                
-                                print("*** SENDING NOTIFICATION THAT STATUS HAS CHANGED ****")
-                                // Send notification for status change
-                                Notifications.shared.sendStatusChangeNotification(
+                                AppLogger.shared.log("Ride: '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus)")
+                                // Send notification for status change using weak reference
+                                self.notificationManager?.sendStatusChangeNotification(
                                     rideName: ride.name,
                                     newStatus: currentStatus,
                                     rideID: ride.rideId
