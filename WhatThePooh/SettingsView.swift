@@ -108,6 +108,7 @@ struct SettingsView: View {
     private var colorsTab: some View {
         List {
             statusColorsSection
+            notificationSettingsSection
             aboutSection
         }
         .tag(1)
@@ -139,6 +140,16 @@ struct SettingsView: View {
                 viewModel.resetStatusColors()
             }
             .foregroundColor(.red)
+        }
+    }
+    
+    private var notificationSettingsSection: some View {
+        Section(header: Text("Notification Settings")) {
+            Toggle("Chatty Notifications", isOn: $viewModel.chattyNotifications)
+                .onChange(of: viewModel.chattyNotifications) { oldValue, newValue in
+                    viewModel.saveNotificationSettings()
+                }
+                .toggleStyle(CompactToggleStyle())
         }
     }
     

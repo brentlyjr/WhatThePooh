@@ -31,6 +31,9 @@ class SharedViewModel: ObservableObject {
     // window that will display internal stats
     @Published var showDebugWindow: Bool = false
     
+    // Notification settings
+    @Published var chattyNotifications: Bool = false
+    
     // Status colors for ride statuses
     @Published var openColor: Color = AppColors.sage(opacity: 1.0)
     @Published var downColor: Color = AppColors.coral(opacity: 1.0)
@@ -46,12 +49,28 @@ class SharedViewModel: ObservableObject {
     // UserDefaults key for sort order
     private let sortOrderKey = "sortOrder"
     
+    // UserDefaults key for chatty notifications
+    private let chattyNotificationsKey = "chattyNotifications"
+    
     init() {
         // Load saved colors from UserDefaults
         loadStatusColors()
         
         // Load saved sort order from UserDefaults
         loadSortOrder()
+        
+        // Load saved notification settings
+        loadNotificationSettings()
+    }
+    
+    // Load notification settings from UserDefaults
+    private func loadNotificationSettings() {
+        chattyNotifications = UserDefaults.standard.bool(forKey: chattyNotificationsKey)
+    }
+    
+    // Save notification settings to UserDefaults
+    func saveNotificationSettings() {
+        UserDefaults.standard.set(chattyNotifications, forKey: chattyNotificationsKey)
     }
     
     // Load sort order from UserDefaults
