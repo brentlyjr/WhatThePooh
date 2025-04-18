@@ -35,33 +35,6 @@ class RideController: ObservableObject {
         loadFavorites()
     }
             
-    // Toggle the favorite state for a ride.
-    func toggleFavorite(for ride: Ride) {
-        guard let index = parkRideArray.firstIndex(where: { $0.id == ride.id }) else { return }
-        parkRideArray[index].isFavorited.toggle()
-        if parkRideArray[index].isFavorited {
-            favoriteIDs.insert(ride.id)
-        } else {
-            favoriteIDs.remove(ride.id)
-        }
-        saveFavorites()
-    }
-    
-    // This is the function that checks a ride's status and sends a notification if has changed
-    private func sendNotificationOnStatusChange(for ride: Ride) {
-        // If our ride status changed, and the value was not empty (IE, we had a previous stored state
-        // Then we should be sending a status change notification.
-        if ride.oldStatus != ride.status && ride.oldStatus != nil {
-            // Use weak reference to avoid retain cycles
-            weak var notifications = Notifications.shared
-            notifications?.sendStatusChangeNotification(
-                rideName: ride.name, 
-                newStatus: ride.status ?? "Unknown",
-                rideID: ride.id
-            )
-        }
-    }
-    
     // Load persisted favorite ride IDs from UserDefaults.
     private func loadFavorites() {
         if let storedIDs = UserDefaults.standard.array(forKey: favoritesKey) as? [String] {
@@ -95,5 +68,25 @@ class RideController: ObservableObject {
     // Check if a ride is favorited
     func isRideFavorited(id: String) -> Bool {
         return favoriteIDs.contains(id)
+    }
+    
+    // Toggle the favorite status of a ride
+    func toggleFavorite(for ride: Ride) {
+        if favoriteIDs.contains(ride.id) {
+            favoriteIDs.remove(ride.id)
+        } else {
+            favoriteIDs.insert(ride.id)
+        }
+        
+        // Save the updated favorites
+        saveFavorites()
+        
+        // Update the ride's favorite status in the array
+        if let index = parkRideArray.firstIndex(where: { $0.id == ride.id }) {
+            parkRideArray[index].isFavorited = !ride.isFavorited
+        }
+        
+        // Notify observers of the change
+        objectWillChange.send()
     }
 }

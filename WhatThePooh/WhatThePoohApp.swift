@@ -13,18 +13,12 @@ struct WhatThePoohApp: App {
     // Initialize our core services
     @StateObject private var notificationManager = Notifications.shared
     @StateObject private var viewModel = SharedViewModel()
-    @StateObject private var parkStore = ParkStore()
+    @StateObject private var parkStore = ParkStore.shared
     @StateObject private var parkRideManager = ParkRideManager.shared
     
     // Initialize app delegate for background tasks
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    init() {
-        // Initialize ParkRideManager with park IDs from ParkStore
-        let parkIds = ParkStore().parks.map { $0.id }
-        ParkRideManager.shared.initialize(with: parkIds)
-    }
-
     var body: some Scene {
         WindowGroup {
             ZStack {
@@ -40,6 +34,10 @@ struct WhatThePoohApp: App {
                 }
             }
             .onAppear {
+                // Initialize ParkRideManager with park IDs from ParkStore
+                let parkIds = parkStore.parks.map { $0.id }
+                ParkRideManager.shared.initialize(with: parkIds)
+                
                 // Set up notification center delegate
                 UNUserNotificationCenter.current().delegate = notificationManager
                 

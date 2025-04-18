@@ -108,7 +108,6 @@ class ParkRideManager: ObservableObject {
         
         // When all requests are done, call the completion handler
         group.notify(queue: .main) {
-            print("All park updates completed")
             completion?()
         }
     }
@@ -138,17 +137,20 @@ class ParkRideManager: ObservableObject {
                     // Now update our main array
                     self.updateRides(updatedRides, for: parkId)
                     
-                    let parkName = ParkStore().parks.first(where: { $0.id == parkId })?.name ?? "Unknown Park"
-                    let isFavorite = ParkStore().isParkFavorited(id: parkId)
-                    let parkDisplayName = isFavorite ? "\(parkName) (*)" : parkName
+                    let currentPark = ParkStore.shared.getPark(withId: parkId)
+                    let parkName = currentPark?.name ?? "Unknown Park"
+                    let isFavoritedPark = ParkStore.shared.isParkFavorited(id: parkId)
+                    let parkDisplayName = isFavoritedPark ? "\(parkName) (*)" : parkName
+                    let parkOpen = currentPark?.isOpen ?? false
 
                     // If this is a favorited park for notifications (let's see if anything changed
                     for ride in updatedRides {
                         if let prevStatus = ride.prevStatus,
                            let currentStatus = ride.status,
                            prevStatus != currentStatus {
-                            print("Status changed for ride '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus)")
-                            if (isFavorite) {
+                            let parkStatus = parkOpen ? "(Park Open)" : "(Park Closed)"
+                            print("Status changed for ride '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus). \(parkStatus)")
+                            if (isFavoritedPark) {
                                 AppLogger.shared.log("Ride: '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus)")
                                 // Send notification for status change using weak reference
                                 self.notificationManager?.sendStatusChangeNotification(
@@ -234,7 +236,7 @@ class ParkRideManager: ObservableObject {
     
     private func updateRideController(for parkId: String, with rides: [SimpleParkRide]) {
         // Only update if this is the currently selected park
-        if parkId == ParkStore().currentSelectedPark?.id {
+        if parkId == ParkStore.shared.currentSelectedPark?.id {
             let convertedRides = rides.map { convertToRide($0) }
             
             // Update on main thread since this affects UI

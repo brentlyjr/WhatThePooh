@@ -90,7 +90,6 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
-        let currentDateTime = dateFormatter.string(from: Date())
         
         Task {
             do {

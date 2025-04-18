@@ -8,6 +8,9 @@
 import SwiftUI
 
 class ParkStore: ObservableObject {
+    // Singleton instance
+    static let shared = ParkStore()
+    
     private var isInitialLoad = true
     @Published var parks: [Park] = [] {
         didSet {
@@ -35,14 +38,16 @@ class ParkStore: ObservableObject {
     private var favoriteParkIDs: Set<String> = []
     
     init() {
+        print("ParkStore init()")
         loadFavoriteParks() // Load favorites first
         loadParks()        // Then load parks
         // Initialize currentSelectedPark
         currentSelectedPark = parks.first { $0.isSelected }
-        isInitialLoad = false // Mark initial load as complete
+        // We'll set isInitialLoad to false after all async operations complete
     }
     
     private func loadParks() {
+        print("Loading Parks...")
         if let data = UserDefaults.standard.data(forKey: parksKey),
            let savedParks = try? JSONDecoder().decode([Park].self, from: data) {
             self.parks = savedParks
@@ -69,7 +74,11 @@ class ParkStore: ObservableObject {
     }
     
     private func fetchOperatingHoursForAllParks() {
+        print("Fetching park operating hours")
+        let group = DispatchGroup()
+        
         for park in parks {
+            group.enter()
             ParkController.shared.fetchParkSchedule(for: park.id) { schedules, timezone in
                 if let schedules = schedules {
                     // Update the park with the operating hours
@@ -89,7 +98,14 @@ class ParkStore: ObservableObject {
                 } else {
                     print("Failed to fetch operating hours for park: \(park.name)")
                 }
+                group.leave()
             }
+        }
+        
+        // When all fetch operations are complete, set isInitialLoad to false
+        group.notify(queue: .main) {
+            print("All park operating hours fetched, setting isInitialLoad to false")
+            self.isInitialLoad = false
         }
     }
     
@@ -136,6 +152,8 @@ class ParkStore: ObservableObject {
     
     // Clear parks from UserDefaults and reload defaults
     func clearParksAndReload() {
+        print("ParkStore clearParksAndReload()")
+        
         // Remove parks from UserDefaults
         UserDefaults.standard.removeObject(forKey: parksKey)
         
@@ -145,11 +163,16 @@ class ParkStore: ObservableObject {
         // Reload parks from defaults
         loadParks()
         
-        // Reset isInitialLoad to false
-        isInitialLoad = false
+        // Note: We don't set isInitialLoad to false here anymore
+        // It will be set to false after all async operations complete
         
         // Log the action
         AppLogger.shared.log("Cleared parks from UserDefaults and reloaded defaults")
+    }
+    
+    // Get a park by its ID
+    func getPark(withId id: String) -> Park? {
+        return parks.first(where: { $0.id == id })
     }
 }
 

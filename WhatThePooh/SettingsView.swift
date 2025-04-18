@@ -202,5 +202,5 @@ struct SettingsView: View {
     SettingsView()
         .environmentObject(SharedViewModel())
         .environmentObject(Notifications.shared)
-        .environmentObject(ParkStore())
+        .environmentObject(ParkStore.shared)
 } 
