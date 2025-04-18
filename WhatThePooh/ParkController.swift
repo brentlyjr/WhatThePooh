@@ -14,6 +14,7 @@ class ParkController {
     private init() {}
     
     func fetchParkSchedule(for entityId: String, completion: @escaping ([ParkSchedule]?, String?) -> Void) {
+        print("Fetch park schedule for \(entityId)")
         let urlString = "https://api.themeparks.wiki/v1/entity/\(entityId)/schedule"
         guard let url = URL(string: urlString) else {
             print("\(ISO8601DateFormatter().string(from: Date())) - Invalid URL: \(urlString)")

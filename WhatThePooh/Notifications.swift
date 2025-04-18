@@ -71,11 +71,11 @@ class Notifications: NSObject, ObservableObject, UNUserNotificationCenterDelegat
     }
     
     // Send a status change notification
-    func sendStatusChangeNotification(rideName: String, newStatus: String, rideID: String) {
+    func sendStatusChangeNotification(rideName: String, newStatus: String, rideID: String, parkName: String) {
         guard permissionGranted else { return }
         
         let content = UNMutableNotificationContent()
-        content.title = "Ride Status Changed"
+        content.title = "\(parkName)"
         content.body = "\(rideName) is now \(newStatus)"
         content.sound = .default
         

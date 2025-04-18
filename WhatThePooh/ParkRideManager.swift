@@ -156,7 +156,8 @@ class ParkRideManager: ObservableObject {
                                 self.notificationManager?.sendStatusChangeNotification(
                                     rideName: ride.name,
                                     newStatus: currentStatus,
-                                    rideID: ride.rideId
+                                    rideID: ride.rideId,
+                                    parkName: parkDisplayName
                                 )
                             }
                         }
