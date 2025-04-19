@@ -19,9 +19,6 @@ struct SimpleParkRide {
 }
 
 class ParkRideManager: ObservableObject {
-    // Singleton instance with dependency injection
-    static let shared = ParkRideManager(notificationManager: Notifications.shared)
-    
     // Dictionary to store park IDs and their array of SimpleParkRide
     private var parkRideArray: [String: [SimpleParkRide]] = [:]
     
@@ -38,9 +35,18 @@ class ParkRideManager: ObservableObject {
     // Weak reference to notification manager to avoid retain cycles
     private weak var notificationManager: Notifications?
     
-    // Private initializer to enforce singleton pattern with dependency injection
-    private init(notificationManager: Notifications) {
+    // Reference to SharedViewModel for settings
+    private var sharedViewModel: SharedViewModel
+    
+    // Public initializer for dependency injection
+    init(notificationManager: Notifications, sharedViewModel: SharedViewModel) {
         self.notificationManager = notificationManager
+        self.sharedViewModel = sharedViewModel
+    }
+    
+    // Update the SharedViewModel reference
+    func updateSharedViewModel(_ viewModel: SharedViewModel) {
+        self.sharedViewModel = viewModel
     }
     
     // Initialize the ParkRideManager with park IDs
@@ -95,6 +101,7 @@ class ParkRideManager: ObservableObject {
         dateFormatter.timeStyle = .medium
         let currentDateTime = dateFormatter.string(from: Date())
         print("Updating status' for all parks at \(currentDateTime)")
+        AppLogger.shared.log("Updating status' for all parks")
 
         // Create a dispatch group to track all network requests
         let group = DispatchGroup()
@@ -109,16 +116,21 @@ class ParkRideManager: ObservableObject {
         // When all requests are done, call the completion handler
         group.notify(queue: .main) {
             completion?()
+            print("Done with dispatch group")
+            AppLogger.shared.log("Done with dispatch group")
         }
     }
     
     func updateRidesForPark(for parkId: String, completion: (() -> Void)? = nil) {
+        // Make a network request to fetch the latest ride data for the specified park
         NetworkService.shared.performNetworkRequest(id: parkId) { [weak self] data in
+            // Use weak self to avoid retain cycles
             guard let self = self else {
                 completion?()
                 return
             }
             
+            // Check if we received valid data from the network request
             guard let data = data else {
                 print("No data received for park \(parkId)")
                 completion?()
@@ -126,48 +138,66 @@ class ParkRideManager: ObservableObject {
             }
             
             do {
+                // Parse the JSON response into a dictionary and extract the liveData array
                 if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let liveData = json["liveData"] as? [[String: Any]] {
                     
+                    // Convert the raw JSON data into SimpleParkRide objects
                     let rides = self.parseRides(from: liveData, for: parkId)
                     
-                    // Copy status over from our existing ride array
-                    let updatedRides = self.updateRidesWithPreviousStatus(rides, for: parkId)
+                    // Compare with previous ride data to track status changes
+                    // This adds the previous status to each ride for change detection
+                    let updatedRides = self .updateRidesWithPreviousStatus(rides, for: parkId)
                     
-                    // Now update our main array
+                    // Store the updated rides in our internal data structure
+                    // This also updates the RideController if this is the currently selected park
                     self.updateRides(updatedRides, for: parkId)
                     
+                    // Get park information for logging and notification purposes
                     let currentPark = ParkStore.shared.getPark(withId: parkId)
                     let parkName = currentPark?.name ?? "Unknown Park"
                     let isFavoritedPark = ParkStore.shared.isParkFavorited(id: parkId)
                     let parkDisplayName = isFavoritedPark ? "\(parkName) (*)" : parkName
                     let parkOpen = currentPark?.isOpen ?? false
 
-                    // If this is a favorited park for notifications (let's see if anything changed
+                    // Check each ride for status changes and send notifications if needed
                     for ride in updatedRides {
+                        // Only process rides where the status has changed
                         if let prevStatus = ride.prevStatus,
                            let currentStatus = ride.status,
                            prevStatus != currentStatus {
+                            // Format park status for logging
                             let parkStatus = parkOpen ? "(Park Open)" : "(Park Closed)"
                             print("Status changed for ride '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus). \(parkStatus)")
-                            if (isFavoritedPark) {
+                            
+                            // Is this a favoritedRide
+                            let isFavoritedRide = RideController.shared.isRideFavorited(id: ride.rideId)
+                            
+                            // Only send notifications for favorited parks AND either:
+                            // 1. The ride is favorited, OR
+                            // 2. Chatty notifications are enabled
+                            if (isFavoritedPark && (isFavoritedRide || self.sharedViewModel.chattyNotifications)) {
+                                // Log the status change
                                 AppLogger.shared.log("Ride: '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus)")
-                                // Send notification for status change using weak reference
+                                print("*** Sending notification for ride '\(ride.name)' at \(parkDisplayName): \(prevStatus) -> \(currentStatus).")
+                                
+                                // Send a notification to the user about the status change
                                 self.notificationManager?.sendStatusChangeNotification(
                                     rideName: ride.name,
                                     newStatus: currentStatus,
                                     rideID: ride.rideId,
-                                    parkName: parkDisplayName
+                                    parkName: parkName
                                 )
                             }
                         }
                     }
                 }
             } catch {
+                // Log any errors that occur during JSON parsing
                 print("Error parsing ride data for park \(parkId): \(error)")
             }
             
-            // Call completion handler when done
+            // Call the completion handler when the update is finished
             completion?()
         }
     }
@@ -184,8 +214,11 @@ class ParkRideManager: ObservableObject {
                 return nil
             }
             
-            // Extract wait time from queue->STANDBY->waitTime
-            let waitTime = extractWaitTime(from: rideData)
+            var waitTime = nil as Int?
+            if status == "OPERATING" {
+                // Extract wait time from queue->STANDBY->waitTime
+                waitTime = extractWaitTime(from: rideData)
+            }
             
             return SimpleParkRide(
                 parkId: parkId,
@@ -219,7 +252,7 @@ class ParkRideManager: ObservableObject {
         // TODO: oh, the copy stuff is here, this is what would check background and foreground.
         // or should we move this copy stuff out into the main loop?
         
-        // Update RideController if this is the selected park
+        // Update RideController if this is the selected park (this is checked inside function)
         updateRideController(for: parkId, with: rides)
     }
     

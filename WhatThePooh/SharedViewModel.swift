@@ -217,9 +217,18 @@ class SharedViewModel: ObservableObject {
                 ($0.waitTime ?? 0) < ($1.waitTime ?? 0) 
             }
             
-            // Sort rides without wait times by name
+            // Sort rides without wait times by status and then by name
             let sortedRidesWithoutWaitTime = ridesWithoutWaitTime.sorted { 
-                $0.name < $1.name 
+                // First sort by status priority: OPERATING > CLOSED > REFURBISHMENT
+                let statusPriority1 = getStatusPriority($0.status)
+                let statusPriority2 = getStatusPriority($1.status)
+                
+                if statusPriority1 != statusPriority2 {
+                    return statusPriority1 < statusPriority2
+                } else {
+                    // If status is the same, sort by name
+                    return $0.name < $1.name
+                }
             }
             
             // Combine the two arrays, with rides with wait times first
@@ -234,13 +243,40 @@ class SharedViewModel: ObservableObject {
                 ($0.waitTime ?? 0) > ($1.waitTime ?? 0) 
             }
             
-            // Sort rides without wait times by name
+            // Sort rides without wait times by status and then by name
             let sortedRidesWithoutWaitTime = ridesWithoutWaitTime.sorted { 
-                $0.name < $1.name 
+                // First sort by status priority: OPERATING > CLOSED > REFURBISHMENT
+                let statusPriority1 = getStatusPriority($0.status)
+                let statusPriority2 = getStatusPriority($1.status)
+                
+                if statusPriority1 != statusPriority2 {
+                    return statusPriority1 < statusPriority2
+                } else {
+                    // If status is the same, sort by name
+                    return $0.name < $1.name
+                }
             }
             
             // Combine the two arrays, with rides with wait times first
             return sortedRidesWithWaitTime + sortedRidesWithoutWaitTime
+        }
+    }
+    
+    // Helper function to get priority for status sorting
+    private func getStatusPriority(_ status: String?) -> Int {
+        guard let status = status else { return 999 } // Unknown status gets lowest priority
+        
+        switch status {
+        case "OPERATING":
+            return 0 // Highest priority
+        case "DOWN":
+            return 1
+        case "CLOSED":
+            return 2
+        case "REFURBISHMENT":
+            return 3
+        default:
+            return 999 // Unknown status gets lowest priority
         }
     }
 

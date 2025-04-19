@@ -12,6 +12,9 @@ import os
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let logger = Logger(subsystem: "com.brentlyjr.WhatThePooh", category: "background")
     let refreshTaskIdentifier = "com.brentlyjr.WhatThePooh.refresh"
+    
+    // Reference to the ParkRideManager
+    var parkRideManager: ParkRideManager?
 
     // Empty function for now, does nothing
     func application(
@@ -70,10 +73,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         group.enter()
         
         // Call updateAllParks() with a completion handler
-        ParkRideManager.shared.updateAllParks(completion: {
-            // Leave the group when all updates are complete
+        if let parkRideManager = parkRideManager {
+            parkRideManager.updateAllParks(completion: {
+                // Leave the group when all updates are complete
+                group.leave()
+            })
+        } else {
+            AppLogger.shared.log("ParkRideManager not available for background refresh")
             group.leave()
-        })
+        }
 
         // Wait for the group to complete or timeout after a reasonable time
         let timeout = DispatchTime.now() + .seconds(25) // 25 seconds max

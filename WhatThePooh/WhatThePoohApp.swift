@@ -14,7 +14,7 @@ struct WhatThePoohApp: App {
     @StateObject private var notificationManager = Notifications.shared
     @StateObject private var viewModel = SharedViewModel()
     @StateObject private var parkStore = ParkStore.shared
-    @StateObject private var parkRideManager = ParkRideManager.shared
+    @StateObject private var parkRideManager = ParkRideManager(notificationManager: Notifications.shared, sharedViewModel: SharedViewModel())
     
     // Initialize app delegate for background tasks
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -36,13 +36,20 @@ struct WhatThePoohApp: App {
             .onAppear {
                 // Initialize ParkRideManager with park IDs from ParkStore
                 let parkIds = parkStore.parks.map { $0.id }
-                ParkRideManager.shared.initialize(with: parkIds)
+                parkRideManager.initialize(with: parkIds)
                 
                 // Set up notification center delegate
                 UNUserNotificationCenter.current().delegate = notificationManager
                 
                 // Ensure notification permissions are requested
                 notificationManager.requestNotificationPermissionIfNeeded()
+                
+                // Update parkRideManager with the correct viewModel
+                parkRideManager.updateSharedViewModel(viewModel)
+                
+                // Inject parkRideManager into AppDelegate
+                appDelegate.parkRideManager = parkRideManager
+                
                 // Schedule background refresh
                 appDelegate.scheduleAppRefresh()
                 

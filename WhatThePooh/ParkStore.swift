@@ -38,11 +38,12 @@ class ParkStore: ObservableObject {
     private var favoriteParkIDs: Set<String> = []
     
     init() {
-        print("ParkStore init()")
         loadFavoriteParks() // Load favorites first
         loadParks()        // Then load parks
+
         // Initialize currentSelectedPark
         currentSelectedPark = parks.first { $0.isSelected }
+
         // We'll set isInitialLoad to false after all async operations complete
     }
     
