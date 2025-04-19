@@ -15,7 +15,7 @@ struct RideResponse: Decodable {
 
 class RideController: ObservableObject {
     // Singleton instance
-    static let shared = RideController(notificationManager: Notifications.shared)
+    static let shared = RideController()
     
     // This is our published object that links to our RideView - Any updates to this
     // object will trigger a view update
@@ -28,10 +28,7 @@ class RideController: ObservableObject {
     private let favoritesKey = "favoriteRides"
     private var favoriteIDs: Set<String> = []
     
-    private weak var notificationManager: Notifications?
-    
-    private init(notificationManager: Notifications) {
-        self.notificationManager = notificationManager
+    private init() {
         loadFavorites()
     }
             
